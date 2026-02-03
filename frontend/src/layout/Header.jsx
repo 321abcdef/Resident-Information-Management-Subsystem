@@ -14,13 +14,18 @@ const Header = ({ toggleSidebar }) => {
     return () => clearInterval(timer);
   }, []);
 
-  const dateTime = currentTime.toLocaleString("en-US", {
+  const datePart = currentTime.toLocaleString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
+  });
+
+  const timePart = currentTime.toLocaleString("en-US", {
     hour: "numeric",
     minute: "2-digit",
   });
+
+  const dateTime = `${datePart} - ${timePart}`;
 
   return (
     <header className="h-[89px] bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center px-6 sticky top-0 z-10">
