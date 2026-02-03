@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StatsOverview from '../components/dashboard/statsoverview';
-import SectorDistribution from '../components/dashboard/SectorDistribution';
-import PurokDistribution from '../components/dashboard/PurokDistribution';
+// import SectorDistribution from '../components/dashboard/SectorDistribution';
+// import PurokDistribution from '../components/dashboard/PurokDistribution';
 import RecentRegistration from '../components/dashboard/recentregistration';
 import Pagination from '../components/common/pagination'; 
 import { getDashboardData } from '../services/dashboard';
