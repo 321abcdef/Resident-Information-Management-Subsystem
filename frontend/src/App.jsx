@@ -8,10 +8,12 @@ import Verification from './pages/verification';
 import Support from './pages/support';
 import Settings from './pages/settings';
 import Logout from './pages/logout';
+import { UserProvider } from './context/userContetxt';
 
 function App() {
   return (
     <ThemeProvider>
+      <UserProvider>
       <Router>
         <Routes>
           <Route element={<DashboardLayout />}>
@@ -26,6 +28,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      </UserProvider>
     </ThemeProvider>
   );
 }
