@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { User, Mail, Lock, Eye, EyeOff, Save } from "lucide-react";
-import { useUser } from "../context/userContetxt";
+import { useUser } from "../context/UserContext";
 import { getInitials, getAvatarColor } from "../utils/avatar";
 
 export default function Settings() {

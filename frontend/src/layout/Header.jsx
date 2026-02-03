@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Moon, Sun, Menu } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
-import { useUser } from "../context/userContetxt";
+import { useUser } from "../context/UserContext";
 import { getInitials, getAvatarColor } from "../utils/avatar";
 
 const Header = ({ toggleSidebar }) => {
