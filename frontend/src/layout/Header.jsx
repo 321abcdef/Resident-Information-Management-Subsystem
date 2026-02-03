@@ -23,7 +23,7 @@ const Header = ({ toggleSidebar }) => {
   });
 
   return (
-    <header className="h-[72px] bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center px-6 sticky top-0 z-10">
+    <header className="h-[89px] bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center px-6 sticky top-0 z-10">
       <button onClick={toggleSidebar} className="lg:hidden p-2">
         <Menu size={22} />
       </button>
