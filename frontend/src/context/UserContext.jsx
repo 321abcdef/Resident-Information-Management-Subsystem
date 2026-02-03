@@ -5,7 +5,7 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
     name: "Juan Dela Cruz",
-    role: "Brgy. Staff",
+    role: "Barangay Staff",
   });
 
   const updateUser = (updates) => {
