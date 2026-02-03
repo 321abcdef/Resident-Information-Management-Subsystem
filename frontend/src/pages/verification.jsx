@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, CheckCircle2, XCircle, ChevronLeft, Lock, Info, AlertTriangle } from 'lucide-react';
 import { verificationService } from '../services/verification';
-import VerificationStats from '../components/verification/VerificationStats';
+import VerificationStats from '../components/verification/verificationstats';
 import VerificationListCard from '../components/verification/verificationlistcard';
 import RejectionModal from '../components/verification/rejectionmodal';
 
