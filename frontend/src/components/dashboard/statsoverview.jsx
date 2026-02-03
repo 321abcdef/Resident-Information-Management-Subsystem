@@ -1,5 +1,5 @@
 import React from 'react';
-import StatCard from '../common/StatCard';
+import StatCard from '../common/statcard';
 import { Users, Home, CheckCircle, Clock } from 'lucide-react';
 
 const StatsOverview = ({ stats }) => {
