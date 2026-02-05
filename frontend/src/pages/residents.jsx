@@ -27,7 +27,6 @@ const Residents = () => {
       (r.address?.toLowerCase() || "").includes(searchTerm.toLowerCase())
     );
     
-    // Updated logic to handle "Adult" and other sectors
     if (categoryFilter !== "All") {
       results = results.filter(r => r.sector === categoryFilter);
     }
@@ -90,41 +89,52 @@ const Residents = () => {
 
   return (
     <div className="space-y-6 pb-10">
+      {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Residents Registry</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">
+          Residents Registry
+        </h1>
         <div className="flex gap-2">
-          <button onClick={handlePrint} className="flex items-center gap-2 bg-slate-900 dark:bg-emerald-600 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:opacity-90 transition-all shadow-lg active:scale-95">
+          <button 
+            onClick={handlePrint} 
+            className="flex items-center gap-2 bg-slate-900 dark:bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-all shadow-lg active:scale-95"
+          >
             <Printer size={16} /> Print 
           </button>
-          <button className="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-sm hover:bg-slate-50 transition-all">
+          <button className="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm hover:bg-slate-50 transition-all">
             <Plus size={16} /> Add New Resident
           </button>
         </div>
       </div>
 
+      {/* Main Content Card */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xl">
-        <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-slate-50/50 dark:bg-slate-900/50">
-          <div className="relative w-full lg:w-80">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+        
+        {/* Search and Filters Bar */}
+        <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-slate-50/50 dark:bg-slate-900/50">
+          
+          {/* Improved Search Bar */}
+          <div className="relative w-full lg:w-96">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
             <input
               type="text"
-              placeholder="Search masterlist..."
+              placeholder="Search by name or address..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold outline-none dark:text-white focus:ring-2 ring-emerald-500/20"
+              className="w-full pl-12 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium outline-none dark:text-white focus:ring-2 ring-emerald-500/40 transition-all shadow-sm"
             />
           </div>
 
-          <div className="flex bg-slate-200/50 dark:bg-slate-800 p-1 rounded-xl">
-            {/* Added 'Adult' to the button list */}
+          {/* Improved Category Filter */}
+          <div className="flex bg-slate-200/50 dark:bg-slate-800 p-1.5 rounded-xl overflow-x-auto no-scrollbar">
             {['All', 'Senior', 'Adult', 'PWD', 'Minor'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setCategoryFilter(cat)}
-                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${
+                className={`px-5 py-2 rounded-lg text-xs font-bold uppercase transition-all whitespace-nowrap ${
                   categoryFilter === cat 
-                  ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-emerald-500 shadow-sm' 
-                  : 'text-slate-400 hover:text-slate-600 hover:bg-white/50'
+                  ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-emerald-500 shadow-md' 
+                  : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
                 }`}
               >
                 {cat}
@@ -133,14 +143,18 @@ const Residents = () => {
           </div>
         </div>
 
+        {/* Table Section */}
         <div className="w-full">
           {loading ? (
-            <div className="p-20 text-center font-black text-emerald-600 text-xs tracking-[4px] animate-pulse">SYNCING MASTERLIST...</div>
+            <div className="p-20 text-center font-bold text-emerald-600 text-sm tracking-[4px] animate-pulse">
+              SYNCING MASTERLIST...
+            </div>
           ) : (
             <ResidentTable residents={currentItems} />
           )}
         </div>
 
+        {/* Footer/Pagination */}
         <Pagination 
           currentPage={currentPage}
           totalPages={totalPages}

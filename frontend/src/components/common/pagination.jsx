@@ -17,7 +17,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
         <button 
           disabled={currentPage === 1}
           onClick={() => onPageChange(currentPage - 1)}
-          className="p-2 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-30 text-gray-600 dark:text-gray-400 transition-all"
+          className="p-2 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-30 text-gray-600 dark:text-gray-400 transition-all rounded-l-lg"
         >
           <ChevronLeft size={18} />
         </button>
@@ -29,7 +29,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
               onClick={() => onPageChange(i + 1)}
               className={`w-9 h-9 text-[11px] font-black border-y border-r border-gray-200 dark:border-slate-700 transition-all ${
                 currentPage === i + 1 
-                ? 'bg-emerald-600 text-white border-emerald-600' 
+                ? 'bg-emerald-600 text-white border-emerald-600 z-10' 
                 : 'bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -41,7 +41,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
         <button 
           disabled={currentPage === totalPages}
           onClick={() => onPageChange(currentPage + 1)}
-          className="p-2 border border-r border-y border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-30 text-gray-600 dark:text-gray-400 transition-all"
+          className="p-2 border border-r border-y border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 disabled:opacity-30 text-gray-600 dark:text-gray-400 transition-all rounded-r-lg"
         >
           <ChevronRight size={18} />
         </button>

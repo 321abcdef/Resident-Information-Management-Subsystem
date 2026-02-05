@@ -3,7 +3,7 @@ import { Pencil, Eye, Trash2, CheckCircle, Clock } from 'lucide-react';
 import Table from '../common/table';
 import ResidentDetailsModal from './ResidentDetailsModal';
 
-// --- HELPERS
+// --- HELPERS (Consistent with Dashboard updates)
 const getInitials = (name) => {
   if (!name) return "??";
   const parts = name.trim().split(' ');
@@ -13,12 +13,12 @@ const getInitials = (name) => {
 
 const getAvatarColor = (name) => {
   const colors = [
-    'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400',
-    'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400',
-    'bg-violet-100 text-violet-600 dark:bg-violet-500/20 dark:text-violet-400',
-    'bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400',
-    'bg-rose-100 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400',
-    'bg-cyan-100 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-400',
+    'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400',
+    'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400',
+    'bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-400',
+    'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400',
+    'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400',
+    'bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-400',
   ];
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
@@ -37,7 +37,6 @@ const ResidentTable = ({ residents: initialResidents }) => {
     setLocalResidents(initialResidents);
   }, [initialResidents]);
 
-  // Header sections 
   const headers = ["Name", "Age", "Address", "Purok", "Sector", "Status", "Actions"];
 
   const handleView = (resident) => {
@@ -70,59 +69,61 @@ const ResidentTable = ({ residents: initialResidents }) => {
       <Table headers={headers}>
         {localResidents.length > 0 ? (
           localResidents.map((r) => (
-            <tr key={r.id} className="border-b last:border-none border-slate-100 dark:border-slate-800 hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-all">
+            <tr key={r.id} className="border-b last:border-none border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all">
               
-              {/* Name Column with Initials Avatar */}
-              <td className="px-6 py-4 flex items-center gap-3">
-                <div className={`h-9 w-9 rounded-lg border border-slate-100 dark:border-slate-700 shadow-sm flex items-center justify-center font-black text-[10px] ${getAvatarColor(r.name)}`}>
+              {/* Name Column: Larger Text & Avatar */}
+              <td className="px-6 py-5 flex items-center gap-4">
+                <div className={`h-11 w-11 rounded-full border-2 border-white dark:border-slate-700 shadow-sm flex items-center justify-center font-bold text-sm ${getAvatarColor(r.name)}`}>
                   {getInitials(r.name)}
                 </div>
                 <div>
-                  <p className="font-bold text-slate-800 dark:text-slate-200 text-sm leading-tight">{r.name}</p>
-                  <p className="text-[10px] text-slate-400 dark:text-slate-500 uppercase font-black tracking-tight">{r.role}</p>
+                  <p className="text-base font-bold text-slate-900 dark:text-white leading-tight">{r.name}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 font-semibold mt-0.5 uppercase tracking-tight">
+                    {(r.role || 'Resident')}
+                  </p>
                 </div>
               </td>
 
-              {/* Age, Address, Purok Columns (Present and Complete) */}
-              <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium">{r.age}</td>
-              <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 truncate max-w-[180px] italic">{r.address}</td>
-              <td className="px-6 py-4 text-sm font-bold text-slate-700 dark:text-slate-300">Purok {r.purok}</td>
+              {/* Age, Address, Purok: Standardized to text-base (16px) */}
+              <td className="px-6 py-5 text-base text-slate-800 dark:text-slate-200 font-medium">{r.age}</td>
+              <td className="px-6 py-5 text-base text-slate-700 dark:text-slate-300 truncate max-w-[200px]">{r.address}</td>
+              <td className="px-6 py-5 text-base font-bold text-slate-900 dark:text-white">Purok {r.purok}</td>
               
-              {/* Sector Badge Column */}
-              <td className="px-6 py-4">
-                <span className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-wider rounded-md border ${
-                  r.sector === 'Senior' ? 'bg-blue-50 text-blue-600 border-blue-100' :
-                  r.sector === 'PWD' ? 'bg-purple-50 text-purple-600 border-purple-100' :
-                  r.sector === 'Minor' ? 'bg-rose-50 text-rose-600 border-rose-100' :
-                  'bg-slate-50 text-slate-500 border-slate-100'
+              {/* Sector Badge: Increased size and contrast */}
+              <td className="px-6 py-5">
+                <span className={`px-3 py-1.5 text-xs font-black uppercase tracking-wide rounded-md border-2 ${
+                  r.sector === 'Senior' ? 'bg-blue-100 text-blue-800 border-blue-200' :
+                  r.sector === 'PWD' ? 'bg-purple-100 text-purple-800 border-purple-200' :
+                  r.sector === 'Minor' ? 'bg-rose-100 text-rose-800 border-rose-200' :
+                  'bg-slate-100 text-slate-700 border-slate-200'
                 }`}>
                   {r.sector}
                 </span>
               </td>
 
-              {/* Status Badge Column */}
-              <td className="px-6 py-4">
-                <div className={`inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-black uppercase tracking-tighter border rounded-full ${
+              {/* Status Badge: Bigger font and icons */}
+              <td className="px-6 py-5">
+                <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-tight ${
                   r.status === 'Verified' 
-                    ? 'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800/50' 
-                    : 'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800/50'
+                    ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800' 
+                    : 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800'
                 }`}>
-                  {r.status === 'Verified' ? <CheckCircle size={12} /> : <Clock size={12} />}
-                  {r.status}
+                  {r.status === 'Verified' ? <CheckCircle size={18} strokeWidth={2.5} /> : <Clock size={18} strokeWidth={2.5} />}
+                  <span>{r.status}</span>
                 </div>
               </td>
 
-              {/* Actions Column */}
-              <td className="px-6 py-4">
-                <div className="flex items-center gap-0 border border-slate-200 dark:border-slate-700 w-fit bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-sm">
-                  <button onClick={() => handleView(r)} title="View" className="p-2.5 text-slate-400 hover:bg-emerald-600 hover:text-white transition-all border-r border-slate-200 dark:border-slate-700">
-                    <Eye size={15} />
+              {/* Actions Column: Larger touch targets */}
+              <td className="px-6 py-5">
+                <div className="flex items-center gap-0 border border-slate-300 dark:border-slate-600 w-fit bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-md">
+                  <button onClick={() => handleView(r)} title="View" className="p-3 text-slate-600 dark:text-slate-300 hover:bg-emerald-600 hover:text-white transition-all border-r border-slate-300 dark:border-slate-600">
+                    <Eye size={20} />
                   </button>
-                  <button onClick={() => handleEdit(r)} title="Edit" className="p-2.5 text-slate-400 hover:bg-blue-600 hover:text-white transition-all border-r border-slate-200 dark:border-slate-700">
-                    <Pencil size={15} />
+                  <button onClick={() => handleEdit(r)} title="Edit" className="p-3 text-slate-600 dark:text-slate-300 hover:bg-blue-600 hover:text-white transition-all border-r border-slate-300 dark:border-slate-600">
+                    <Pencil size={20} />
                   </button>
-                  <button onClick={() => handleDelete(r.id, r.name)} title="Delete" className="p-2.5 text-slate-400 hover:bg-rose-600 hover:text-white transition-all">
-                    <Trash2 size={15} />
+                  <button onClick={() => handleDelete(r.id, r.name)} title="Delete" className="p-3 text-slate-600 dark:text-slate-300 hover:bg-rose-600 hover:text-white transition-all">
+                    <Trash2 size={20} />
                   </button>
                 </div>
               </td>
@@ -130,7 +131,7 @@ const ResidentTable = ({ residents: initialResidents }) => {
           ))
         ) : (
           <tr>
-            <td colSpan={7} className="px-6 py-24 text-center text-xs font-black text-slate-300 dark:text-slate-600 uppercase tracking-[4px]">
+            <td colSpan={7} className="px-6 py-24 text-center text-lg font-black text-slate-400 dark:text-slate-600 uppercase tracking-widest">
               No records match your filter.
             </td>
           </tr>

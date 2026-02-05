@@ -10,32 +10,52 @@ const RecentRegistration = ({ registrations = [] }) => {
     <Table title="Recent Registration" headers={headers}>
       {registrations.length > 0 ? (
         registrations.map((person) => (
-          <tr key={person.id} className="hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors group">
-            <td className="px-6 py-4 whitespace-nowrap">
-              <div className="flex items-center gap-3">
-                {/* Dynamic Initials Avatar */}
-                <div className={`w-10 h-10 flex items-center justify-center rounded-full border border-gray-100 dark:border-slate-700 font-bold text-xs shadow-sm ${getAvatarColor(person.name)}`}>
+          <tr 
+            key={person.id} 
+            className="border-b last:border-none border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all group"
+          >
+            {/* Name Column: Larger Text & Avatar Style */}
+            <td className="px-6 py-5 whitespace-nowrap">
+              <div className="flex items-center gap-4">
+                <div className={`h-11 w-11 rounded-full border-2 border-white dark:border-slate-700 shadow-xl flex items-center justify-center font-bold text-sm ${getAvatarColor(person.name)}`}>
                   {getInitials(person.name)}
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-gray-900 dark:text-white">{person.name}</div>
-                  <div className="text-[11px] text-gray-500 dark:text-gray-400 font-medium">{person.role}</div>
+                  <p className="text-base font-bold text-slate-900 dark:text-white leading-tight">
+                    {person.name}
+                  </p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 font-semibold mt-0.5 uppercase tracking-tight">
+                    {(person.role || 'Resident')}
+                  </p>
                 </div>
               </div>
             </td>
-            {/* ... rest of the table row remains the same */}
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{person.age}</td>
-            <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400 max-w-[300px] truncate">{person.address}</td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 font-bold">
-              <span className="bg-gray-100 dark:bg-slate-800 px-2.5 py-1 rounded-md text-[10px]">Purok {person.purok}</span>
+
+            {/* Age & Address: Standardized to text-base (16px) */}
+            <td className="px-6 py-5 text-base text-slate-800 dark:text-slate-200 font-medium">
+              {person.age}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-tighter ${
+            
+            <td className="px-6 py-5 text-base text-slate-700 dark:text-slate-300 truncate max-w-[250px]">
+              {person.address}
+            </td>
+
+            {/* Purok: Bold focus */}
+            <td className="px-6 py-5 text-base font-bold text-slate-900 dark:text-white">
+              Purok {person.purok}
+            </td>
+
+            {/* Status Badge: Bigger font and icons (Matched with ResidentTable) */}
+            <td className="px-6 py-5">
+              <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-tight ${
                 person.status === 'Verified' 
-                  ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' 
-                  : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400'
+                  ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800' 
+                  : 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800'
               }`}>
-                {person.status === 'Verified' ? <CheckCircle size={14} /> : <Clock size={14} />}
+                {person.status === 'Verified' 
+                  ? <CheckCircle size={18} strokeWidth={2.5} /> 
+                  : <Clock size={18} strokeWidth={2.5} />
+                }
                 <span>{person.status}</span>
               </div>
             </td>
@@ -43,7 +63,9 @@ const RecentRegistration = ({ registrations = [] }) => {
         ))
       ) : (
         <tr>
-          <td colSpan={5} className="px-6 py-10 text-center text-gray-400 dark:text-gray-500 italic">No registrations found.</td>
+          <td colSpan={5} className="px-6 py-20 text-center text-lg font-black text-slate-400 dark:text-slate-600 uppercase tracking-widest">
+            No registrations found.
+          </td>
         </tr>
       )}
     </Table>

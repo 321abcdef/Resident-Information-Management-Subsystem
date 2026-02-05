@@ -22,10 +22,10 @@ const Dashboard = () => {
   }, []);
 
   if (loading) return (
-    <div className="p-8 text-emerald-600 dark:text-emerald-400 font-black uppercase text-xs tracking-widest animate-pulse">
-      Loading System Data...
-    </div>
-  );
+  <div className="p-10 text-emerald-600 dark:text-emerald-400 font-black uppercase text-xl tracking-tight animate-pulse text-center">
+    Loading System Data...
+  </div>
+);
 
   // Pagination Logic for Dashboard Table
   const totalPages = Math.ceil(data.registrations.length / itemsPerPage);
@@ -35,24 +35,26 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 transition-colors">
-      <h1 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+    <div className="space-y-8 animate-in fade-in duration-500 transition-colors">
+      {/* PAGE TITLE */}
+      <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-slate-100 uppercase tracking-tight">
         Dashboard Overview
       </h1>
       
+      {/* STATS */}
       <StatsOverview stats={data.stats} />
       
-      {/* Charts Section */}
+      {/* Charts Section (optional) */}
       {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <SectorDistribution />
         <PurokDistribution />
       </div> */}
 
-      {/* Recent Registrations Table Section */}
-      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 shadow-sm transition-colors">
+      {/* Recent Registrations Card */}
+      <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-800 transition-colors">
         <RecentRegistration registrations={currentRegs} />
         
-        {/* Sharp Pagination remains at the bottom of the card */}
+        {/* Pagination */}
         <Pagination 
           currentPage={currentPage}
           totalPages={totalPages}
