@@ -3,7 +3,7 @@ import { Clock, CheckCircle2, XCircle, ChevronLeft, Maximize2 } from 'lucide-rea
 import { verificationService, calculateAge } from '../services/verification';
 import VerificationStats from '../components/verification/verificationstats';
 import PendingVerificationTable from '../components/verification/VerificationTable';
-import VerificationFilters from '../components/verification/verificationfilters';
+import VerificationFilters from '../components/verification/VerificationFilters';
 
 const Verification = () => {
   const [submissions, setSubmissions] = useState([]);
