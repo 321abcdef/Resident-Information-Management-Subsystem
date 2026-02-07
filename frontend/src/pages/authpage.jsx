@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sun, Moon, Loader2, CheckCircle2, AlertCircle, ClipboardCheck } from "lucide-react";
-import LoginForm from "../components/auth/LogInForm";
-import SignupForm from "../components/auth/SignUpForm";
+import LoginForm from "../components/auth/Login";
+import SignupForm from "../components/auth/Signup";
 import bsbPic from "../assets/bsb.png";
 import logoPic from "../assets/logo.png";
 import { authService } from "../services/auth"; 
