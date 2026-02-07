@@ -12,15 +12,14 @@ const Table = ({ title, headers, children }) => {
       )}
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
-          {/* Ginawang solid Emerald para mas madaling ma-distinguish ang header */}
-          <thead className="bg-emerald-700 dark:bg-emerald-900 border-b-2 border-emerald-800 dark:border-slate-950">
+          {/* Header background now reaches the edges because parent is overflow-hidden */}
+          <thead className="bg-emerald-700 dark:bg-emerald-900">
             <tr>
               {headers.map((header, index) => (
                 <th 
                   key={index} 
-                  className="px-6 py-5 text-left text-sm font-black text-white uppercase tracking-wider first:border-l-0 last:border-r-0"
+                  className="px-6 py-5 text-left text-sm font-black text-white uppercase tracking-wider border-b-2 border-emerald-800 dark:border-slate-950"
                 >
-                  {/* text-sm (14px) na ang font size dito imbes na text-[10px] */}
                   {header}
                 </th>
               ))}

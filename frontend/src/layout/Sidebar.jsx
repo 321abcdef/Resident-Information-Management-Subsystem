@@ -1,16 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
-  LayoutDashboard, Users, BarChart3, CreditCard, 
+  LayoutDashboard, IdCard, Users, House, BarChart3,
   HelpCircle, Settings, LogOut, X 
 } from 'lucide-react';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const menuItems = [
     { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard', to: '/dashboard' },
+    { id: 'Verification', icon: IdCard, label: 'ID Verification', to: '/verification' },
     { id: 'Residents', icon: Users, label: 'Residents', to: '/residents' },
+    { id: 'Households', icon: House, label: 'Households', to: '/households' },
     { id: 'Analytics', icon: BarChart3, label: 'Analytics', to: '/analytics' },
-    { id: 'Verification', icon: CreditCard, label: 'ID Verification', to: '/verification' },
   ];
 
   const bottomItems = [
