@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '../common/table';
-import HouseholdRow from './householdrow';
+import HouseholdRow from './HouseholdRow';
 
 const HouseholdTable = ({ households, onView, onDelete }) => {
   const headers = ["Household ID", "Head of Family", "Address", "Purok", "Members", "Actions"];
