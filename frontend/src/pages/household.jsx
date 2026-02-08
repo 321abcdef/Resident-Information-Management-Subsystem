@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Printer } from 'lucide-react';
-import HouseholdFilters from '../components/household/HouseholdFilters';
-import HouseholdTable from '../components/household/HouseholdTable';
-import HouseholdModal from '../components/household/HouseholdModal';
+import HouseholdFilters from '../components/household/householdFilters';
+import HouseholdTable from '../components/household/householdTable';
+import HouseholdModal from '../components/household/householdModal';
 import Pagination from '../components/common/pagination';
 
 // Import hooks and services
