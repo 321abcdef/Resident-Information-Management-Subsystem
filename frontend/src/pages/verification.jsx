@@ -3,7 +3,7 @@ import {
   ChevronLeft, Maximize2, Clock, MapPin, 
   CheckCircle2, XCircle, History, Key 
 } from 'lucide-react';
-import { useVerification } from '../hooks/UseVerification';
+import { useVerification } from '../hooks/useVerification';
 import { calculateAge } from '../services/verification';
 import VerificationStats from '../components/verification/verificationstats';
 import PendingVerificationTable from '../components/verification/VerificationTable';
