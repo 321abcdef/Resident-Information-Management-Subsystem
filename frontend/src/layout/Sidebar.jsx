@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { 
-  LayoutDashboard, IdCard, Users, House, FileText, BarChart3,
+  LayoutDashboard, IdCard, Users, House, FileText, BarChart3, ScanQrCode,
   HelpCircle, Settings, LogOut, X 
 } from 'lucide-react';
 
@@ -17,6 +17,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { id: 'Households', icon: House, label: 'Households', to: '/households' },
     // { id: 'Certificates', icon: FileText, label: 'Certificates', to: '/certificates'},
     { id: 'Analytics', icon: BarChart3, label: 'Analytics', to: '/analytics' },
+    // { id: 'Scanner', icon: ScanQrCode, label: 'Scanner', to: '/scanner' },
   ];
 
   const bottomItems = [

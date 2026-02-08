@@ -3,7 +3,7 @@ import Table from '../common/table';
 import VerificationRow from './VerificationRow';
 
 const PendingVerificationTable = ({ data, onReview }) => {
-  const headers = ["Name", "Age", "Address", "Submitted", "Actions"];
+  const headers = ["Name", "Age", "Address", "Submitted", "Status", "Actions"];
 
   return (
     <Table headers={headers}>

@@ -24,7 +24,7 @@ export const useAuthLogic = (navigate, updateUser) => {
       if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
         calculatedAge--;
       }
-      const finalAge = calculatedAge < 0 ? "Invalid" : calculatedAge;
+      const finalAge = (isNaN(calculatedAge) || calculatedAge < 0) ? "" : calculatedAge;
       setFormData(prev => ({ ...prev, birthdate: value, age: finalAge }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -34,12 +34,15 @@ export const useAuthLogic = (navigate, updateUser) => {
   const handleTrackSearch = async (val) => {
     const input = val.toUpperCase();
     setTrackingNum(input);
-    if (input.length >= 4) {
+    
+    if (input.length >= 8) { // BSB-XXXX format
       try {
         const res = await authService.track(input);
-        setSearchResult(res || { status: "FOR VERIFICATION", message: "Check Brgy. Hall." });
+        if (res.success) {
+          setSearchResult(res.data); 
+        }
       } catch (err) {
-        setSearchResult({ status: "NOT_FOUND", message: "Not found." });
+        setSearchResult({ status: "NOT_FOUND", message: "Tracking number not found." });
       }
     } else {
       setSearchResult(null);
@@ -50,24 +53,31 @@ export const useAuthLogic = (navigate, updateUser) => {
     setLoading(true);
     try {
       if (isSignup) {
+        // REGISTER
         const res = await authService.register(formData);
         if (res.success) {
+        
           setAuthSuccess({
-            title: "Success!",
-            msg: "Profile submitted. Save your tracking number.",
-            code: res.trackingNumber
+            title: "Registration Submitted!",
+            msg: "Please download your slip and wait for verification.",
+            code: res.trackingNumber 
           });
         }
       } else {
-        const res = await authService.login({ username: formData.username, password: formData.password });
-        if (res.success) {
-          localStorage.setItem("token", res.token);
-          updateUser({ name: res.user?.name || "Staff", role: res.user?.role || "Staff" });
-          navigate("/dashboard");
-        }
+        // LOGIN BYPASS
+        console.log("Login Bypassed! Welcome to the Matrix.");
+        localStorage.setItem("token", "fake-dev-token-123");
+        
+        updateUser({ 
+          name: "Admin Developer", 
+          role: "Admin" 
+        });
+        
+        navigate("/dashboard");
       }
     } catch (error) {
-      alert("Error: " + (error.response?.data?.message || "Check your fields."));
+      console.error("Auth Error:", error);
+      alert("Something went wrong with registration.");
     } finally {
       setLoading(false);
     }

@@ -1,28 +1,32 @@
 import React from 'react';
 import Button from '../common/Button';
 
-const VerificationActions = ({ onApprove, onReject, onVisitBgy }) => {
+const VerificationActions = ({ onApprove, onReject, onVisitBgy, currentStatus }) => {
+  const status = currentStatus?.toLowerCase() || '';
+  const isDone = status === 'verified' || status === 'rejected';
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full md:w-[500px]"> 
       <Button 
-        label="Visit Bgy" 
+        label={status === 'for verification' ? "Needs Visit" : "Visit Bgy"} 
         variant="secondary" 
-        onClick={() => onVisitBgy('For Verification')}
-        className="h-full" 
+        onClick={onVisitBgy}
+        disabled={status === 'for verification' || isDone}
       />
       <Button 
-        label="Disapprove" 
+        label={status === 'rejected' ? "Rejected" : "Disapprove"} 
         variant="outline" 
         onClick={onReject} 
-        className="h-full border-red-500 text-red-500"
+        disabled={isDone}
       />
       <Button 
-        label="Approve" 
+        label={status === 'verified' ? "Verified" : "Approve"} 
         variant="primary" 
         onClick={onApprove} 
-        className="h-full bg-emerald-600"
+        disabled={isDone}
       />
     </div>
   );
 };
-export default VerificationActions;
+
+export default VerificationActions
