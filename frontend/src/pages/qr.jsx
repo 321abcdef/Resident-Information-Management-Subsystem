@@ -11,7 +11,7 @@ import {
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
-import { useVerification } from '../hooks/UseVerification'; 
+import { useVerification } from '../hooks/useVerification'; 
 
 const QRScanner = () => {
   const { submissions } = useVerification(); 
