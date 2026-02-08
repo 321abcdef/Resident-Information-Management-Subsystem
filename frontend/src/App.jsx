@@ -6,7 +6,7 @@ import { UserProvider } from "./context/UserContext";
 import DashboardLayout from "./layout/DashboardLayout";
 
 // Public Page
-import AuthPage from "./pages/authpage";
+import AuthPage from "./auth/AuthPage";
 
 // Dashboard Pages
 import Dashboard from "./pages/dashboard";
