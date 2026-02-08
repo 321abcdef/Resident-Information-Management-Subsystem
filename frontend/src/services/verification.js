@@ -1,40 +1,27 @@
-// src/services/verification.js
 import idFrontSample from '../assets/idfront.png';
 import idBackSample from '../assets/idback.png';
 
-// UTILITY: Function to compute age based on birthdate
 export const calculateAge = (birthdate) => {
   if (!birthdate) return 'N/A';
   const birthDateObj = new Date(birthdate);
   const today = new Date();
   let age = today.getFullYear() - birthDateObj.getFullYear();
   const monthDiff = today.getMonth() - birthDateObj.getMonth();
-  
   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
     age--;
   }
   return age;
 };
 
-const realisticNames = [
-  'Dexter Mark B. Binongcal', 'Juan Carlo Reyes', 'Maria Angelica Santos',
-  'Jose Miguel Cruz', 'Kristine Louise Navarro', 'Ryan Gabriel Flores',
-  'Angela Mae dela Cruz', 'Mark Anthony Garcia', 'Jennifer Louise Ramos',
-  'Christian Paul Villanueva', 'Patricia Ann Mendoza', 'Jerome Luis Aquino',
-  'Nicole Faith Morales', 'Alexander John Tan', 'Christine Joy Castillo',
-  'Michael Ray Soriano', 'Elaine Marie Lopez', 'Daniel Patrick Ramos',
-  'Jocelyn Grace Bautista', 'Kevin Mark de Guzman', 'Stephanie Ann Pineda',
-  'Brian Kenneth Velasco', 'Shiela Mae Cordero', 'Ramon Antonio Lim',
-  'Clarissa Joy Navarro', 'Francis Michael Aquino', 'Alyssa Marie Santos',
-  'Mark Joseph Villanueva', 'Catherine Joy Garcia', 'Luis Miguel Fernandez'
+let mockResidents = [
 ];
 
-// Randomized mock data to make age more realistic
-let mockResidents = realisticNames.map((name, i) => {
-  const yearsToSubtract = 18 + (i % 40); // Random age from 18 to 58
+const realisticNames = ['Dexter Mark B. Binongcal', 'Juan Carlo Reyes', 'Maria Angelica Santos', 'Jose Miguel Cruz', 'Kristine Louise Navarro', 'Ryan Gabriel Flores', 'Angela Mae dela Cruz', 'Mark Anthony Garcia', 'Jennifer Louise Ramos', 'Christian Paul Villanueva', 'Patricia Ann Mendoza', 'Jerome Luis Aquino', 'Nicole Faith Morales', 'Alexander John Tan', 'Christine Joy Castillo', 'Michael Ray Soriano', 'Elaine Marie Lopez', 'Daniel Patrick Ramos', 'Jocelyn Grace Bautista', 'Kevin Mark de Guzman', 'Stephanie Ann Pineda', 'Brian Kenneth Velasco', 'Shiela Mae Cordero', 'Ramon Antonio Lim', 'Clarissa Joy Navarro', 'Francis Michael Aquino', 'Alyssa Marie Santos', 'Mark Joseph Villanueva', 'Catherine Joy Garcia', 'Luis Miguel Fernandez'];
+
+mockResidents = realisticNames.map((name, i) => {
+  const yearsToSubtract = 18 + (i % 40);
   const bdate = new Date();
   bdate.setFullYear(bdate.getFullYear() - yearsToSubtract);
-  
   return {
     id: i + 1,
     name,
@@ -60,10 +47,10 @@ export const verificationService = {
     });
   },
 
-  updateStatus: async (id, status, reason = "") => {
+  updateStatus: async (id, status) => {
     return new Promise((resolve) => {
       mockResidents = mockResidents.map(r => 
-        r.id === id ? { ...r, status, rejectionReason: reason } : r
+        r.id === id ? { ...r, status: status } : r
       );
       setTimeout(() => resolve({ success: true }), 500);
     });

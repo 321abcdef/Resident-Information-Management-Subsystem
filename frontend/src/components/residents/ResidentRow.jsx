@@ -1,7 +1,6 @@
 import React from 'react';
-import { Pencil, Eye, Trash2, CheckCircle, Clock } from 'lucide-react';
+import { Pencil, Eye, Trash2 } from 'lucide-react';
 
-// Helpers inside the row file for easier management
 const getInitials = (name) => {
   if (!name) return "??";
   const parts = name.trim().split(' ');
@@ -54,19 +53,7 @@ const ResidentRow = ({ r, onView, onEdit, onDelete }) => {
           {r.sector}
         </span>
       </td>
-      <td className="px-6 py-5">
-        <div 
-          title={r.status === 'Verified' ? "Officially Verified Resident" : "Account Verification Pending"}
-          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-tight cursor-default ${
-            r.status === 'Verified' 
-              ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800' 
-              : 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800'
-          }`}
-        >
-          {r.status === 'Verified' ? <CheckCircle size={18} strokeWidth={2.5} /> : <Clock size={18} strokeWidth={2.5} />}
-          <span>{r.status}</span>
-        </div>
-      </td>
+      {/* Status column removed here */}
       <td className="px-6 py-5">
         <div className="flex items-center gap-0 border border-slate-300 dark:border-slate-600 w-fit bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-md">
           <button 

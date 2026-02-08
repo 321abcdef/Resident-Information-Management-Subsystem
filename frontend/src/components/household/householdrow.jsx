@@ -62,20 +62,6 @@ const HouseholdRow = ({ item, onView, onDelete }) => {
         {item.members}
       </td>
 
-      {/* 6. Status */}
-      <td className="px-6 py-5">
-        <div 
-          title={item.status === 'Verified' ? "This household is officially verified" : "Pending verification by Barangay"}
-          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-tight border cursor-help ${
-          item.status === 'Verified' 
-            ? 'bg-emerald-100 text-emerald-800 border-emerald-200' 
-            : 'bg-amber-100 text-amber-800 border-amber-200'
-        }`}>
-          {item.status === 'Verified' ? <CheckCircle size={18} strokeWidth={2.5} /> : <Clock size={18} strokeWidth={2.5} />}
-          <span>{item.status}</span>
-        </div>
-      </td>
-
       {/* 7. Actions */}
       <td className="px-6 py-5">
         <div className="flex items-center gap-0 border border-slate-300 dark:border-slate-600 w-fit bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-md">

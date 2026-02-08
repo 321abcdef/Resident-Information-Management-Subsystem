@@ -1,29 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Printer } from 'lucide-react';
-import HouseholdFilters from '../components/household/householdfilters';
-import HouseholdTable from '../components/household/householdtable';
-import HouseholdModal from '../components/household/householdmodal';
+import React, { useState } from 'react';
+import { Printer } from 'lucide-react';
+import HouseholdFilters from '../components/household/HouseholdFilters';
+import HouseholdTable from '../components/household/HouseholdTable';
+import HouseholdModal from '../components/household/HouseholdModal';
 import Pagination from '../components/common/pagination';
+
+// Import hooks and services
+import { useHouseholds } from '../hooks/useHousehold';
 import { householdService } from '../services/household';
 
 const Households = () => {
-  const [households, setHouseholds] = useState([]);
+  // custom hook 
+  const { households, setHouseholds, loading } = useHouseholds();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [purokFilter, setPurokFilter] = useState("All Puroks");
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedHousehold, setSelectedHousehold] = useState(null);
 
-  useEffect(() => {
-    householdService.getAll().then(data => {
-      setHouseholds(data || []);
-      setLoading(false);
-    });
-  }, []);
-
+  // 2. Logic for filtering
   const filtered = households.filter(h => {
     const matchesSearch = (h.head?.toLowerCase() || "").includes(searchTerm.toLowerCase()) || 
                           (h.id?.toString().toLowerCase() || "").includes(searchTerm.toLowerCase());
@@ -94,13 +92,11 @@ const Households = () => {
 
   return (
     <div className="space-y-6 pb-10">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">Household Registry</h1>
-        <div className="flex gap-2">
-          <button onClick={handlePrint} className="flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-all shadow-lg active:scale-95">
-            <Printer size={16} /> Print
-          </button>
-        </div>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-2">
+        <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">Household Registry</h1>
+        <button onClick={handlePrint} className="flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-all shadow-lg active:scale-95">
+          <Printer size={16} /> Print
+        </button>
       </div>
 
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden rounded-none">
@@ -108,6 +104,7 @@ const Households = () => {
           searchTerm={searchTerm} setSearchTerm={setSearchTerm}
           purokFilter={purokFilter} setPurokFilter={setPurokFilter}
         />
+        
         <div className="w-full">
           {loading ? (
             <div className="p-20 text-center font-bold text-emerald-600 text-sm tracking-[4px] animate-pulse uppercase">Syncing Registry...</div>
@@ -116,7 +113,7 @@ const Households = () => {
               households={currentItems} 
               onView={(item) => { setSelectedHousehold(item); setIsModalOpen(true); }}
               onDelete={async (id) => {
-                if (window.confirm("Are you sure?")) {
+                if (window.confirm("Are you sure? This will remove the household record.")) {
                   await householdService.delete(id);
                   setHouseholds(prev => prev.filter(h => h.id !== id));
                 }
@@ -124,12 +121,18 @@ const Households = () => {
             />
           )}
         </div>
+
         <Pagination 
           currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage}
           totalItems={filtered.length} itemsPerPage={itemsPerPage}
         />
       </div>
-      <HouseholdModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={selectedHousehold} />
+
+      <HouseholdModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        data={selectedHousehold} 
+      />
     </div>
   );
 };

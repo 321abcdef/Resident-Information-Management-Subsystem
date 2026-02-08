@@ -14,6 +14,7 @@ import Residents from "./pages/residents";
 import Analytics from "./pages/analytics";
 import Verification from "./pages/verification";
 import Households from "./pages/household";
+import Certificates from "./pages/certificates";
 import Support from "./pages/support";
 import Settings from "./pages/settings";
 import Logout from "./pages/logout";
@@ -35,6 +36,7 @@ function App() {
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/verification" element={<Verification />} />
               <Route path="/households" element={<Households />} />
+              <Route path="/certificates" element={<Certificates />} />
               <Route path="/support" element={<Support />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/logout" element={<Logout />} />

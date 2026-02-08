@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sun, Moon, Loader2, CheckCircle2, AlertCircle, ClipboardCheck } from "lucide-react";
+import { Sun, Moon, Loader2, ClipboardCheck } from "lucide-react";
 import LoginForm from "../components/auth/Login";
 import SignupForm from "../components/auth/Signup";
 import bsbPic from "../assets/bsb.png";
 import logoPic from "../assets/logo.png";
 import { authService } from "../services/auth"; 
+
+import { useUser } from "../context/UserContext"; 
 
 export default function AuthPage() {
   const [isSignup, setIsSignup] = useState(false);
@@ -14,7 +16,10 @@ export default function AuthPage() {
   const [searchResult, setSearchResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [authSuccess, setAuthSuccess] = useState(null); 
+  
   const navigate = useNavigate();
+  
+  const { updateUser } = useUser();
 
   const [formData, setFormData] = useState({
     firstName: "", middleName: "", lastName: "", birthdate: "", age: "",
@@ -66,8 +71,18 @@ export default function AuthPage() {
           username: formData.username,
           password: formData.password
         });
+
         if (res.success) {
+          // 1. Save token para for API Calls
           localStorage.setItem("token", res.token);
+          
+          // 2. Update the Context state (Name on the Dashboard)
+          updateUser({
+            name: res.user?.name || "Juan Dela Cruz", 
+            role: res.user?.role || "Barangay Staff"
+          });
+
+          // Move to Dashboard
           navigate("/dashboard");
         }
       }
@@ -82,7 +97,7 @@ export default function AuthPage() {
   return (
     <div className={`min-h-screen w-screen flex items-center justify-center relative overflow-x-hidden transition-colors duration-500 py-6 lg:py-0 ${isDarkMode ? 'bg-slate-950 text-white' : 'bg-gray-200 text-slate-900'}`}>
       
-      {/* FIXED BACKGROUND */}
+      {/* BACKGROUND */}
       <div className="fixed inset-0 z-0">
         <img src={bsbPic} alt="BG" className="w-full h-full object-cover opacity-50" />
         <div className={`absolute inset-0 ${isDarkMode ? 'bg-black/70' : 'bg-white/30'}`} />
@@ -93,12 +108,12 @@ export default function AuthPage() {
         {isDarkMode ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-green-800" />}
       </button>
 
-      {/* MAIN WRAPPER */}
+      {/* WRAPPER */}
       <div className={`relative z-20 w-full px-4 transition-all duration-500 ${isSignup ? 'max-w-6xl' : 'max-w-4xl'}`}>
         <div className={`w-full flex flex-col lg:flex-row rounded-[32px] shadow-2xl overflow-hidden border backdrop-blur-lg transition-all
           ${isDarkMode ? 'bg-slate-900/95 border-white/10' : 'bg-white/90 border-white/50'}`}>
           
-          {/* LEFT PANEL: BRANDING */}
+          {/* BRANDING PANEL */}
           <div className={`lg:w-1/3 p-8 flex flex-col items-center justify-center text-center border-b lg:border-b-0 lg:border-r 
             ${isDarkMode ? 'bg-black/20 border-white/5' : 'bg-white/40 border-black/5'}`}>
             
@@ -129,7 +144,7 @@ export default function AuthPage() {
             )}
           </div>
 
-          {/* RIGHT PANEL: FORMS */}
+          {/* FORM PANEL */}
           <div className="flex-1 flex flex-col min-h-0">
             <div className="p-8 lg:p-10 pb-4">
               <h3 className="text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-none">
@@ -146,7 +161,6 @@ export default function AuthPage() {
               )}
             </div>
 
-            {/* FORM AREA - Readable and Spaced */}
             <div className="px-8 lg:px-10 pb-8 lg:max-h-[55vh] lg:overflow-y-auto custom-scrollbar">
               <div className="pt-2">
                 <form id="auth-form" onSubmit={handleSubmit}>
@@ -184,7 +198,6 @@ export default function AuthPage() {
         </div>
       </div>
 
-      {/* READABLE INPUT STYLES */}
       <style dangerouslySetInnerHTML={{ __html: `
         .full-input { 
           width: 100%; padding: 1.2rem 1.5rem; border: 2.5px solid ${isDarkMode ? '#334155' : '#e2e8f0'}; 

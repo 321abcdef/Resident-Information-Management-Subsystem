@@ -8,7 +8,8 @@ const ResidentTable = ({ residents, onUpdate }) => {
   const [selectedResident, setSelectedResident] = useState(null);
   const [modalMode, setModalMode] = useState('view');
 
-  const headers = ["Name", "Age", "Address", "Purok", "Sector", "Status", "Actions"];
+  // "Status" header removed
+  const headers = ["Name", "Age", "Address", "Purok", "Sector", "Actions"];
 
   const handleView = (resident) => {
     setSelectedResident(resident);
@@ -24,7 +25,6 @@ const ResidentTable = ({ residents, onUpdate }) => {
 
   const handleDelete = (id, name) => {
     if (window.confirm(`Are you sure you want to delete ${name}?`)) {
-      // This is where you will call your delete API in the future
       console.log("Deleting:", id);
     }
   };
@@ -44,21 +44,21 @@ const ResidentTable = ({ residents, onUpdate }) => {
           ))
         ) : (
           <tr>
-            <td colSpan={7} className="px-6 py-24 text-center text-lg font-black text-slate-400 uppercase tracking-widest">
+            {/* colSpan updated to 6 */}
+            <td colSpan={6} className="px-6 py-24 text-center text-lg font-black text-slate-400 uppercase tracking-widest">
               No records found.
             </td>
           </tr>
         )}
       </Table>
 
-      {/* We placed the Modal here so that Table features are self-contained */}
       <ResidentDetailsModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         resident={selectedResident}
         mode={modalMode}
         onSave={(data) => {
-          onUpdate(data); // Pass the new data back to the Page
+          onUpdate(data);
           setIsModalOpen(false);
         }}
       />

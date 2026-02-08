@@ -1,36 +1,71 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { Clock, MapPin, CheckCircle2, XCircle } from 'lucide-react';
+import StatCard from '../common/statcard';
 
-/**
- * VerificationStats Component
- * Displays summary cards for different verification statuses
- */
-export default function VerificationStats({ stats }) {
+const VerificationStats = ({ submissions = [] }) => {
+  const stats = useMemo(() => {
+    const counts = {
+      pending: 0,
+      forVerification: 0,
+      verified: 0,
+      rejected: 0
+    };
+
+    submissions.forEach(s => {
+      if (s.status === 'Pending') counts.pending++;
+      else if (s.status === 'For Verification') counts.forVerification++;
+      else if (s.status === 'Verified') counts.verified++;
+      else if (s.status === 'Rejected') counts.rejected++;
+    });
+
+    return counts;
+  }, [submissions]);
+
+  const statsConfig = [
+    {
+      title: 'Pending',
+      value: stats.pending,
+      subtitle: 'Awaiting Review',
+      icon: Clock,
+      color: 'amber' 
+    },
+    {
+      title: 'For Verification',
+      value: stats.forVerification,
+      subtitle: 'On-site Check',
+      icon: MapPin,
+      color: 'blue'
+    },
+    {
+      title: 'Verified',
+      value: stats.verified,
+      subtitle: 'Approved Records',
+      icon: CheckCircle2,
+      color: 'emerald'
+    },
+    {
+      title: 'Rejected',
+      value: stats.rejected,
+      subtitle: 'Denied Submissions',
+      icon: XCircle,
+      color: 'red'
+    }
+  ];
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-      {stats.map((stat, i) => (
-        <div 
-          key={i} 
-          className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex justify-between group hover:border-emerald-500 dark:hover:border-emerald-500 transition-all duration-300"
-        >
-          {/* Label and Count section */}
-          <div>
-            <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">
-              {stat.label}
-            </p>
-            <h2 className="text-4xl font-black text-slate-800 dark:text-white mb-2 tracking-tighter">
-              {stat.count}
-            </h2>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold italic">
-              {stat.subtext}
-            </p>
-          </div>
-
-          {/* Icon section - Removed the nested indicator circles */}
-          <div className="flex flex-col items-center justify-center">
-            <stat.Icon className={`w-8 h-8 ${stat.color} transition-transform group-hover:scale-110 duration-300`} />
-          </div>
-        </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      {statsConfig.map((stat, index) => (
+        <StatCard
+          key={index}
+          title={stat.title}
+          value={stat.value}
+          subtitle={stat.subtitle}
+          icon={stat.icon}
+          color={stat.color}
+        />
       ))}
     </div>
   );
-}
+};
+
+export default VerificationStats;

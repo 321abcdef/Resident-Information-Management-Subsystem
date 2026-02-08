@@ -1,16 +1,21 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 import { 
-  LayoutDashboard, IdCard, Users, House, BarChart3,
+  LayoutDashboard, IdCard, Users, House, FileText, BarChart3,
   HelpCircle, Settings, LogOut, X 
 } from 'lucide-react';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const navigate = useNavigate();
+  const { logout } = useUser();
+
   const menuItems = [
     { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard', to: '/dashboard' },
     { id: 'Verification', icon: IdCard, label: 'ID Verification', to: '/verification' },
     { id: 'Residents', icon: Users, label: 'Residents', to: '/residents' },
     { id: 'Households', icon: House, label: 'Households', to: '/households' },
+    // { id: 'Certificates', icon: FileText, label: 'Certificates', to: '/certificates'},
     { id: 'Analytics', icon: BarChart3, label: 'Analytics', to: '/analytics' },
   ];
 
@@ -18,6 +23,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { id: 'Support', icon: HelpCircle, label: 'Help/Support', to: '/support' },
     { id: 'Settings', icon: Settings, label: 'Settings', to: '/settings' },
   ];
+
+  const handleLogout = () => {
+    if (window.confirm("Are you sure you want to logout?")) {
+      navigate('/logout');
+    }
+  };
 
   const linkClass = ({ isActive }) => `
     flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group
@@ -37,7 +48,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-600/20">
             <span className="font-black text-xl">SB</span>
           </div>
-          <div className="leading-none">
+          <div className="leading-none text-left">
             <p className="text-sm font-black text-slate-900 dark:text-white tracking-tighter">BARANGAY SAN BARTOLOME</p>
             {/* <p className="text-[10px] font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-widest">Barangay System</p> */}
           </div>
@@ -48,29 +59,28 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar">
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar text-left">
         <p className="text-[10px] font-black text-slate-400 dark:text-slate-600 px-4 mb-4 uppercase tracking-[3px]">Menu</p>
         {menuItems.map(item => (
-  <NavLink
-    key={item.id}
-    to={item.to}
-    onClick={() => window.innerWidth < 1024 && toggleSidebar()}
-    className={linkClass}
-  >
-    {({ isActive }) => (
-      <>
-        <item.icon
-          size={20}
-          strokeWidth={isActive ? 2.5 : 2}
-        />
-        <span className="text-sm font-bold tracking-tight">
-          {item.label}
-        </span>
-      </>
-    )}
-  </NavLink>
-))}
-
+          <NavLink
+            key={item.id}
+            to={item.to}
+            onClick={() => window.innerWidth < 1024 && toggleSidebar()}
+            className={linkClass}
+          >
+            {({ isActive }) => (
+              <>
+                <item.icon
+                  size={20}
+                  strokeWidth={isActive ? 2.5 : 2}
+                />
+                <span className="text-sm font-bold tracking-tight">
+                  {item.label}
+                </span>
+              </>
+            )}
+          </NavLink>
+        ))}
       </nav>
 
       {/* Footer Nav */}
@@ -83,7 +93,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         ))}
         
         <button 
-          onClick={() => confirm("Are you sure you want to logout?")} 
+          onClick={handleLogout} 
           className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all duration-200 mt-2 group"
         >
           <LogOut size={20} className="group-hover:translate-x-1 transition-transform" />
