@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import AnalyticsCard from "../components/common/analyticscard";
 import { MapPin, Lightbulb, ChevronRight, X } from "lucide-react";
 import { getAnalyticsData } from "../services/analytics";
+import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function Analytics() {
   const [data, setData] = useState(null);
@@ -106,9 +107,69 @@ export default function Analytics() {
           </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Registered Voters Card */}
+        <AnalyticsCard title="Registered Voters">
+          <div className="space-y-4">
+            <ResponsiveContainer width="100%" height={180}>
+              <PieChart>
+                <Pie
+                  data={data.registeredVoters}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, value }) => `${name}: ${value}`}
+                  outerRadius={70}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {data.registeredVoters.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => `${value} voters`} />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="px-4 py-3 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-200 dark:border-slate-700">
+              <p className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 tracking-tighter">Total Voters</p>
+              <p className="text-2xl font-black text-slate-900 dark:text-white">{data.registeredVoters.reduce((sum, item) => sum + item.value, 0)}</p>
+            </div>
+          </div>
+        </AnalyticsCard>
+
+        {/* Male/Female Distribution Card */}
+        <AnalyticsCard title="Gender Distribution">
+          <div className="space-y-4">
+            <ResponsiveContainer width="100%" height={180}>
+              <PieChart>
+                <Pie
+                  data={data.genderDistribution}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, value }) => `${name}: ${value}`}
+                  outerRadius={70}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {data.genderDistribution.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => `${value} residents`} />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="px-4 py-3 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-200 dark:border-slate-700">
+              <p className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 tracking-tighter">Total Population</p>
+              <p className="text-2xl font-black text-slate-900 dark:text-white">{data.genderDistribution.reduce((sum, item) => sum + item.value, 0)}</p>
+            </div>
+          </div>
+        </AnalyticsCard>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recommendation Card */}
-        <div className="lg:col-span-3 bg-slate-900 border border-slate-800 text-white p-8 rounded-2xl flex flex-col justify-between shadow-xl">
+        <div className="bg-slate-900 border border-slate-800 text-white p-8 rounded-2xl flex flex-col justify-between shadow-xl">
           <div>
             <div className="flex items-center gap-2 text-orange-400 mb-6 bg-orange-400/10 w-fit px-3 py-1 rounded-full">
               <Lightbulb size={16} />
@@ -119,7 +180,7 @@ export default function Analytics() {
             </h2>
           </div>
           <div className="mt-8 flex justify-end">
-             <button 
+             <button
                 onClick={() => setSelectedPurok(recommendation)}
                 className="p-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl transition-all shadow-lg active:scale-95"
              >
@@ -128,24 +189,8 @@ export default function Analytics() {
           </div>
         </div>
 
-        {/* Employment Status Card */}
-        <div className="lg:col-span-2">
-          <AnalyticsCard title="Employment Status">
-            <div className="space-y-5 pt-2">
-              {data.employment.map((item, i) => (
-                <div key={i}>
-                  <div className="flex justify-between text-[10px] font-black uppercase mb-1.5">
-                    <span className="text-slate-400">{item.label}</span>
-                    <span className="text-slate-900 dark:text-white">{item.count}</span>
-                  </div>
-                  <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-emerald-500" style={{ width: `${(item.count / 600) * 100}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </AnalyticsCard>
-        </div>
+        {/* Empty space for balanced layout */}
+        <div></div>
       </div>
 
       {/* Modal */}
