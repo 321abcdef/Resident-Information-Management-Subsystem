@@ -1,3 +1,10 @@
 // src/config/api.js
-export const API_BASE_URL = 'http://localhost:8000/api';
-export const STORAGE_URL = 'http://localhost:8000/storage';
+
+// ✅ CRITICAL: Change this to your actual Laravel server URL
+export const API_BASE_URL = 'http://127.0.0.1:8000/api';
+
+// For storage (public files like ID images)
+export const STORAGE_URL = 'http://127.0.0.1:8000/storage';
+
+// Alternative if using different port:
+// export const API_BASE_URL = 'http://127.0.0.1:8000/api';
