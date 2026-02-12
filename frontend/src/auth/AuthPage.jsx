@@ -167,15 +167,18 @@ export default function AuthPage() {
                       <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">
                         Status
                       </p>
-                      <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase border 
-                        ${searchResult.status === 'Verified' 
-                          ? 'bg-emerald-100 text-emerald-600 border-emerald-200' 
-                          : searchResult.status === 'NOT_FOUND'
-                          ? 'bg-red-100 text-red-600 border-red-200'
-                          : 'bg-orange-100 text-orange-600 border-orange-200'
-                        }`}>
-                        {searchResult.status}
-                      </span>
+                     <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase border 
+  ${searchResult.status === 'Verified' 
+    ? 'bg-emerald-100 text-emerald-600 border-emerald-200' 
+    : searchResult.status === 'Rejected'
+    ? 'bg-red-100 text-red-600 border-red-200'
+    : searchResult.status === 'For Verification'
+    ? 'bg-blue-100 text-blue-600 border-blue-200'
+    : 'bg-orange-100 text-orange-600 border-orange-200' // Default for Pending
+  }`}>
+  {searchResult.status}
+</span>
+
                     </div>
                     
                     <p className="text-sm font-black text-slate-800 dark:text-white leading-tight mb-1">

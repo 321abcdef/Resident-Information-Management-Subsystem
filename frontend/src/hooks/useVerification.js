@@ -3,7 +3,7 @@ import { verificationService } from '../services/verification';
 
 export const useVerification = () => {
   const [submissions, setSubmissions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading]         = useState(true);
 
   const loadData = async () => {
     try {
@@ -17,10 +17,14 @@ export const useVerification = () => {
     }
   };
 
-  const updateStatus = async (id, status, extraData = {}) => {
-    const res = await verificationService.updateStatus(id, status, extraData);
+  /**
+   * Update resident status.
+   * Returns the full server response (including accountDetails for Verified).
+   */
+  const updateStatus = async (id, status) => {
+    const res = await verificationService.updateStatus(id, status);
     if (res.success) {
-      await loadData(); // Auto-refresh list
+      await loadData(); // Refresh list after any status change
     }
     return res;
   };

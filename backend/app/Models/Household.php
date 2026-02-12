@@ -26,7 +26,6 @@ class Household extends Model
 
     /**
      * Household belongs to a Purok
-     * Ito ang "tulay" para gumana ang household.purok
      */
     public function purok() 
     {
@@ -42,7 +41,6 @@ class Household extends Model
     }
 
     /**
-     * Isang household, maraming residents
      */
     public function residents()
     {
@@ -50,7 +48,6 @@ class Household extends Model
     }
 
     /**
-     * Ang Head of Family ay isang Resident din
      */
     public function headResident()
     {
