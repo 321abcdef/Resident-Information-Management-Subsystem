@@ -1,29 +1,44 @@
-// Data Transformer for clean UI
+import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
+
 const transformResident = (r) => ({
   ...r,
-  sector: r.age >= 60 ? "Senior" : r.age < 18 ? "Minor" : (r.is_pwd ? "PWD" : "Adult"),
+  name: r.name || `${r.first_name || ''} ${r.last_name || ''}`.trim(),
+  address: r.address || r.street,
+  // Use the sector exactly as stored - never recalculate it
+  sector: r.sector || 'General Population',
 });
 
 export const residentService = {
   getResidents: async () => {
-    // API Simulation
-    const data = [
-      { id: 1, name: 'Juan Dela Cruz', role: 'Head of Household', age: 65, address: 'Blk 12 Lot 4, San Bartolome', purok: 1, status: 'Verified' },
-      { id: 2, name: 'Maria Elena Santos', role: 'Member of Household', age: 12, address: '152-B Katipunan St.', purok: 4, status: 'Verified' },
-      { id: 5, name: 'Carlos Garcia', role: 'Head of Household', age: 41, address: 'Blk 8, Sampaguita St.', purok: 2, is_pwd: true, status: 'Verified' },
-    ];
-    return data.map(transformResident);
+    try {
+      // Fetch only verified residents from backend API
+      const response = await axios.get(`${API_BASE_URL}/residents?status=Verified`);
+      const backendResidents = (response.data || []).map(transformResident);
+      return backendResidents;
+    } catch (error) {
+      console.error("Fetch residents error:", error);
+      return [];
+    }
   },
 
   updateResident: async (id, updatedData) => {
-    console.log("Backend Sync:", id, updatedData);
-    // return await axios.put(`/api/residents/${id}`, updatedData);
-    return { success: true, data: updatedData };
+    try {
+      const response = await axios.put(`${API_BASE_URL}/residents/${id}`, updatedData);
+      return response.data;
+    } catch (error) {
+      console.error("Update resident error:", error);
+      return { success: false };
+    }
   },
 
   deleteResident: async (id) => {
-    console.log("Deleting ID:", id);
-    // return await axios.delete(`/api/residents/${id}`);
-    return { success: true };
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/residents/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Delete resident error:", error);
+      return { success: false };
+    }
   }
 };

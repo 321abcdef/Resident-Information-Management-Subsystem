@@ -17,9 +17,9 @@ const VerificationRow = ({ res, onReview }) => {
           <span className="text-base font-bold">
             {calculateAge(res.details?.birthdate)} yrs old
           </span>
-          <span className="text-[10px] text-slate-400 font-medium uppercase tracking-tighter">
+          {/* <span className="text-[10px] text-slate-400 font-medium uppercase tracking-tighter">
             {res.details?.birthdate}
-          </span>
+          </span> */}
         </div>
       </td>
 

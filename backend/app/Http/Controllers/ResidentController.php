@@ -9,10 +9,17 @@ use Illuminate\Support\Facades\Storage;
 
 class ResidentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-    
-        $residents = Resident::orderBy('created_at', 'desc')->get();
+        // If status filter provided, use it (for resident dashboard to get only verified)
+        if ($request->has('status')) {
+            $residents = Resident::where('status', $request->status)
+                                 ->orderBy('created_at', 'desc')
+                                 ->get();
+        } else {
+            // Return all residents (for verification dashboard)
+            $residents = Resident::orderBy('created_at', 'desc')->get();
+        }
         return response()->json($residents);
     }
 
@@ -42,6 +49,7 @@ class ResidentController extends Controller
         $resident->birthdate = $request->birthdate;
         $resident->age = $request->age;
         $resident->gender = $request->gender;
+        $resident->sector = $request->sector;
         $resident->house_number = $request->houseNumber;
         $resident->purok = $request->purok;
         $resident->street = $request->street;
@@ -64,6 +72,21 @@ class ResidentController extends Controller
     {
         $resident = Resident::findOrFail($id);
         $resident->status = $request->status;
+        
+        // Save any additional fields from extraData (barangay_id, temp_password, verified_at, sector)
+        if ($request->has('barangay_id')) {
+            $resident->barangay_id = $request->barangay_id;
+        }
+        if ($request->has('temp_password')) {
+            $resident->temp_password = $request->temp_password;
+        }
+        if ($request->has('verified_at')) {
+            $resident->verified_at = $request->verified_at;
+        }
+        if ($request->has('sector')) {
+            $resident->sector = $request->sector;
+        }
+        
         $resident->save();
 
         return response()->json(['success' => true]);

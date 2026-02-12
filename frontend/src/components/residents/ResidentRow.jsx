@@ -44,9 +44,11 @@ const ResidentRow = ({ r, onView, onEdit, onDelete }) => {
         <span 
           title={`Sector Category: ${r.sector}`}
           className={`px-3 py-1.5 text-xs font-black uppercase tracking-wide rounded-md border-2 cursor-default ${
-            r.sector === 'Senior' ? 'bg-blue-100 text-blue-800 border-blue-200' :
+            r.sector === 'Senior Citizen' ? 'bg-blue-100 text-blue-800 border-blue-200' :
             r.sector === 'PWD' ? 'bg-purple-100 text-purple-800 border-purple-200' :
-            r.sector === 'Minor' ? 'bg-rose-100 text-rose-800 border-rose-200' :
+            r.sector === 'Student' ? 'bg-rose-100 text-rose-800 border-rose-200' :
+            r.sector === 'Solo Parent' ? 'bg-amber-100 text-amber-800 border-amber-200' :
+            r.sector === 'General Population' ? 'bg-slate-100 text-slate-700 border-slate-200' :
             'bg-slate-100 text-slate-700 border-slate-200'
           }`}
         >

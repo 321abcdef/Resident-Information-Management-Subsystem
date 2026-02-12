@@ -18,9 +18,17 @@ export const useVerification = () => {
   };
 
   const updateStatus = async (id, status, extraData = {}) => {
+    // If approving, include the sector from the submission so it's saved to backend
+    if (status === 'Verified') {
+      const submission = submissions.find(s => s.id === id);
+      if (submission?.details?.sector) {
+        extraData.sector = submission.details.sector;
+      }
+    }
+    
     const res = await verificationService.updateStatus(id, status, extraData);
     if (res.success) {
-      await loadData(); // Auto-refresh list
+      await loadData(); // Auto-refresh verification list
     }
     return res;
   };

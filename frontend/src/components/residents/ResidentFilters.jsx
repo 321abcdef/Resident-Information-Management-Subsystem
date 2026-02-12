@@ -2,7 +2,7 @@ import React from 'react';
 import { Search } from 'lucide-react';
 
 const ResidentFilters = ({ searchTerm, setSearchTerm, categoryFilter, setCategoryFilter }) => {
-  const categories = ['All', 'Senior', 'Adult', 'PWD', 'Minor'];
+  const categories = ['All', 'General Population', 'Senior Citizen', 'PWD', 'Solo Parent', 'Student'];
 
   return (
     <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-slate-50/50 dark:bg-slate-900/50">

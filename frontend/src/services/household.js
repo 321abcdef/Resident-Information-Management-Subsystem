@@ -12,10 +12,10 @@ export const householdService = {
           members: 4,
           status: "Verified",
           memberList: [
-            { name: "Juan Dela Cruz", relation: "Head", sector: "Adult", age: 45 },
-            { name: "Maria Dela Cruz", relation: "Spouse", sector: "Adult", age: 42 },
-            { name: "Pedro Dela Cruz", relation: "Son", sector: "Minor", age: 15 },
-            { name: "Santy Dela Cruz", relation: "Father", sector: "Senior", age: 70 },
+            { name: "Juan Dela Cruz", relation: "Head", sector: "General Population", age: 45 },
+            { name: "Maria Dela Cruz", relation: "Spouse", sector: "General Population", age: 42 },
+            { name: "Pedro Dela Cruz", relation: "Son", sector: "Student", age: 15 },
+            { name: "Santy Dela Cruz", relation: "Father", sector: "Senior Citizen", age: 70 },
           ]
         },
         {
@@ -26,9 +26,9 @@ export const householdService = {
           members: 3,
           status: "Verified",
           memberList: [
-            { name: "Elena Ramos", relation: "Head", sector: "Senior", age: 68 },
-            { name: "Roberto Ramos", relation: "Son", sector: "Adult", age: 35 },
-            { name: "Angel Ramos", relation: "Granddaughter", sector: "Infant", age: 2 },
+            { name: "Elena Ramos", relation: "Head", sector: "Senior Citizen", age: 68 },
+            { name: "Roberto Ramos", relation: "Son", sector: "General Population", age: 35 },
+            { name: "Angel Ramos", relation: "Granddaughter", sector: "General Population", age: 2 },
           ]
         }
       ];

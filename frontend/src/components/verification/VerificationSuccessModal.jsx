@@ -90,7 +90,7 @@ SYSTEM: BSB-2026
                 <div className="w-full md:w-3/5 space-y-3">
                     <CredentialBox label="FULL LEGAL NAME" value={data.name} icon={User} />
                     <CredentialBox label="UNIQUE BARANGAY ID" value={data.id} icon={IdCard} highlight />
-                    <CredentialBox label="LOGIN USERNAME" value={data.user} icon={Smartphone} />
+                    <CredentialBox label="CONTACT NUMBER" value={data.user} icon={Smartphone} />
                     <CredentialBox label="TEMPORARY PASSWORD" value={data.pass} icon={Key} isSecret />
 
                     <div className="mt-6 space-y-2">

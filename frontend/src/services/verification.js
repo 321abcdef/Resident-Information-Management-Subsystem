@@ -29,6 +29,7 @@ export const verificationService = {
                     sex: res.gender,
                     purok: res.purok,
                     address: res.street,
+                    sector: res.sector,
                     idFront: `${STORAGE_URL}/${res.id_front_path}`,
                     idBack: `${STORAGE_URL}/${res.id_back_path}`,
                     contact: res.contact
