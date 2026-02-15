@@ -6,7 +6,7 @@ import PendingVerificationTable from '../components/verification/VerificationTab
 import VerificationFilters from '../components/verification/VerificationFilters';
 import VerificationSuccessModal from '../components/verification/VerificationSuccessModal';
 import DetailView from '../components/verification/VerificationDetailView';
-import Pagination from '../components/common/Pagination'; 
+import Pagination from '@/components/common/pagination';
 
 const Verification = () => {
   const { submissions, loading, updateStatus } = useVerification();
