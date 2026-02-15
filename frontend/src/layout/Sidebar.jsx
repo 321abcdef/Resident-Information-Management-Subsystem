@@ -50,7 +50,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <span className="font-black text-xl">SB</span>
           </div>
           <div className="leading-none text-left">
-            <p className="text-sm font-black text-slate-900 dark:text-white tracking-tighter">BARANGAY SAN BARTOLOME</p>
+            <p className="text-sm font-black text-slate-900 dark:text-white tracking-tighter">BARANGAY GULOD</p>
             {/* <p className="text-[10px] font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-widest">Barangay System</p> */}
           </div>
         </div>

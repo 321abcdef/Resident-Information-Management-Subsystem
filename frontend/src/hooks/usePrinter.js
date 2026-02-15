@@ -174,7 +174,7 @@ export const usePrinter = () => {
               <div class="header">
                 <h2>Republic of the Philippines</h2>
                 <h2>Province of Example</h2>
-                <h1>Barangay San Bartolome</h1>
+                <h1>Barangay Gulod</h1>
                 <p>Office of the Barangay Captain</p>
               </div>
 
@@ -185,7 +185,7 @@ export const usePrinter = () => {
                 
                 <div class="body-text">
                   This is to certify that <b>${resident.name.toUpperCase()}</b>, of legal age, 
-                  is a bonafide resident of <b>Purok ${resident.purok}, Barangay San Bartolome</b>.
+                  is a bonafide resident of <b>Purok ${resident.purok}, Barangay Gulod</b>.
                 </div>
 
                 <div class="body-text">
@@ -201,7 +201,7 @@ export const usePrinter = () => {
 
                 <div class="body-text">
                   Issued this <b>${dateToday}</b> at the Office of the Barangay Captain, 
-                  Barangay San Bartolome.
+                  Barangay Gulod.
                 </div>
               </div>
 

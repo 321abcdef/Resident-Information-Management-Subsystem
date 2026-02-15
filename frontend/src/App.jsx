@@ -5,8 +5,9 @@ import { UserProvider } from "./context/UserContext";
 // Layout
 import DashboardLayout from "./layout/DashboardLayout";
 
-// Public Page
-import AuthPage from "./auth/AuthPage";
+// Public Pages
+import HomePage from "./homepage/HomePage";
+import PublicVerify from "./pages/publicverify"; 
 
 // Dashboard Pages
 import Dashboard from "./pages/dashboard";
@@ -26,16 +27,18 @@ function App() {
       <UserProvider>
         <Router>
           <Routes>
+            {/* PUBLIC ROUTES */}
+            <Route path="/" element={<HomePage />} />
+            
+            {/*QR Scanner link*/}
+            <Route path="/verify/:id" element={<PublicVerify />} />
 
-            {/* PUBLIC ROUTE */}
-            <Route path="/" element={<AuthPage />} />
-
-            {/* PRIVATE ROUTES */}
+            {/* PRIVATE ROUTES (Sidebar/DashboardLayout) */}
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/residents" element={<Residents />} />
               <Route path="/analytics" element={<Analytics />} />
-               <Route path="/scanner" element={<Scanner />} />
+              <Route path="/scanner" element={<Scanner />} />
               <Route path="/verification" element={<Verification />} />
               <Route path="/households" element={<Households />} />
               <Route path="/certificates" element={<Certificates />} />
@@ -46,7 +49,6 @@ function App() {
 
             {/* FALLBACK */}
             <Route path="*" element={<Navigate to="/" replace />} />
-
           </Routes>
         </Router>
       </UserProvider>

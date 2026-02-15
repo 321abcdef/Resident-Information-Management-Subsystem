@@ -6,14 +6,18 @@ import ModalWrapper from '../common/ModalWrapper';
 const VerificationSuccessModal = ({ isOpen, onClose, data }) => {
     if (!data) return null;
 
-    // READABLE FORMAT for Scanners
-    const qrValue = `
-OFFICIAL BRGY ID: ${data.id}
-NAME: ${data.name}
-USER: ${data.user}
-VERIFIED: ${new Date().toLocaleDateString()}
-SYSTEM: BSB-2026
-    `.trim();
+const myIP = "192.168.8.159";
+const port = "5173"; 
+const qrUrl = `http://${myIP}:${port}/verify/${data.id}`;
+
+
+// const currentHost = window.location.hostname; 
+// const currentPort = window.location.port || "5173";
+
+// const qrUrl = `http://${currentHost}:${currentPort}/verify/${data.id}`;
+
+    // const currentHost = window.location.host; 
+    // const qrUrl = `${window.location.origin}/verify/${data.id}`;
 
     const downloadQR = () => {
         const svg = document.getElementById("resident-qr");
@@ -22,7 +26,6 @@ SYSTEM: BSB-2026
         const ctx = canvas.getContext("2d");
         const img = new Image();
         img.onload = () => {
-            // High resolution 1000x1000px
             canvas.width = 1000;
             canvas.height = 1000;
             ctx.fillStyle = "white";
@@ -41,7 +44,6 @@ SYSTEM: BSB-2026
         img.src = "data:image/svg+xml;base64," + btoa(svgData);
     };
 
-   
     const handleClose = () => {
         if (window.confirm("Have you saved the credentials? This temporary password will be hidden once you close this window.")) {
             onClose();
@@ -68,9 +70,9 @@ SYSTEM: BSB-2026
                     <div className="bg-white p-4 rounded-3xl shadow-2xl mb-4 border border-slate-100">
                         <QRCodeSVG 
                             id="resident-qr"
-                            value={qrValue} 
+                            value={qrUrl}
                             size={200} 
-                            level="M" 
+                            level="H" 
                             includeMargin={true}
                         />
                     </div>
@@ -82,7 +84,7 @@ SYSTEM: BSB-2026
                     </button>
                     <div className="text-center">
                         <p className="text-[11px] font-black text-emerald-600 uppercase tracking-widest">Official Resident ID</p>
-                        <p className="text-[9px] text-slate-400 font-mono mt-1 font-bold">{data.id}</p>
+                        <p className="text-[9px] text-slate-400 font-mono mt-1 font-bold">SCAN TO VERIFY IDENTITY</p>
                     </div>
                 </div>
 
