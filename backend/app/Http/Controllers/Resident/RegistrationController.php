@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Resident;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Services\ResidentService;
-use App\Models\Resident;
 use App\Models\Household;
+use App\Models\Resident;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class RegistrationController extends Controller
 {
@@ -17,67 +19,112 @@ class RegistrationController extends Controller
         $this->service = $service;
     }
 
-   public function register(RegisterRequest $request) {
-    try {
+    public function register(Request $request) {
+        try {
+            // 1. DYNAMIC VALIDATION RULES
+            $formRequest = new RegisterRequest();
+            $rules = $formRequest->rules();
 
-        if ($request->householdPosition === 'Head of Family') {
-            
-            $alreadyExists = Household::where('house_number', $request->houseNumber)
-                ->where('purok_id', $request->purok)
-                ->where('street_id', $request->street)
-                ->whereNotNull('head_resident_id')
-                ->exists();
+         
+            $rules['sector'] = 'nullable'; 
+            $rules['nationality'] = 'required';
+            $rules['idFront'] = 'required|file|mimes:jpeg,png,jpg,webp|max:10240';
+            $rules['idBack'] = 'required|file|mimes:jpeg,png,jpg,webp|max:10240';
 
-            if ($alreadyExists) {
-          
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Validation Error: There is already a Head of Family registered at this specific address. Please choose "Member" or verify your address.'
-                ], 422); 
+                    'errors' => $validator->errors(),
+                    'message' => 'Check your inputs.'
+                ], 422);
             }
-        }
 
-   
-        $resident = $this->service->createResidentRecord($request->validated(), $request->allFiles());
-        return response()->json(['success' => true, 'trackingNumber' => $resident->tracking_number], 201);
+            // 2. CHECK FILE VALIDITY
+            if (!$request->hasFile('idFront') || !$request->hasFile('idBack')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'File error, double check your submitted file.'
+                ], 422);
+            }
+
+            // 3. CHECK HOUSEHOLD LOGIC
+            if ($request->householdPosition === 'Head of Family') {
+                $alreadyExists = Household::where('house_number', $request->houseNumber)
+                    ->where('purok_id', $request->purok)
+                    ->where('street_id', $request->street)
+                    ->whereNotNull('head_resident_id')
+                    ->exists();
+
+                if ($alreadyExists) {
+                    return response()->json([
+                        'success' => false,
+                     'message' => 'The head of the family already exists in this household. Please change the household position.'
+
+                    ], 422); 
+                }
+            }
+
+            // 4. EXECUTE SERVICE LOGIC
         
-    } catch (\Exception $e) {
-        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            $resident = $this->service->createResidentRecord(
+                $validator->validated(), 
+                $request->allFiles()
+            );
+
+            return response()->json([
+    'success' => true, 
+    'trackingNumber' => $resident->tracking_number,
+    'resident' => [
+        'name' => trim("{$resident->first_name} {$resident->middle_name} {$resident->last_name} {$resident->suffix}"),
+        'status' => $resident->status,
+        'submittedDate' => $resident->created_at->format('F d, Y')
+    ],
+    'message' => 'Registration successful!'
+], 201);
+            
+        } catch (\Exception $e) {
+        
+            Log::error('Registration Fail: ' . $e->getMessage());
+            return response()->json([
+                'success' => false, 
+                'message' => 'Error: ' . $e->getMessage() 
+            ], 500);
+        }
     }
-}
 
     public function track($trackingNumber)
-{
-    $trackingNumber = strtoupper(trim($trackingNumber));
-    $resident = \App\Models\Resident::where('tracking_number', $trackingNumber)->first();
+    {
+        $trackingNumber = strtoupper(trim($trackingNumber));
+        $resident = Resident::where('tracking_number', $trackingNumber)->first();
 
-    if (!$resident) {
+        if (!$resident) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'Tracking number not found.'
+            ], 404);
+        }
+
+        $messages = [
+            'Pending'          => 'Your registration is being reviewed by barangay staff. Please wait.',
+            'For Verification' => 'Initial application approved! Visit the Brgy. Hall with your original ID.',
+            'Verified'         => 'Congratulations! You are now a verified resident of Brgy. Gulod.',
+            'Rejected'         => 'Your registration was not approved. Please visit the Brgy. Hall for clarification.',
+        ];
+
         return response()->json([
-            'success' => false, 
-            'message' => 'Tracking number not found'
-        ], 404);
+            'success' => true,
+            'data'    => [
+                'trackingNumber' => $resident->tracking_number,
+                'name'           => "{$resident->first_name} {$resident->last_name}",
+                'status'         => $resident->status,
+                'message'        => $messages[$resident->status] ?? 'Status unknown.',
+                'dateSubmitted'  => $resident->created_at->format('F d, Y'),
+                'verifiedDate'   => $resident->verified_at ? $resident->verified_at->format('F d, Y') : null,
+            ],
+        ]);
     }
-
-    $messages = [
-        'Pending'          => 'Your registration is being reviewed by barangay staff. Please wait for updates.',
-        'For Verification' => 'Your initial application is approved! Please visit the Barangay Hall for identity verification. Bring your original ID.',
-        'Verified'         => 'Congratulations! You are now a verified resident.',
-        'Rejected'         => 'Your registration was not approved. This might be due to incomplete requirements or invalid data.',
-    ];
-
-    return response()->json([
-        'success' => true,
-        'data'    => [
-            'trackingNumber' => $resident->tracking_number,
-            'barangayId'     => $resident->barangay_id,
-            'name'           => "{$resident->first_name} {$resident->last_name}",
-            'status'         => $resident->status,
-            'message'        => $messages[$resident->status] ?? 'Status unknown. Please visit the Barangay Hall.',
-            'dateSubmitted'  => $resident->created_at->format('F d, Y'),
-            'verifiedDate'   => $resident->verified_at ? $resident->verified_at->format('F d, Y') : null,
-        ],
-    ]);
-}
 
     public function checkHousehold(Request $request) {
         $household = Household::with('headResident')

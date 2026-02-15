@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Purok;
+use App\Models\Street;
 
 class Resident extends Model
 {
@@ -17,6 +19,7 @@ class Resident extends Model
         'last_name',
         'suffix',
         'birthdate',
+        'birth_registration',
         'gender',
         'contact_number',
         'email',

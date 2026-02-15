@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Purok extends Model
 {
     use HasFactory;
-
+    protected $table = 'puroks';
+    
     protected $fillable = [
         'number',
         'name'

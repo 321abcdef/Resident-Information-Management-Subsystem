@@ -1,31 +1,7 @@
+import { jsPDF } from "jspdf";
 import axios from 'axios';
 import { API_BASE_URL, STORAGE_URL } from '../config/api';
-import { jsPDF } from "jspdf";
 
-/**
- * Street ID → name mapping (matches SignupForm streetsByPurok)
- * Used as fallback when the Street relationship isn't loaded yet
- */
-const STREET_MAP = {
-  1: "Sisa St.",
-  2: "Crisostomo St.",
-  3: "Ibarra St.",
-  4: "Elias St.",
-  5: "Maria Clara St.",
-  6: "Basilio St.",
-  7: "Salvi St.",
-  8: "Victoria St.",
-  9: "Tiago St.",
-  10: "Tasio St.",
-  11: "Guevarra St.",
-  12: "Sinang St.",
-  13: "Alfarez St.",
-  14: "Doña Victorina St.",
-};
-
-/**
- * Calculate age from birthdate string
- */
 export const calculateAge = (birthdate) => {
   if (!birthdate) return 'N/A';
   const birth = new Date(birthdate);
@@ -36,93 +12,85 @@ export const calculateAge = (birthdate) => {
   return age;
 };
 
-// ─── Verification Service ────────────────────────────────────────────────────
-
 export const verificationService = {
-
-  /**
-   * Fetch all residents.
-   * Address priority:
-   *   1. Loaded relationship (temp_purok / temp_street) — works when with() is active
-   *   2. Raw ID fallback via STREET_MAP — works even when with() is commented out
-   *   3. Assigned household (after verification)
-   */
   getSubmissions: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/residents`);
+      const response = await axios.get(`${API_BASE_URL}/submissions`);
 
       return response.data.map(res => {
-        // --- Purok resolution ---
-        const purok =
-          res.temp_purok?.number ||
-          res.temp_purok?.name   ||
-          res.temp_purok_id      ||   // raw numeric ID as last resort
-          res.household?.purok?.number ||
-          res.household?.purok?.name   ||
-          'N/A';
-
-        // --- Street resolution ---
-        const street =
-          res.temp_street?.name         ||
-          STREET_MAP[res.temp_street_id] ||  // JS-side fallback map
-          res.household?.street?.name    ||
-          'N/A';
-
-        // --- House number ---
-        const houseNumber =
-          res.temp_house_number ||
-          res.household?.house_number ||
-          'N/A';
+        const ageVal = calculateAge(res.birthdate);
+        
+        // Date Formatter Helper
+        const formatDate = (dateStr) => {
+          if (!dateStr) return 'N/A';
+          const d = new Date(dateStr);
+          return d.toLocaleDateString('en-US', { 
+            month: 'short', day: '2-digit', year: 'numeric' 
+          });
+        };
 
         return {
-          id:             res.id,
-          barangay_id:    res.barangay_id,
+          id: res.id,
           trackingNumber: res.tracking_number,
-          name:           `${res.first_name} ${res.last_name}`,
-          date: new Date(res.created_at).toLocaleDateString('en-US', {
-            month: 'short', day: '2-digit', year: 'numeric',
-          }),
+          name: `${res.first_name || ''} ${res.middle_name || ''} ${res.last_name || ''} ${res.suffix || ''}`.replace(/\s+/g, ' ').trim(),
+          date: formatDate(res.created_at),
           status: res.status,
+          sector: res.sector?.name || '',
+          
           details: {
-            birthdate:   res.birthdate,
-            sex:         res.gender,
-            houseNumber,
-            purok,
-            address:     street,
-            idFront:     `${STORAGE_URL}/${res.id_front_path}`,
-            idBack:      `${STORAGE_URL}/${res.id_back_path}`,
-            contact:     res.contact_number,
+            birthdate: formatDate(res.birthdate),
+            age: ageVal,
+            sex: res.gender || 'N/A',
+            contact: res.contact_number || 'N/A',
+            maritalStatus: res.marital_status?.name || 'N/A', 
+            nationality: res.nationality?.name || 'Filipino',
+            birthRegistration: res.birth_registration || 'N/A',
+            sector: res.sector?.name || '',
+            
+            // Address & Position
+            houseNumber: res.temp_house_number || 'N/A',
+            purok: res.resolved_purok || 'N/A',
+            street: res.resolved_street || 'N/A',
+            householdPosition: res.household_position || 'N/A',
+            
+            addressSummary: `${res.temp_house_number || ''} ${res.resolved_street || ''}, ${res.resolved_purok || ''}, Brgy. Gulod`.replace(/N\/A/g, '').trim(),
+            
+            residencyStatus: res.residency_status || 'N/A',
+            residencyStartDate: formatDate(res.residency_start_date),
+            isVoter: res.is_voter, 
+            
+            idFront: res.id_front_path ? `${STORAGE_URL}/${res.id_front_path}` : null,
+            idBack: res.id_back_path ? `${STORAGE_URL}/${res.id_back_path}` : null,
+            idType: res.id_type || 'Resident ID',
+            
+            // Employment
+            employmentStatus: res.employment_data?.employment_status || 'N/A',
+            occupation: res.employment_data?.occupation || 'N/A',
+            monthlyIncome: res.employment_data?.monthly_income || '0',
+            incomeSource: res.employment_data?.income_source || 'N/A', 
+            
+            // Education
+            educationalStatus: res.education_data?.educational_status || 'N/A',
+            schoolType: res.education_data?.school_type || 'N/A',
+            schoolLevel: res.education_data?.school_level || 'N/A',
+            highestGrade: res.education_data?.highest_grade_completed || 'N/A',
           },
         };
       });
-
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.error("Fetch submissions error:", error);
       return [];
     }
   },
 
-  /**
-   * Update resident status.
-   * Only sends { status } — all household + account logic is server-side.
-   * Returns full server response so callers can read accountDetails.
-   */
   updateStatus: async (id, status) => {
     try {
-        const response = await axios.put(
-            `${API_BASE_URL}/residents/${id}`,
-            { status }
-        );
-        
-        return response.data; 
+      const response = await axios.put(`${API_BASE_URL}/residents/${id}/status`, { status });
+      return response.data;
     } catch (error) {
-        console.error("Update error:", error.response?.data || error.message);
-        return {
-            success: false,
-            message: error.response?.data?.message || 'Database update failed.',
-        };
+      return { success: false, message: error.response?.data?.message || 'Update failed' };
     }
-},
+  }
 };
 
 // ─── PDF Slip ────────────────────────────────────────────────────────────────
@@ -195,7 +163,7 @@ export const handleDownloadSlip = (data) => {
 
   } catch (err) {
     console.error("PDF Generation Error:", err);
-    alert("Failed to generate PDF slip. Please try again.");
+    alert("Failed to generate PDF slip.");
   }
 };
 
@@ -218,7 +186,7 @@ export const downloadResidentQR = (qrElementId, residentData) => {
       ctx.drawImage(img, 100, 100, 800, 800);
 
       const link = document.createElement("a");
-      link.download = `QR-${residentData.barangayId}-${residentData.name}.png`;
+      link.download = `QR-${residentData.barangayId || 'BGN'}-${residentData.name}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     };

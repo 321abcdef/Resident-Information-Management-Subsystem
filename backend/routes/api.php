@@ -1,34 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-
 use App\Http\Controllers\Resident\RegistrationController;
 use App\Http\Controllers\Staff\StaffController;
+use App\Http\Controllers\ResidentController;
+use App\Http\Controllers\LocationController;
 
-/*
-|--------------------------------------------------------------------------
-| Resident Routes (No Login - For Signup/Tracking)
-|--------------------------------------------------------------------------
-*/
+// 1. PUBLIC & REGISTRATION
 Route::post('/register', [RegistrationController::class, 'register']);
 Route::get('/track/{trackingNumber}', [RegistrationController::class, 'track']);
 Route::post('/check-household', [RegistrationController::class, 'checkHousehold']);
+Route::get('/residents/verify-public/{barangay_id}', [StaffController::class, 'publicVerify']);
 
-/*
-|--------------------------------------------------------------------------
-| Staff Routes (For Management - Put Middleware soon)
-|--------------------------------------------------------------------------
-*/
+// 2. VERIFICATION PAGE (Staff Submissions)
+Route::get('/submissions', [StaffController::class, 'index']); 
 
-Route::get('/residents', [StaffController::class, 'index']);
+// 3. RESIDENT MANAGEMENT (RBI - Verified Only)
+Route::get('/residents', [ResidentController::class, 'index']); 
+Route::put('/residents/{id}', [ResidentController::class, 'update']);
+Route::delete('/residents/{id}', [ResidentController::class, 'destroy']);
 
-// View specific resident details
-Route::get('/residents/{id}', [StaffController::class, 'show']);
+// 4. ACTION
+Route::put('/residents/{id}/status', [StaffController::class, 'updateStatus']);
 
-// Approve / Reject / Update Status
-Route::put('/residents/{id}', [StaffController::class, 'updateStatus']);
-// routes/api.php
+Route::get('/locations', [LocationController::class, 'index']);
 
-// Publicly accessible route for QR scanning
-Route::get('/residents/verify-public/{barangay_id}', [App\Http\Controllers\Staff\StaffController::class, 'publicVerify']);

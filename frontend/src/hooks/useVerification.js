@@ -3,17 +3,18 @@ import { verificationService } from '../services/verification';
 
 export const useVerification = () => {
   const [submissions, setSubmissions] = useState([]);
-  const [loading, setLoading]         = useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const loadData = async () => {
+ 
+  const loadData = async (isInitial = false) => {
     try {
-      setLoading(true);
+      if (isInitial) setLoading(true); 
       const data = await verificationService.getSubmissions();
       setSubmissions(data || []);
     } catch (error) {
       console.error("Hook Load Error:", error);
     } finally {
-      setLoading(false);
+      if (isInitial) setLoading(false);
     }
   };
 
@@ -29,7 +30,17 @@ export const useVerification = () => {
     return res;
   };
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => { 
+    // 1. Initial Load 
+    loadData(true); 
 
-  return { submissions, loading, updateStatus, refresh: loadData };
+    const interval = setInterval(() => {
+      loadData(false); 
+    }, 1000); // 10000ms = 10 seconds
+
+   
+    return () => clearInterval(interval);
+  }, []);
+
+  return { submissions, loading, updateStatus, refresh: () => loadData(true) };
 };

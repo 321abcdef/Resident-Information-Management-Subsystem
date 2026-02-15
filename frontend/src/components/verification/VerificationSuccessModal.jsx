@@ -6,12 +6,18 @@ import ModalWrapper from '../common/ModalWrapper';
 const VerificationSuccessModal = ({ isOpen, onClose, data }) => {
     if (!data) return null;
 
-// const myIP = "192.168.8.159";
-// const port = "5173"; 
-// const qrUrl = `http://${myIP}:${port}/verify/${data.id}`;
+const myIP = "192.168.8.159";
+const port = "5173"; 
+const qrUrl = `http://${myIP}:${port}/verify/${data.id}`;
 
-const currentHost = window.location.host; 
-const qrUrl = `${window.location.origin}/verify/${data.id}`;
+
+// const currentHost = window.location.hostname; 
+// const currentPort = window.location.port || "5173";
+
+// const qrUrl = `http://${currentHost}:${currentPort}/verify/${data.id}`;
+
+    // const currentHost = window.location.host; 
+    // const qrUrl = `${window.location.origin}/verify/${data.id}`;
 
     const downloadQR = () => {
         const svg = document.getElementById("resident-qr");

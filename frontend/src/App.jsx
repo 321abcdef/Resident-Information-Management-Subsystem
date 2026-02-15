@@ -6,7 +6,7 @@ import { UserProvider } from "./context/UserContext";
 import DashboardLayout from "./layout/DashboardLayout";
 
 // Public Pages
-import AuthPage from "./auth/AuthPage";
+import HomePage from "./homepage/HomePage";
 import PublicVerify from "./pages/publicverify"; 
 
 // Dashboard Pages
@@ -28,7 +28,7 @@ function App() {
         <Router>
           <Routes>
             {/* PUBLIC ROUTES */}
-            <Route path="/" element={<AuthPage />} />
+            <Route path="/" element={<HomePage />} />
             
             {/*QR Scanner link*/}
             <Route path="/verify/:id" element={<PublicVerify />} />
