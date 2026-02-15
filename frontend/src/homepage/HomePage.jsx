@@ -2,13 +2,13 @@ import { jsPDF } from "jspdf";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sun, Moon, Loader2, CheckCircle2, Download, ArrowLeft } from "lucide-react";
-import LoginForm from "./auth/login/Login";
+import LoginForm from "./auth/login/LogIn";
 import SignupForm from "./auth/signup/SignUp";
 import { useAuthLogic } from "./auth/hooks/useAuthLogic";
 import { useUser } from "../context/UserContext"; 
 import { handleDownloadSlip } from '../services/verification';
 
-// Assets
+// Assetsss
 import bsbPic from "../assets/bgygulod.png";
 import logoPic from "../assets/bgylogo.png";
 
