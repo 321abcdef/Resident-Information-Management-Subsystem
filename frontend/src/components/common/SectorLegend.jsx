@@ -15,14 +15,14 @@ const SectorLegend = ({ activeFilter, onFilterChange, counts = {} }) => {
     <div className="flex flex-col gap-4 p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm mb-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+            <span className="text-[12px] font-black text-slate-400 uppercase tracking-[0.2em]">
                 Legends And Filters
             </span>
         </div>
         {activeFilter !== 'All' && (
           <button 
             onClick={() => onFilterChange('All')}
-            className="text-[10px] font-black text-rose-500 uppercase hover:text-rose-600 transition-colors"
+            className="text-[12px] font-black text-rose-500 uppercase hover:text-rose-600 transition-colors"
           >
             Reset Filters ↺
           </button>
@@ -33,7 +33,7 @@ const SectorLegend = ({ activeFilter, onFilterChange, counts = {} }) => {
         {/* All Button with Total Count */}
         <button
           onClick={() => onFilterChange('All')}
-          className={`px-4 py-2 rounded-xl text-[10px] font-black border uppercase tracking-wider transition-all shadow-sm ${
+          className={`px-4 py-2 rounded-xl text-[12px] font-black border uppercase tracking-wider transition-all shadow-sm ${
             activeFilter === 'All' 
             ? 'bg-slate-900 text-white border-slate-900 scale-105 shadow-md' 
             : 'bg-white dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-400'
@@ -51,12 +51,12 @@ const SectorLegend = ({ activeFilter, onFilterChange, counts = {} }) => {
             <button
               key={name}
               onClick={() => onFilterChange(name)}
-              className={`px-4 py-2 rounded-xl text-[10px] font-black border uppercase tracking-wider transition-all shadow-sm flex items-center gap-2 ${baseStyles} ${
+              className={`px-4 py-2 rounded-xl text-[12px] font-black border uppercase tracking-wider transition-all shadow-sm flex items-center gap-2 ${baseStyles} ${
                 isActive ? 'ring-2 ring-offset-2 ring-slate-800 dark:ring-white scale-105 z-10' : 'opacity-60 hover:opacity-100'
               }`}
             >
               {name}
-              <span className={`px-1.5 py-0.5 rounded-md text-[9px] ${isActive ? 'bg-black/20' : 'bg-white/50'}`}>
+              <span className={`px-1.5 py-0.5 rounded-md text-[12px] ${isActive ? 'bg-black/20' : 'bg-white/50'}`}>
                 {count}
               </span>
             </button>

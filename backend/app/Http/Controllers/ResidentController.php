@@ -128,25 +128,26 @@ class ResidentController extends Controller
 
             $resident->update($basicData);
 
-            // 5. Update Education Table
-            if ($resident->educationData) {
-                $resident->educationData->update([
-                    'educational_status' => $request->educationalStatus,
-                    'school_type' => $request->schoolType,
-                    'school_level' => $request->schoolLevel,
-                    'highest_grade_completed' => $request->highestGrade,
-                ]);
-            }
+           // 5. Update Education Table
+if ($resident->educationData) {
+    $resident->educationData->update([
+   
+        'educational_status'      => $request->educational_status ?? $request->educationalStatus,
+        'school_type'             => $request->school_type ?? $request->schoolType,
+        'school_level'            => $request->school_level ?? $request->schoolLevel,
+        'highest_grade_completed' => $request->highest_attainment ?? $request->highestGrade, 
+    ]);
+}
 
-            // 6. Update Employment Table
-            if ($resident->employmentData) {
-                $resident->employmentData->update([
-                    'employment_status' => $request->employmentStatus,
-                    'occupation' => $request->occupation,
-                    'monthly_income' => $request->monthly_income,
-                    'income_source' => $request->incomeSource,
-                ]);
-            }
+// 6. Update Employment Table
+if ($resident->employmentData) {
+    $resident->employmentData->update([
+        'employment_status' => $request->employment_status ?? $request->employmentStatus,
+        'occupation'        => $request->occupation,
+        'monthly_income'    => $request->monthly_income,
+        'income_source'     => $request->income_source ?? $request->incomeSource,
+    ]);
+}
 
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Successfully updated!']);

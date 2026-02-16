@@ -5,7 +5,7 @@ const transformResident = (r) => {
     if (!r) return null;
     return {
         ...r,
-        sectorLabel: (typeof r.sector === 'object' ? r.sector?.name : r.sector) || "Adult",
+        sectorLabel: (typeof r.sector === 'object' ? r.sector?.name : r.sector) || "GENERAL POPULATION",
     };
 };
 

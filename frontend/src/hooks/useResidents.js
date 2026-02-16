@@ -61,18 +61,17 @@ export const useResidents = () => {
                 temp_purok_id: updatedData.temp_purok_id,
                 temp_street_id: updatedData.temp_street_id,
                 residency_start_date: updatedData.residency_start_date,
-                
-                // Education Data 
-                educationalStatus: updatedData.educationalStatus,
-                schoolType: updatedData.schoolType,
-                schoolLevel: updatedData.schoolLevel,
-                highestGrade: updatedData.highestGrade,
+               // Education Data - 
+    educational_status: updatedData.educational_status,
+    school_type: updatedData.school_type,
+    school_level: updatedData.school_level,
+    highest_attainment: updatedData.highest_attainment, 
 
-                // Employment Data
-                employmentStatus: updatedData.employmentStatus,
-                occupation: updatedData.occupation,
-                monthly_income: updatedData.monthly_income,
-                incomeSource: updatedData.incomeSource
+    // Employment Data
+    employment_status: updatedData.employment_status,
+    occupation: updatedData.occupation,
+    monthly_income: updatedData.monthly_income,
+    income_source: updatedData.income_source
             };
 
             const res = await residentService.updateResident(updatedData.id, payload);
