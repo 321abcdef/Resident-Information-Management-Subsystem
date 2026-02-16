@@ -48,7 +48,7 @@ const SignupForm = ({
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        alert("Masyadong malaki ang file! Max size ay 5MB.");
+        alert("Max size of file is 5MB only.");
         e.target.value = "";
         return;
       }

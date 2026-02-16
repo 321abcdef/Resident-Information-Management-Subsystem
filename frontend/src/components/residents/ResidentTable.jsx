@@ -3,12 +3,11 @@ import Table from '../common/table';
 import ResidentRow from './ResidentRow';
 import ResidentDetailsModal from './ResidentDetailsModal';
 
-const ResidentTable = ({ residents, onUpdate }) => {
+const ResidentTable = ({ residents, onUpdate, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedResident, setSelectedResident] = useState(null);
   const [modalMode, setModalMode] = useState('view');
 
-  // "Status" header removed
   const headers = ["Name", "Age", "Address", "Purok", "Sector", "Actions"];
 
   const handleView = (resident) => {
@@ -23,9 +22,13 @@ const ResidentTable = ({ residents, onUpdate }) => {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id, name) => {
-    if (window.confirm(`Are you sure you want to delete ${name}?`)) {
-      console.log("Deleting:", id);
+  const handleDelete = async (id, name) => {
+    if (window.confirm(`Are you sure you want to delete ${name}? This will also deactivate their account.`)) {
+      try {
+        await onDelete(id);
+      } catch (err) {
+        console.error("Delete failed:", err);
+      }
     }
   };
 
@@ -39,12 +42,11 @@ const ResidentTable = ({ residents, onUpdate }) => {
               r={r} 
               onView={handleView} 
               onEdit={handleEdit} 
-              onDelete={handleDelete} 
+              onDelete={() => handleDelete(r.id, r.name)} 
             />
           ))
         ) : (
           <tr>
-            {/* colSpan updated to 6 */}
             <td colSpan={6} className="px-6 py-24 text-center text-lg font-black text-slate-400 uppercase tracking-widest">
               No records found.
             </td>
@@ -52,16 +54,21 @@ const ResidentTable = ({ residents, onUpdate }) => {
         )}
       </Table>
 
-      <ResidentDetailsModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        resident={selectedResident}
-        mode={modalMode}
-        onSave={(data) => {
-          onUpdate(data);
-          setIsModalOpen(false);
-        }}
-      />
+
+      {isModalOpen && (
+        <ResidentDetailsModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          resident={selectedResident}
+          mode={modalMode}
+          onSave={async (data) => {
+            const success = await onUpdate(data);
+            if (success) {
+              setIsModalOpen(false);
+            }
+          }}
+        />
+      )}
     </>
   );
 };

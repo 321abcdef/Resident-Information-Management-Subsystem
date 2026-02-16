@@ -47,107 +47,59 @@ class StaffController extends Controller
     }
 }
 
+public function updateStatus(Request $request, $id) {
+    $resident = Resident::findOrFail($id);
+    $status = $request->status;
 
-    public function updateStatus(Request $request, $id) {
-        $resident = Resident::findOrFail($id);
-        $status = $request->status;
-
-        DB::beginTransaction();
-        try {
-            if ($status === 'Verified') {
-                
-                $householdId = $this->assignToHousehold($resident);
-                
-              
-                $barangayId  = $this->service->generateBarangayId();
-                $tempPass    = $this->service->generateTempPassword();
-                $verifiedBy  = auth()->check() ? auth()->id() : null;
-
-                // 3. Update Resident record
-                $resident->update([
-                    'status' => 'Verified',
-                    'barangay_id' => $barangayId,
-                    'household_id' => $householdId,
-                    'verified_at' => now(),
-                    'verified_by' => $verifiedBy
-                ]);
-
+    DB::beginTransaction();
+    try {
+        if ($status === 'Verified') {
+        
+            $householdId = $this->service->assignToHouseholdLogic($resident);
             
-                ResidentAccount::updateOrCreate(
-                    ['resident_id' => $resident->id],
-                    [
-                        'username' => $barangayId, 
-                        'password' => Hash::make($tempPass), 
-                        'must_change_password' => true
-                    ]
-                );
+            $barangayId  = $this->service->generateBarangayId();
+            $tempPass    = $this->service->generateTempPassword();
+            $verifiedBy  = auth()->check() ? auth()->id() : null;
 
-                DB::commit();
-                
-                return response()->json([
-                    'success' => true,
-                    'residentData' => [
-                        'id'   => $barangayId,
-                        'name' => trim("{$resident->first_name} {$resident->middle_name} {$resident->last_name} {$resident->suffix}"),
-                        'user' => $barangayId,
-                        'pass' => $tempPass
-                    ]
-                ]);
-            }
+            $resident->update([
+                'status' => 'Verified', 
+                'barangay_id' => $barangayId,
+                'household_id' => $householdId,
+                'verified_at' => now(),
+                'verified_by' => $verifiedBy
+            ]);
 
-            $resident->update(['status' => $status]);
+            ResidentAccount::updateOrCreate(
+                ['resident_id' => $resident->id],
+                [
+                    'username' => $barangayId, 
+                    'password' => Hash::make($tempPass), 
+                    'must_change_password' => true
+                ]
+            );
+
             DB::commit();
-            return response()->json(['success' => true]);
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error("Update Status Error (ID $id): " . $e->getMessage());
             return response()->json([
-                'success' => false, 
-                'message' => $e->getMessage()
-            ], 500);
+                'success' => true,
+                'residentData' => [
+                    'id'   => $barangayId,
+                    'name' => $resident->name, 
+                    'user' => $barangayId,
+                    'pass' => $tempPass
+                ]
+            ]);
         }
+
+        $resident->update(['status' => $status]);
+        DB::commit();
+        return response()->json(['success' => true]);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error("Update Status Error (ID $id): " . $e->getMessage());
+        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
     }
-
-   
-    private function assignToHousehold($resident) {
-        $houseNumber = $resident->temp_house_number;
-        $purokId     = $resident->temp_purok_id;
-        $streetId    = $resident->temp_street_id;
-
-        if (!$houseNumber || !$purokId || !$streetId) {
-            throw new \Exception('Incomplete address data for household assignment.');
-        }
-
- 
-        $house = Household::where('house_number', $houseNumber)
-            ->where('purok_id', $purokId)
-            ->where('street_id', $streetId)
-            ->first();
-
-        if ($house) {
-          
-            if ($resident->household_position === 'Head of Family') {
-                if ($house->head_resident_id !== null && $house->head_resident_id != $resident->id) {
-                    throw new \Exception('A Head of Family already exists at this address.');
-                }
-                $house->update(['head_resident_id' => $resident->id]);
-            }
-            return $house->id;
-        }
-
-      
-        $newHouse = Household::create([
-            'household_id' => $this->service->generateHouseholdId(),
-            'house_number' => $houseNumber,
-            'purok_id' => $purokId,
-            'street_id' => $streetId,
-            'head_resident_id' => ($resident->household_position === 'Head of Family') ? $resident->id : null,
-            'established_date' => now(),
-        ]);
-
-        return $newHouse->id;
-    }
+}
 
  
     public function publicVerify($barangay_id) {

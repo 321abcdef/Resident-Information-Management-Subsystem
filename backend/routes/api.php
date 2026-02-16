@@ -5,6 +5,7 @@ use App\Http\Controllers\Resident\RegistrationController;
 use App\Http\Controllers\Staff\StaffController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\BarangayIDController;
 
 // 1. PUBLIC & REGISTRATION
 Route::post('/register', [RegistrationController::class, 'register']);
@@ -18,10 +19,13 @@ Route::get('/submissions', [StaffController::class, 'index']);
 // 3. RESIDENT MANAGEMENT (RBI - Verified Only)
 Route::get('/residents', [ResidentController::class, 'index']); 
 Route::put('/residents/{id}', [ResidentController::class, 'update']);
+Route::get('/reference-data', [ResidentController::class, 'getReferenceData']);
 Route::delete('/residents/{id}', [ResidentController::class, 'destroy']);
 
 // 4. ACTION
 Route::put('/residents/{id}/status', [StaffController::class, 'updateStatus']);
 
 Route::get('/locations', [LocationController::class, 'index']);
+
+Route::get('/barangay-id/{barangay_id}', [BarangayIdController::class, 'show']);
 

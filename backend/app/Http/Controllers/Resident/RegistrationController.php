@@ -28,8 +28,8 @@ class RegistrationController extends Controller
          
             $rules['sector'] = 'nullable'; 
             $rules['nationality'] = 'required';
-            $rules['idFront'] = 'required|file|mimes:jpeg,png,jpg,webp|max:10240';
-            $rules['idBack'] = 'required|file|mimes:jpeg,png,jpg,webp|max:10240';
+            $rules['idFront'] = 'required|file|mimes:jpeg,png,jpg,webp|max:5120';
+            $rules['idBack'] = 'required|file|mimes:jpeg,png,jpg,webp|max:5120';
 
             $validator = Validator::make($request->all(), $rules);
 
@@ -50,21 +50,26 @@ class RegistrationController extends Controller
             }
 
             // 3. CHECK HOUSEHOLD LOGIC
-            if ($request->householdPosition === 'Head of Family') {
-                $alreadyExists = Household::where('house_number', $request->houseNumber)
-                    ->where('purok_id', $request->purok)
-                    ->where('street_id', $request->street)
-                    ->whereNotNull('head_resident_id')
-                    ->exists();
+           if ($request->householdPosition === 'Head of Family') {
+    $alreadyExistsVerified = Household::where('house_number', $request->houseNumber)
+        ->where('purok_id', $request->purok)
+        ->where('street_id', $request->street)
+        ->whereNotNull('head_resident_id')->exists();
 
-                if ($alreadyExists) {
-                    return response()->json([
-                        'success' => false,
-                     'message' => 'The head of the family already exists in this household. Please change the household position.'
+    $alreadyExistsPending = Resident::where('temp_house_number', $request->houseNumber)
+        ->where('temp_purok_id', $request->purok)
+        ->where('temp_street_id', $request->street)
+        ->where('household_position', 'Head of Family')
+        ->where('status', 'Pending')->exists();
 
-                    ], 422); 
-                }
-            }
+    // DITO ANG PAGBABAGO:
+    if ($alreadyExistsVerified || $alreadyExistsPending) {
+        return response()->json([
+            'success' => false,
+            'message' => 'The head of the family already exists or is pending for this household.'
+        ], 422); 
+    }
+}
 
             // 4. EXECUTE SERVICE LOGIC
         
@@ -77,7 +82,7 @@ class RegistrationController extends Controller
     'success' => true, 
     'trackingNumber' => $resident->tracking_number,
     'resident' => [
-        'name' => trim("{$resident->first_name} {$resident->middle_name} {$resident->last_name} {$resident->suffix}"),
+        'name' => $resident->name,
         'status' => $resident->status,
         'submittedDate' => $resident->created_at->format('F d, Y')
     ],
@@ -110,7 +115,7 @@ class RegistrationController extends Controller
             'Pending'          => 'Your registration is being reviewed by barangay staff. Please wait.',
             'For Verification' => 'Initial application approved! Visit the Brgy. Hall with your original ID.',
             'Verified'         => 'Congratulations! You are now a verified resident of Brgy. Gulod.',
-            'Rejected'         => 'Your registration was not approved. Please visit the Brgy. Hall for clarification.',
+            'Rejected' => 'Your registration was not approved. Please visit the Brgy. Hall or re-submit with correct information.'
         ];
 
         return response()->json([
