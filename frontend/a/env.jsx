@@ -66,6 +66,6 @@
 
 // VITE_APP_NAME="${APP_NAME}"
 
-// VITE_API_BASE_URL=http://localhost:8000/api
-// VITE_STORAGE_URL=http://localhost:8000/storage
+// VITE_API_BASE_URL=http://192.168.8.159:8000/api
+// VITE_STORAGE_URL=http://192.168.8.159:8000/storage
 // CORS_ALLOWED_ORIGINS=*

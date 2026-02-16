@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2026 at 01:01 PM
+-- Generation Time: Feb 16, 2026 at 06:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -79,25 +79,9 @@ CREATE TABLE `households` (
   `established_date` date DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `households`
---
-
-INSERT INTO `households` (`id`, `household_id`, `house_number`, `purok_id`, `street_id`, `head_resident_id`, `established_date`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'HH-00001', '123-A', 2, 3, 20, '2026-02-10', 1, '2026-02-09 19:53:54', '2026-02-12 05:21:59'),
-(2, 'HH-00002', '123-B', 2, 3, NULL, '2026-02-10', 1, '2026-02-10 06:22:48', '2026-02-10 06:22:48'),
-(3, 'HH-00003', '123-A', 3, 5, NULL, '2026-02-10', 1, '2026-02-10 07:05:44', '2026-02-10 07:05:44'),
-(4, 'HH-00004', '123-A', 4, 7, NULL, '2026-02-10', 1, '2026-02-10 07:19:35', '2026-02-10 07:19:35'),
-(6, 'HH-00005', '123-B', 4, 7, NULL, '2026-02-10', 1, '2026-02-10 07:20:49', '2026-02-10 07:20:49'),
-(7, 'HH-00006', '123-A', 1, 1, 23, '2026-02-11', 1, '2026-02-10 17:29:30', '2026-02-12 05:25:02'),
-(10, 'HH-00007', '321-Z', 4, 8, NULL, '2026-02-12', 1, '2026-02-12 04:00:44', '2026-02-12 04:00:44'),
-(11, 'HH-00008', '123-A', 2, 4, 18, '2026-02-12', 1, '2026-02-12 05:10:28', '2026-02-12 05:10:28'),
-(12, 'HH-RUFHCZ', '123', 2, 3, 10, '2026-02-14', 1, '2026-02-14 12:51:32', '2026-02-14 12:51:32'),
-(13, 'HH-5QDXEJ', '213', 3, 5, NULL, '2026-02-14', 1, '2026-02-14 14:45:38', '2026-02-14 14:45:38'),
-(14, 'HH-00011', '321-A', 1, 1, NULL, '2026-02-15', 1, '2026-02-15 03:33:53', '2026-02-15 03:33:53');
 
 -- --------------------------------------------------------
 
@@ -186,7 +170,8 @@ INSERT INTO `nationalities` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (6, 'Taiwanese', '2026-02-10 17:31:20', '2026-02-10 17:31:20'),
 (7, 'Indian', '2026-02-15 02:06:19', '2026-02-15 02:06:19'),
 (8, 'Indonesian', '2026-02-15 02:08:17', '2026-02-15 02:08:17'),
-(9, 'Brazilian', '2026-02-15 02:19:14', '2026-02-15 02:19:14');
+(9, 'Brazilian', '2026-02-15 02:19:14', '2026-02-15 02:19:14'),
+(10, 'Russian', '2026-02-15 04:35:09', '2026-02-15 04:35:09');
 
 -- --------------------------------------------------------
 
@@ -333,8 +318,7 @@ INSERT INTO `sectors` (`id`, `name`, `description`, `is_active`, `created_at`, `
 (4, 'LGBTQIA+', 'Inclusivity sector for diverse orientations', 1, '2026-02-14 11:33:59', '2026-02-14 11:33:59'),
 (5, 'Kasambahay', 'Domestic workers within the barangay', 1, '2026-02-14 11:33:59', '2026-02-14 11:33:59'),
 (6, 'OFW', 'Overseas Filipino Workers', 1, '2026-02-14 11:33:59', '2026-02-14 11:33:59'),
-(7, 'General Population', 'Regular residents with no special sector classification', 1, '2026-02-14 11:36:39', '2026-02-14 11:36:39'),
-(8, '4', NULL, 1, '2026-02-15 02:06:19', '2026-02-15 02:06:19');
+(7, 'General Population', 'Regular residents with no special sector classification', 1, '2026-02-14 11:36:39', '2026-02-14 11:36:39');
 
 -- --------------------------------------------------------
 
@@ -434,6 +418,7 @@ ALTER TABLE `households`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_address` (`house_number`,`street_id`,`purok_id`),
   ADD UNIQUE KEY `households_household_id_unique` (`household_id`),
+  ADD UNIQUE KEY `household_id` (`household_id`),
   ADD KEY `households_purok_id_foreign` (`purok_id`),
   ADD KEY `households_street_id_foreign` (`street_id`),
   ADD KEY `households_head_resident_id_index` (`head_resident_id`);
@@ -487,6 +472,7 @@ ALTER TABLE `residents`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `residents_tracking_number_unique` (`tracking_number`),
   ADD UNIQUE KEY `residents_barangay_id_unique` (`barangay_id`),
+  ADD UNIQUE KEY `barangay_id` (`barangay_id`),
   ADD KEY `residents_marital_status_id_foreign` (`marital_status_id`),
   ADD KEY `residents_nationality_id_foreign` (`nationality_id`),
   ADD KEY `residents_sector_id_foreign` (`sector_id`),
@@ -555,7 +541,7 @@ ALTER TABLE `employment_data`
 -- AUTO_INCREMENT for table `households`
 --
 ALTER TABLE `households`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `marital_statuses`
@@ -573,7 +559,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `nationalities`
 --
 ALTER TABLE `nationalities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`

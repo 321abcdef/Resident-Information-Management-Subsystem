@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2026 at 01:03 PM
+-- Generation Time: Feb 16, 2026 at 06:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,7 +45,7 @@ CREATE TABLE `education_data` (
 --
 
 INSERT INTO `education_data` (`id`, `resident_id`, `educational_status`, `school_type`, `school_level`, `school_name`, `course_program`, `highest_grade_completed`, `created_at`, `updated_at`) VALUES
-(1, 1, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-09 19:53:54', '2026-02-09 19:53:54'),
+(1, 1, 'Not Studying', 'Private', 'Vocational', NULL, NULL, 'Senior High Level', '2026-02-09 19:53:54', '2026-02-16 11:30:25'),
 (2, 2, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-09 19:55:55', '2026-02-09 19:55:55'),
 (3, 3, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-10 06:21:39', '2026-02-10 06:21:39'),
 (4, 4, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-10 06:22:48', '2026-02-10 06:22:48'),
@@ -155,7 +155,51 @@ INSERT INTO `education_data` (`id`, `resident_id`, `educational_status`, `school
 (108, 118, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-15 02:59:54', '2026-02-15 02:59:54'),
 (109, 119, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-15 03:12:11', '2026-02-15 03:12:11'),
 (110, 120, 'Currently Studying', 'Private', 'Elementary', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 03:30:03', '2026-02-15 03:30:03'),
-(111, 121, 'Currently Studying', 'Private', 'Elementary', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 03:33:24', '2026-02-15 03:33:24');
+(111, 121, 'Currently Studying', 'Private', 'Elementary', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 03:33:24', '2026-02-15 03:33:24'),
+(112, 122, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 04:10:44', '2026-02-15 04:10:44'),
+(113, 123, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 04:13:15', '2026-02-15 04:13:15'),
+(114, 124, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 04:22:48', '2026-02-15 04:22:48'),
+(115, 125, 'Not Studying', 'Private', 'Elementary', NULL, NULL, 'Elementary Graduate', '2026-02-15 04:31:11', '2026-02-15 04:31:11'),
+(116, 126, 'Not Studying', 'Private', 'Elementary', NULL, NULL, 'Elementary Graduate', '2026-02-15 04:32:37', '2026-02-15 04:32:37'),
+(117, 127, 'Not Studying', 'Private', 'Elementary', NULL, NULL, 'Elementary Graduate', '2026-02-15 04:33:01', '2026-02-15 04:33:01'),
+(118, 128, 'Graduated', 'Public', 'Senior High School', NULL, NULL, 'High School Graduate', '2026-02-15 04:35:09', '2026-02-15 04:35:09'),
+(119, 129, 'Not Studying', 'Private', 'Elementary', NULL, NULL, 'Elementary Graduate', '2026-02-15 04:36:20', '2026-02-15 04:36:20'),
+(120, 130, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Graduate', '2026-02-15 06:00:16', '2026-02-15 06:00:16'),
+(121, 131, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Graduate', '2026-02-15 06:00:28', '2026-02-15 06:00:28'),
+(122, 132, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Graduate', '2026-02-15 06:01:26', '2026-02-15 06:01:26'),
+(123, 133, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 06:04:14', '2026-02-15 06:04:14'),
+(124, 134, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-15 06:26:16', '2026-02-15 06:26:16'),
+(125, 135, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-15 09:22:20', '2026-02-15 09:22:20'),
+(126, 136, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-15 09:22:32', '2026-02-15 09:22:32'),
+(127, 137, 'Graduated', 'Public', 'Elementary', NULL, NULL, 'Elementary Graduate', '2026-02-15 10:15:30', '2026-02-15 10:15:30'),
+(128, 138, 'Graduated', 'Public', 'Elementary', NULL, NULL, 'Elementary Graduate', '2026-02-15 10:15:48', '2026-02-15 10:15:48'),
+(129, 139, 'Graduated', 'Public', 'Elementary', NULL, NULL, 'Elementary Graduate', '2026-02-15 11:11:58', '2026-02-15 11:11:58'),
+(130, 140, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-15 11:13:18', '2026-02-15 11:13:18'),
+(131, 141, 'Currently Studying', 'Private', 'Junior High School', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 13:52:09', '2026-02-15 13:52:09'),
+(132, 142, 'Currently Studying', 'Private', 'Junior High School', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 13:53:46', '2026-02-15 13:53:46'),
+(133, 143, 'Currently Studying', 'Private', 'Junior High School', NULL, NULL, 'Elementary Undergraduate', '2026-02-15 13:54:03', '2026-02-15 13:54:03'),
+(134, 144, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Graduate', '2026-02-16 04:32:31', '2026-02-16 04:32:31'),
+(135, 145, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Graduate', '2026-02-16 06:28:58', '2026-02-16 06:28:58'),
+(136, 146, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Graduate', '2026-02-16 06:29:06', '2026-02-16 06:29:06'),
+(137, 147, 'Graduated', 'Private', 'Junior High School', NULL, NULL, 'Elementary Graduate', '2026-02-16 06:46:56', '2026-02-16 06:46:56'),
+(138, 148, 'Graduated', 'Private', 'N/A', NULL, NULL, 'Elementary Graduate', '2026-02-16 06:52:05', '2026-02-16 06:52:05'),
+(139, 149, 'Graduated', 'Public', 'N/A', NULL, NULL, 'N/A', '2026-02-16 07:07:53', '2026-02-16 07:07:53'),
+(140, 150, 'Graduated', 'Public', 'N/A', NULL, NULL, 'N/A', '2026-02-16 07:09:16', '2026-02-16 07:09:16'),
+(141, 151, 'Graduated', 'Public', 'N/A', NULL, NULL, 'N/A', '2026-02-16 07:16:41', '2026-02-16 07:16:41'),
+(142, 152, 'Graduated', 'Public', 'N/A', NULL, NULL, 'N/A', '2026-02-16 07:17:25', '2026-02-16 07:17:25'),
+(143, 153, 'Graduated', 'Public', 'Junior High School', NULL, NULL, 'N/A', '2026-02-16 08:10:51', '2026-02-16 08:10:51'),
+(144, 154, 'Graduated', 'Public', 'Junior High School', NULL, NULL, 'N/A', '2026-02-16 09:04:28', '2026-02-16 09:04:28'),
+(145, 155, 'Graduated', 'Public', 'Elementary', NULL, NULL, 'N/A', '2026-02-16 09:28:04', '2026-02-16 09:28:04'),
+(146, 156, 'Graduated', 'Public', 'Elementary', NULL, NULL, 'N/A', '2026-02-16 09:28:27', '2026-02-16 09:28:27'),
+(147, 157, 'Not Studying', 'Private', 'Senior High School', NULL, NULL, 'N/A', '2026-02-16 10:48:17', '2026-02-16 10:48:17'),
+(148, 158, 'Currently Studying', 'Public', 'Junior High School', NULL, NULL, 'N/A', '2026-02-16 11:43:51', '2026-02-16 11:43:51'),
+(149, 159, 'Currently Studying', 'Private', 'Junior High School', NULL, NULL, 'N/A', '2026-02-16 16:44:57', '2026-02-16 16:44:57'),
+(150, 160, 'Not Studying', 'Private', 'Vocational', NULL, NULL, 'N/A', '2026-02-16 16:59:56', '2026-02-16 16:59:56'),
+(151, 161, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-16 17:09:19', '2026-02-16 17:09:19'),
+(152, 162, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-16 17:15:45', '2026-02-16 17:15:45'),
+(153, 163, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-16 17:15:59', '2026-02-16 17:15:59'),
+(154, 164, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-16 17:19:26', '2026-02-16 17:19:26'),
+(155, 165, 'N/A', 'N/A', 'N/A', NULL, NULL, 'N/A', '2026-02-16 17:20:28', '2026-02-16 17:20:28');
 
 -- --------------------------------------------------------
 
@@ -185,14 +229,14 @@ CREATE TABLE `employment_data` (
 --
 
 INSERT INTO `employment_data` (`id`, `resident_id`, `employment_status`, `occupation`, `employer_name`, `work_address`, `business_name`, `business_type`, `business_status`, `income_source`, `monthly_income`, `income_bracket`, `created_at`, `updated_at`) VALUES
-(1, 1, 'N/A', 'N/A', NULL, NULL, NULL, NULL, 'Permanent', 'Investments', 'No Income', 'N/A', '2026-02-09 19:53:54', '2026-02-09 19:53:54'),
-(2, 2, 'N/A', 'N/A', NULL, NULL, NULL, NULL, 'Contractual', 'Business', NULL, 'N/A', '2026-02-09 19:55:55', '2026-02-09 19:55:55'),
+(1, 1, 'Unemployed', 'Doctor', NULL, NULL, NULL, NULL, 'Permanent', 'Investments', '20,001 - 30,000', 'N/A', '2026-02-09 19:53:54', '2026-02-16 11:29:48'),
+(2, 2, 'N/A', 'N/A', NULL, NULL, NULL, NULL, 'Contractual', 'Business', '30,001 - 50,000', 'N/A', '2026-02-09 19:55:55', '2026-02-16 06:44:29'),
 (3, 3, 'N/A', 'N/A', NULL, NULL, NULL, NULL, 'Contractual', 'Employment', '30,001-40,000', 'N/A', '2026-02-10 06:21:39', '2026-02-10 06:21:39'),
 (4, 4, 'N/A', 'N/A', NULL, NULL, NULL, NULL, 'Corporate', 'Employment', 'Above 100,000', 'N/A', '2026-02-10 06:22:48', '2026-02-10 06:22:48'),
 (5, 5, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Business Owner', 'Employment', '40,001-50,000', 'N/A', '2026-02-10 07:05:44', '2026-02-10 07:05:44'),
 (6, 6, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Corporate', 'Others', '40,001-50,000', 'N/A', '2026-02-10 07:19:35', '2026-02-10 07:19:35'),
 (7, 7, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Shared', 'Investments', 'Below 5,000', 'N/A', '2026-02-10 07:20:49', '2026-02-10 07:20:49'),
-(8, 8, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'Employment', 'Below 5,000', 'N/A', '2026-02-10 07:39:27', '2026-02-10 07:39:27'),
+(8, 8, 'N/A', 'None', NULL, NULL, NULL, NULL, NULL, 'Employment', 'Below 5,000', 'N/A', '2026-02-10 07:39:27', '2026-02-16 16:00:44'),
 (9, 9, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Business Owner', 'Others', 'Below 5,000', 'N/A', '2026-02-10 10:00:50', '2026-02-10 10:00:50'),
 (10, 10, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Contractual', 'Business', 'Below 5,000', 'N/A', '2026-02-10 17:29:30', '2026-02-10 17:29:30'),
 (11, 11, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'Investments', '20,001-30,000', 'N/A', '2026-02-10 17:31:20', '2026-02-10 17:31:20'),
@@ -204,7 +248,7 @@ INSERT INTO `employment_data` (`id`, `resident_id`, `employment_status`, `occupa
 (17, 17, 'Self-Employed', 'Engineer', NULL, NULL, NULL, NULL, 'Shared', 'Employment', 'Below 5,000', 'N/A', '2026-02-12 03:59:44', '2026-02-12 03:59:44'),
 (18, 18, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Corporate', 'Business', '40,001-50,000', 'N/A', '2026-02-12 05:09:22', '2026-02-12 05:09:22'),
 (19, 19, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Corporate', 'Remittance', '50,001-100,000', 'N/A', '2026-02-12 05:13:00', '2026-02-12 05:13:00'),
-(20, 20, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Shared', 'Employment', 'No Income', 'N/A', '2026-02-12 05:21:10', '2026-02-12 05:21:10'),
+(20, 20, 'N/A', 'None', NULL, NULL, NULL, NULL, 'Shared', 'Employment', 'No Income', 'N/A', '2026-02-12 05:21:10', '2026-02-16 08:12:07'),
 (21, 21, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Shared', 'Employment', '50,001-100,000', 'N/A', '2026-02-12 05:22:39', '2026-02-12 05:22:39'),
 (22, 22, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Contractual', 'Others', '40,001-50,000', 'N/A', '2026-02-12 05:24:10', '2026-02-12 05:24:10'),
 (23, 23, 'N/A', NULL, NULL, NULL, NULL, NULL, 'Contractual', 'Business', 'No Income', 'N/A', '2026-02-12 05:24:38', '2026-02-12 05:24:38'),
@@ -295,7 +339,51 @@ INSERT INTO `employment_data` (`id`, `resident_id`, `employment_status`, `occupa
 (109, 118, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-15 02:59:54', '2026-02-15 02:59:54'),
 (110, 119, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-15 03:12:11', '2026-02-15 03:12:11'),
 (111, 120, 'Contractual', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Employment', 'Below 5,000', 'N/A', '2026-02-15 03:30:03', '2026-02-15 03:30:03'),
-(112, 121, 'Contractual', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Employment', 'Below 5,000', 'N/A', '2026-02-15 03:33:24', '2026-02-15 03:33:24');
+(112, 121, 'Contractual', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Employment', 'Below 5,000', 'N/A', '2026-02-15 03:33:24', '2026-02-15 03:33:24'),
+(113, 122, 'Contractual', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Business', 'Below 5,000', 'N/A', '2026-02-15 04:10:44', '2026-02-15 04:10:44'),
+(114, 123, 'Contractual', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Business', 'Below 5,000', 'N/A', '2026-02-15 04:13:15', '2026-02-15 04:13:15'),
+(115, 124, 'Contractual', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Business', 'Below 5,000', 'N/A', '2026-02-15 04:22:48', '2026-02-15 04:22:48'),
+(116, 125, 'Business Owner', 'Driver', NULL, NULL, NULL, NULL, NULL, 'Remittance', '20,001-40,000', 'N/A', '2026-02-15 04:31:11', '2026-02-15 04:31:11'),
+(117, 126, 'Business Owner', 'Driver', NULL, NULL, NULL, NULL, NULL, 'Remittance', '20,001-40,000', 'N/A', '2026-02-15 04:32:37', '2026-02-15 04:32:37'),
+(118, 127, 'Business Owner', 'Driver', NULL, NULL, NULL, NULL, NULL, 'Remittance', '20,001-40,000', 'N/A', '2026-02-15 04:33:01', '2026-02-15 04:33:01'),
+(119, 128, 'Shared', 'Doctor', NULL, NULL, NULL, NULL, NULL, 'Remittance', '20,001-40,000', 'N/A', '2026-02-15 04:35:09', '2026-02-15 04:35:09'),
+(120, 129, 'Business Owner', 'Driver', NULL, NULL, NULL, NULL, NULL, 'Remittance', '20,001-40,000', 'N/A', '2026-02-15 04:36:20', '2026-02-15 04:36:20'),
+(121, 130, 'Shared', 'Engineer', NULL, NULL, NULL, NULL, NULL, 'Business', 'Below 5,000', 'N/A', '2026-02-15 06:00:16', '2026-02-15 06:00:16'),
+(122, 131, 'Shared', 'Engineer', NULL, NULL, NULL, NULL, NULL, 'Business', 'Below 5,000', 'N/A', '2026-02-15 06:00:28', '2026-02-15 06:00:28'),
+(123, 132, 'Shared', 'Engineer', NULL, NULL, NULL, NULL, NULL, 'Business', 'Below 5,000', 'N/A', '2026-02-15 06:01:26', '2026-02-15 06:01:26'),
+(124, 133, 'Contractual', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Employment', '20,001-40,000', 'N/A', '2026-02-15 06:04:14', '2026-02-15 06:04:14'),
+(125, 134, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-15 06:26:16', '2026-02-15 06:26:16'),
+(126, 135, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-15 09:22:20', '2026-02-15 09:22:20'),
+(127, 136, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-15 09:22:32', '2026-02-15 09:22:32'),
+(128, 137, 'Contractual', 'Police', NULL, NULL, NULL, NULL, NULL, 'Business', '40,001-70,000', 'N/A', '2026-02-15 10:15:30', '2026-02-15 10:15:30'),
+(129, 138, 'Contractual', 'Police', NULL, NULL, NULL, NULL, NULL, 'Business', '40,001-70,000', 'N/A', '2026-02-15 10:15:48', '2026-02-15 10:15:48'),
+(130, 139, 'Contractual', 'Police', NULL, NULL, NULL, NULL, NULL, 'Business', '40,001-70,000', 'N/A', '2026-02-15 11:11:58', '2026-02-15 11:11:58'),
+(131, 140, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-15 11:13:18', '2026-02-15 11:13:18'),
+(132, 141, 'Shared', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Remittance', '5,001-10,000', 'N/A', '2026-02-15 13:52:09', '2026-02-15 13:52:09'),
+(133, 142, 'Shared', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Remittance', '5,001-10,000', 'N/A', '2026-02-15 13:53:46', '2026-02-15 13:53:46'),
+(134, 143, 'Shared', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Remittance', '5,001-10,000', 'N/A', '2026-02-15 13:54:03', '2026-02-15 13:54:03'),
+(135, 144, 'Shared', 'None', NULL, NULL, NULL, NULL, NULL, 'Business', '40,001-70,000', 'N/A', '2026-02-16 04:32:31', '2026-02-16 04:32:31'),
+(136, 145, 'Shared', 'None', NULL, NULL, NULL, NULL, NULL, 'Business', '40,001-70,000', 'N/A', '2026-02-16 06:28:58', '2026-02-16 06:28:58'),
+(137, 146, 'Shared', 'None', NULL, NULL, NULL, NULL, NULL, 'Business', '40,001-70,000', 'N/A', '2026-02-16 06:29:06', '2026-02-16 06:29:06'),
+(138, 147, 'Shared', 'None', NULL, NULL, NULL, NULL, NULL, 'Business', '40,001-70,000', 'N/A', '2026-02-16 06:46:56', '2026-02-16 06:46:56'),
+(139, 148, 'Shared', 'None', NULL, NULL, NULL, NULL, NULL, 'Business', '40,001-70,000', 'N/A', '2026-02-16 06:52:05', '2026-02-16 06:52:05'),
+(140, 149, 'Shared', 'Pilot', NULL, NULL, NULL, NULL, NULL, 'Business', '10,001-20,000', 'N/A', '2026-02-16 07:07:53', '2026-02-16 07:07:53'),
+(141, 150, 'Shared', 'Pilot', NULL, NULL, NULL, NULL, NULL, 'Business', '10,001-20,000', 'N/A', '2026-02-16 07:09:16', '2026-02-16 07:09:16'),
+(142, 151, 'Shared', 'Pilot', NULL, NULL, NULL, NULL, NULL, 'Business', '10,001-20,000', 'N/A', '2026-02-16 07:16:41', '2026-02-16 07:16:41'),
+(143, 152, 'Shared', 'Pilot', NULL, NULL, NULL, NULL, NULL, 'Business', '10,001-20,000', 'N/A', '2026-02-16 07:17:25', '2026-02-16 07:17:25'),
+(144, 153, 'Shared', 'Pilot', NULL, NULL, NULL, NULL, NULL, 'Business', '10,001-20,000', 'N/A', '2026-02-16 08:10:51', '2026-02-16 08:10:51'),
+(145, 154, 'Shared', 'Pilot', NULL, NULL, NULL, NULL, NULL, 'Business', '10,001-20,000', 'N/A', '2026-02-16 09:04:28', '2026-02-16 09:04:28'),
+(146, 155, 'Permanent', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Employment', '40,001-70,000', 'N/A', '2026-02-16 09:28:04', '2026-02-16 09:28:04'),
+(147, 156, 'Permanent', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Employment', '40,001-70,000', 'N/A', '2026-02-16 09:28:27', '2026-02-16 09:28:27'),
+(148, 157, 'Business Owner', 'Pilot', NULL, NULL, NULL, NULL, NULL, 'Remittance', '40,001-70,000', 'N/A', '2026-02-16 10:48:17', '2026-02-16 10:48:17'),
+(149, 158, 'Contractual', 'Pilot', NULL, NULL, NULL, NULL, NULL, 'Business', '10,001-20,000', 'N/A', '2026-02-16 11:43:51', '2026-02-16 11:43:51'),
+(150, 159, 'Contractual', 'Retired', NULL, NULL, NULL, NULL, NULL, 'Remittance', 'Below 5,000', 'N/A', '2026-02-16 16:44:57', '2026-02-16 16:44:57'),
+(151, 160, 'Business Owner', 'Teacher', NULL, NULL, NULL, NULL, NULL, 'Investments', '20,001-40,000', 'N/A', '2026-02-16 16:59:56', '2026-02-16 16:59:56'),
+(152, 161, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-16 17:09:19', '2026-02-16 17:09:19'),
+(153, 162, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-16 17:15:45', '2026-02-16 17:15:45'),
+(154, 163, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-16 17:15:59', '2026-02-16 17:15:59'),
+(155, 164, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-16 17:19:26', '2026-02-16 17:19:26'),
+(156, 165, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '0', 'N/A', '2026-02-16 17:20:28', '2026-02-16 17:20:28');
 
 -- --------------------------------------------------------
 
@@ -313,25 +401,39 @@ CREATE TABLE `households` (
   `established_date` date DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `households`
 --
 
-INSERT INTO `households` (`id`, `household_id`, `house_number`, `purok_id`, `street_id`, `head_resident_id`, `established_date`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'HH-00001', '123-A', 2, 3, 20, '2026-02-10', 1, '2026-02-09 19:53:54', '2026-02-12 05:21:59'),
-(2, 'HH-00002', '123-B', 2, 3, NULL, '2026-02-10', 1, '2026-02-10 06:22:48', '2026-02-10 06:22:48'),
-(3, 'HH-00003', '123-A', 3, 5, NULL, '2026-02-10', 1, '2026-02-10 07:05:44', '2026-02-10 07:05:44'),
-(4, 'HH-00004', '123-A', 4, 7, NULL, '2026-02-10', 1, '2026-02-10 07:19:35', '2026-02-10 07:19:35'),
-(6, 'HH-00005', '123-B', 4, 7, NULL, '2026-02-10', 1, '2026-02-10 07:20:49', '2026-02-10 07:20:49'),
-(7, 'HH-00006', '123-A', 1, 1, 23, '2026-02-11', 1, '2026-02-10 17:29:30', '2026-02-12 05:25:02'),
-(10, 'HH-00007', '321-Z', 4, 8, NULL, '2026-02-12', 1, '2026-02-12 04:00:44', '2026-02-12 04:00:44'),
-(11, 'HH-00008', '123-A', 2, 4, 18, '2026-02-12', 1, '2026-02-12 05:10:28', '2026-02-12 05:10:28'),
-(12, 'HH-RUFHCZ', '123', 2, 3, 10, '2026-02-14', 1, '2026-02-14 12:51:32', '2026-02-14 12:51:32'),
-(13, 'HH-5QDXEJ', '213', 3, 5, NULL, '2026-02-14', 1, '2026-02-14 14:45:38', '2026-02-14 14:45:38'),
-(14, 'HH-00011', '321-A', 1, 1, NULL, '2026-02-15', 1, '2026-02-15 03:33:53', '2026-02-15 03:33:53');
+INSERT INTO `households` (`id`, `household_id`, `house_number`, `purok_id`, `street_id`, `head_resident_id`, `established_date`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'HH-00001', '123-A', 2, 3, NULL, '2026-02-10', 1, '2026-02-09 19:53:54', '2026-02-16 08:12:07', NULL),
+(2, 'HH-00002', '123-B', 2, 3, 20, '2026-02-10', 1, '2026-02-10 06:22:48', '2026-02-16 08:42:39', NULL),
+(3, 'HH-00003', '123-A', 3, 5, NULL, '2026-02-10', 1, '2026-02-10 07:05:44', '2026-02-10 07:05:44', NULL),
+(4, 'HH-00004', '123-A', 4, 7, NULL, '2026-02-10', 1, '2026-02-10 07:19:35', '2026-02-10 07:19:35', NULL),
+(6, 'HH-00005', '123-B', 4, 7, NULL, '2026-02-10', 1, '2026-02-10 07:20:49', '2026-02-10 07:20:49', NULL),
+(7, 'HH-00006', '123-A', 1, 1, 23, '2026-02-11', 1, '2026-02-10 17:29:30', '2026-02-12 05:25:02', NULL),
+(10, 'HH-00007', '321-Z', 4, 8, NULL, '2026-02-12', 1, '2026-02-12 04:00:44', '2026-02-12 04:00:44', NULL),
+(11, 'HH-00008', '123-A', 2, 4, 18, '2026-02-12', 1, '2026-02-12 05:10:28', '2026-02-12 05:10:28', NULL),
+(12, 'HH-RUFHCZ', '123', 2, 3, 10, '2026-02-14', 1, '2026-02-14 12:51:32', '2026-02-14 12:51:32', NULL),
+(13, 'HH-5QDXEJ', '213', 3, 5, NULL, '2026-02-14', 1, '2026-02-14 14:45:38', '2026-02-14 14:45:38', NULL),
+(14, 'HH-00011', '321-A', 1, 1, NULL, '2026-02-15', 1, '2026-02-15 03:33:53', '2026-02-15 03:33:53', NULL),
+(15, 'HH-00012', '123-C', 3, 5, NULL, '2026-02-15', 1, '2026-02-15 04:11:21', '2026-02-15 04:11:21', NULL),
+(16, 'HH-00013', '5', 3, 5, NULL, '2026-02-15', 1, '2026-02-15 04:32:17', '2026-02-15 04:32:17', NULL),
+(17, 'HH-00014', '1-A', 7, 14, NULL, '2026-02-15', 1, '2026-02-15 04:35:46', '2026-02-15 04:35:46', NULL),
+(18, 'HH-00015', '123-B', 3, 6, NULL, '2026-02-15', 1, '2026-02-15 06:01:06', '2026-02-15 06:01:06', NULL),
+(19, 'HH-00016', '123-A', 1, 2, NULL, '2026-02-15', 1, '2026-02-15 06:04:27', '2026-02-15 06:04:27', NULL),
+(21, 'HH-00017', '123-AB', 2, 4, NULL, '2026-02-16', 1, '2026-02-16 07:01:13', '2026-02-16 07:01:13', NULL),
+(22, 'HH-00018', '12-AB', 2, 3, 8, '2026-02-16', 1, '2026-02-16 08:11:22', '2026-02-16 16:02:45', NULL),
+(23, 'HH-00019', '12-ABCD', 2, 3, NULL, '2026-02-16', 1, '2026-02-16 09:02:42', '2026-02-16 09:03:31', NULL),
+(24, 'HH-00020', '12-ABCDE', 2, 3, NULL, '2026-02-16', 1, '2026-02-16 09:03:31', '2026-02-16 09:03:59', NULL),
+(25, 'HH-00021', '12-B', 2, 3, 1, '2026-02-16', 1, '2026-02-16 09:03:59', '2026-02-16 16:21:48', NULL),
+(26, 'HH-00022', '123-A', 3, 6, NULL, '2026-02-16', 1, '2026-02-16 10:48:34', '2026-02-16 10:48:34', NULL),
+(27, 'HH-00023', '123-ABCDE', 2, 3, 2, '2026-02-16', 1, '2026-02-16 15:37:38', '2026-02-16 15:39:49', NULL),
+(28, 'HH-00024', '12', 3, 5, NULL, '2026-02-17', 1, '2026-02-16 17:09:31', '2026-02-16 17:09:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -420,7 +522,8 @@ INSERT INTO `nationalities` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (6, 'Taiwanese', '2026-02-10 17:31:20', '2026-02-10 17:31:20'),
 (7, 'Indian', '2026-02-15 02:06:19', '2026-02-15 02:06:19'),
 (8, 'Indonesian', '2026-02-15 02:08:17', '2026-02-15 02:08:17'),
-(9, 'Brazilian', '2026-02-15 02:19:14', '2026-02-15 02:19:14');
+(9, 'Brazilian', '2026-02-15 02:19:14', '2026-02-15 02:19:14'),
+(10, 'Russian', '2026-02-15 04:35:09', '2026-02-15 04:35:09');
 
 -- --------------------------------------------------------
 
@@ -528,26 +631,26 @@ CREATE TABLE `residents` (
 --
 
 INSERT INTO `residents` (`id`, `barangay_id`, `tracking_number`, `first_name`, `middle_name`, `last_name`, `suffix`, `birthdate`, `birth_registration`, `gender`, `contact_number`, `email`, `temp_house_number`, `temp_purok_id`, `temp_street_id`, `household_id`, `household_position`, `marital_status_id`, `nationality_id`, `sector_id`, `residency_status`, `residency_start_date`, `is_voter`, `id_type`, `id_front_path`, `id_back_path`, `status`, `temp_password`, `verified_at`, `verified_by`, `rejection_reason`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'BGN-00010', 'BGN-6642', 'a', 'a', 'a', NULL, '2002-12-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Relative', 6, 1, 3, 'New Resident', '2026-02-10', 1, 'Government ID', 'resident_ids/front/0kXHCQcymtrjVrdMikSi6MVXWMfKXrOHk2pssRsC.png', 'resident_ids/back/2xv5luYytOQ4Mfcl8tnTmIfdRt5ll8lIcx8mgclA.png', 'Verified', NULL, '2026-02-12 05:56:44', NULL, NULL, '2026-02-09 19:53:54', '2026-02-12 05:56:44', NULL),
-(2, 'BGN-00011', 'BGN-2476', 'ads', 'a', 'a', NULL, '2002-12-12', 'Not Registered', 'Male', '09753657345', NULL, '123-A', 2, 3, 1, 'Spouse', 2, 1, 5, 'New Resident', '2026-02-10', 0, 'Government ID', 'resident_ids/front/7IZ3yMIcms49PncVuY0FQQIDhNyKitKoGPHTjx16.png', 'resident_ids/back/pVk6b0WoNp5wf98ExQpsyAT8pB8STmiPvNL3PcyL.png', 'Verified', NULL, '2026-02-12 06:26:24', NULL, NULL, '2026-02-09 19:55:55', '2026-02-12 06:26:24', NULL),
+(1, 'BGN-00010', 'BGN-6642', 'Aaaaa', 'B', 'Csv', 'Jr.', '2005-10-18', 'Not Registered', 'Male', '09655259389', NULL, '12-B', 2, 3, 25, 'Head of Family', 2, 8, 4, 'New Resident', '2020-01-08', 0, 'Government ID', 'resident_ids/front/0kXHCQcymtrjVrdMikSi6MVXWMfKXrOHk2pssRsC.png', 'resident_ids/back/2xv5luYytOQ4Mfcl8tnTmIfdRt5ll8lIcx8mgclA.png', 'Verified', NULL, '2026-02-12 05:56:44', NULL, NULL, '2026-02-09 19:53:54', '2026-02-16 16:21:48', NULL),
+(2, 'BGN-00011', 'BGN-2476', 'ads', 'a', 'a', NULL, '2002-12-09', 'Not Registered', 'Male', '09753657345', NULL, '123-ABCDE', 2, 3, 27, 'Head of Family', 2, 1, 5, 'New Resident', '2026-02-07', 0, 'Government ID', 'resident_ids/front/7IZ3yMIcms49PncVuY0FQQIDhNyKitKoGPHTjx16.png', 'resident_ids/back/pVk6b0WoNp5wf98ExQpsyAT8pB8STmiPvNL3PcyL.png', 'Verified', NULL, '2026-02-12 06:26:24', NULL, NULL, '2026-02-09 19:55:55', '2026-02-16 15:39:49', NULL),
 (3, NULL, 'BGN-2486', 'asd', 'asd', 'asd', NULL, '2002-12-12', 'Not Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Daughter', 4, 1, 1, 'New Resident', '2026-02-10', 1, 'Government ID', 'resident_ids/front/emqbdYai9Qm5qeB1IhtXkOWefWbTovherdZ9P9yQ.png', 'resident_ids/back/WieYosobJnlizJiRmGQSz09kkxT9HyQ6ZTJtqeir.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-10 06:21:39', '2026-02-14 12:35:28', NULL),
 (4, NULL, 'BGN-2318', 'asd', 'asd', 'asd', NULL, '2002-12-12', 'Not Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 2, 'Head of Family', 4, 1, 3, 'New Resident', '2026-02-10', 1, 'Government ID', 'resident_ids/front/65tfZKtqgcZfETzGRM4kjukIw7gPSUBk0EIvjx7x.png', 'resident_ids/back/9gxCvlHVX2OyrDY0vVUNrdptiNI2UGf1VoGVqpbX.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-10 06:22:48', '2026-02-15 03:01:31', NULL),
-(5, NULL, 'BGN-3048', 'a', 'a', 'a', NULL, '0012-02-21', 'Registered', 'Male', '09141391637', NULL, '123-A', 2, 3, 3, 'Head of Family', 5, 1, 3, 'New Resident', '2026-02-10', 1, 'Government ID', 'resident_ids/front/GJiFQapMTE76HZA0seTLPO4GjLplt5wpfn83Oyim.png', 'resident_ids/back/SeLMT0iBj19mFIeHQB4bqv6D4WJZykZ994VKHj2W.png', 'For Verification', NULL, NULL, NULL, NULL, '2026-02-10 07:05:44', '2026-02-15 03:03:24', NULL),
+(5, NULL, 'BGN-3048', 'a', 'a', 'a', NULL, '0012-02-21', 'Registered', 'Male', '09141391637', NULL, '123-A', 2, 3, 3, 'Head of Family', 5, 1, 3, 'New Resident', '2026-02-10', 1, 'Government ID', 'resident_ids/front/GJiFQapMTE76HZA0seTLPO4GjLplt5wpfn83Oyim.png', 'resident_ids/back/SeLMT0iBj19mFIeHQB4bqv6D4WJZykZ994VKHj2W.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-10 07:05:44', '2026-02-15 13:54:28', NULL),
 (6, NULL, 'BGN-7060', 'aasa', 'asa', 'asa', 'Jr.', '2002-12-21', 'Registered', 'Female', '09141391637', NULL, '123-A', 2, 3, 4, 'Head of Family', 3, 1, 2, 'New Resident', '2026-02-10', 1, 'Government ID', 'resident_ids/front/dI9ctqOlnt0xudfDDORF4h3XSm4J2cuAaw01yrS2.png', 'resident_ids/back/ytdTpC5Q52z3meuuAO30DY6gP6zci4ZwuGRw2WbK.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-10 07:19:35', '2026-02-15 03:12:37', NULL),
 (7, NULL, 'BGN-1744', 'aasa', 'asa', 'asa', 'Jr.', '2002-12-21', 'Registered', 'Female', '09141391637', NULL, '123-A', 2, 3, 6, 'Head of Family', 3, 1, 7, 'New Resident', '2026-02-10', 1, 'Government ID', 'resident_ids/front/WGnfIf088EhDIPXvIEcwjH3z56AvUlOMIdvmJG4z.png', 'resident_ids/back/bevbGMXJH7IkerDHcnrIaMqCTdmtJxk4E6fR5pZ1.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-10 07:20:49', '2026-02-10 07:20:49', NULL),
-(8, 'BGN-00026', 'BGN-5210', 'a', 'a', 'a', NULL, '2002-02-21', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Spouse', 6, 1, 6, 'New Resident', '2026-02-10', 1, 'Government ID', 'resident_ids/front/sEzO3Sk9HWbbmhupcVNR6uj2Z51z5DyyjdG6viYs.png', 'resident_ids/back/HZiseqs9LhccRuH3dSN96WqCOtp1YGqrtinjJ0gN.png', 'Verified', NULL, '2026-02-15 03:03:27', NULL, NULL, '2026-02-10 07:39:27', '2026-02-15 03:03:27', NULL),
+(8, 'BGN-00026', 'BGN-5210', 'a', 'a', 'a', NULL, '2002-02-18', 'Registered', 'Male', '09655259387', NULL, '12-AB', 2, 3, 22, 'Head of Family', 6, 1, 6, 'New Resident', '2026-02-07', 1, 'Government ID', 'resident_ids/front/sEzO3Sk9HWbbmhupcVNR6uj2Z51z5DyyjdG6viYs.png', 'resident_ids/back/HZiseqs9LhccRuH3dSN96WqCOtp1YGqrtinjJ0gN.png', 'Verified', NULL, '2026-02-15 03:03:27', NULL, NULL, '2026-02-10 07:39:27', '2026-02-16 16:02:45', NULL),
 (9, 'BGN-00013', 'BGN-1407', 'ewqewq', 'ewq', 'ewqew', 'Jr.', '0012-12-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Son', 1, 1, 7, 'New Resident', '2026-02-10', 1, 'Government ID', 'resident_ids/front/Hh6z3PoOOfsncHsFeDnwTbQvAEV7vlbaClpxbkRV.png', 'resident_ids/back/GId9kMkCcABtyoJsLPjlFCdIYyn7q7Ol0zkwob7D.png', 'Verified', NULL, '2026-02-12 08:38:39', NULL, NULL, '2026-02-10 10:00:50', '2026-02-12 08:38:39', NULL),
 (10, 'BGN-00016', 'BGN-3435', 'sdadsadsa', 'a', 'a', NULL, '0001-12-12', 'Registered', 'Male', '09655259387', NULL, '123', 2, 3, 12, 'Head of Family', 4, 1, 5, 'New Resident', '2026-02-11', 1, 'Government ID', 'resident_ids/front/ut7RdwHySinGOnzuKD7CZYNIDvybGUKYDiwWs8wF.png', 'resident_ids/back/mpfnJ2K551A2aYTIwduWYFcy7PzE4Kj6DZuiOR0b.png', 'Verified', NULL, '2026-02-14 12:51:32', NULL, NULL, '2026-02-10 17:29:30', '2026-02-14 12:51:32', NULL),
 (11, 'BGN-00014', 'BGN-5481', 'sdadsadsa', 'a', 'a', NULL, '0001-12-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Son', 4, 6, 3, 'New Resident', '2026-02-11', 1, 'Government ID', 'resident_ids/front/vNKsjK7Ez8G2gu6vY4OpryHLTsQx0ye0p7Ns5tzo.png', 'resident_ids/back/bLu7SS2U117f0D34aHtgEp39e9cnkQCmAGUWLgmn.png', 'Verified', NULL, '2026-02-12 08:41:24', NULL, NULL, '2026-02-10 17:31:20', '2026-02-12 08:41:24', NULL),
 (12, NULL, 'BGN-5196', 'sdadsadsa', 'a', 'a', NULL, '0001-12-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, NULL, 'Son', 3, 6, 6, 'New Resident', '2026-02-11', 1, 'Government ID', 'resident_ids/front/y3Bg0qXqo982wa7OfvIEAqOaM0OFLESBu55N0DGG.png', 'resident_ids/back/uglprYNyoc5Tf1yZdYydFYZEli7D7jxtGxvGPZp8.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-10 17:43:13', '2026-02-10 19:52:58', NULL),
-(13, 'BGN-00008', 'BGN-8866', 'a', 'a', 'sa', 'Jr.', '0011-03-21', 'Not Registered', 'Male', '09141391637', NULL, '123-A', 2, 3, 1, 'Son', 3, 1, 6, 'New Resident', '2026-02-11', 1, 'Government ID', 'resident_ids/front/VtPUCUH8IvNWJJvW8jCxl0dJd77qvdmnYwXseKUH.png', 'resident_ids/back/fT7bg8ZJgBHBxFJahIMaqwUeH3DPdGh4PpvS11Qe.png', 'Verified', NULL, '2026-02-12 05:47:33', NULL, NULL, '2026-02-10 20:22:54', '2026-02-12 05:47:33', NULL),
+(13, 'BGN-00008', 'BGN-8866', 'a', 'a', 'sa', 'Jr.', '0011-03-21', 'Not Registered', 'Male', '09141391637', NULL, '123-A', 2, 3, 1, 'Son', 3, 1, 6, 'New Resident', '2026-02-11', 1, 'Government ID', 'resident_ids/front/VtPUCUH8IvNWJJvW8jCxl0dJd77qvdmnYwXseKUH.png', 'resident_ids/back/fT7bg8ZJgBHBxFJahIMaqwUeH3DPdGh4PpvS11Qe.png', 'Verified', NULL, '2026-02-12 05:47:33', NULL, NULL, '2026-02-10 20:22:54', '2026-02-15 13:32:16', '2026-02-15 13:32:16'),
 (14, 'BGN-00001', 'BGN-2448', 'a', 'a', 'a', NULL, '2002-02-21', 'Registered', 'Male', '09931996212', NULL, '123-A', 2, 3, 1, 'Son', 1, 1, 5, 'New Resident', '2026-02-12', 1, 'Government ID', 'resident_ids/front/K3r550pCesqY83BgBW7VtUoWWcexeU1GzqOFvVto.png', 'resident_ids/back/7Cz1097CuA7MglDJX06knWQ5lBPPnZqsiLQ3xwg8.png', 'Verified', NULL, '2026-02-12 03:24:06', NULL, NULL, '2026-02-12 03:10:23', '2026-02-12 03:24:06', NULL),
 (15, 'BGN-00002', 'BGN-6499', 'aaaaaaaaaa', 'a', 'a', NULL, '2002-02-21', 'Not Registered', 'Male', '09931996212', NULL, '123-A', 2, 3, 1, 'Son', 1, 1, 6, 'New Resident', '2026-02-12', 1, 'Government ID', 'resident_ids/front/PCKCHaLsELbhxjVk8XrMtxGtmoxGk7ob2g2YgS3h.png', 'resident_ids/back/sBYfyBvZSOFf0WCehjsn1gxEHMTcTtV2PMHvxeGS.png', 'Verified', NULL, '2026-02-12 03:54:23', NULL, NULL, '2026-02-12 03:22:08', '2026-02-12 03:54:23', NULL),
 (16, NULL, 'BGN-9139', 'a', 'a', 'a', NULL, '2002-02-12', 'Not Registered', 'Male', '09655259387', NULL, '321-Z', 4, 8, NULL, 'Spouse', 1, 1, 1, 'New Resident', '2026-02-12', 1, 'Government ID', 'resident_ids/front/8t82Oy3gkFyV1VC5fRckN8qUCZ7jkhEn8YhgCKql.png', 'resident_ids/back/SWPql31ObbTxmeB250R6BgZYieiDr4RJar4voL6o.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-12 03:59:29', '2026-02-12 05:12:12', NULL),
 (17, 'BGN-00003', 'BGN-3638', 'a', 'a', 'a', NULL, '2002-02-12', 'Not Registered', 'Male', '09655259387', NULL, '321-Z', 4, 8, 10, 'Spouse', 7, 1, 1, 'New Resident', '2026-02-12', 1, 'Government ID', 'resident_ids/front/qyTZoFTtROONw7apA32bqT0dvPmMlmn2kAfJumcI.png', 'resident_ids/back/7eHVJiKrP6dO6L6OVx9j1f0GgDjFFFrmUNIfPnHQ.png', 'Verified', NULL, '2026-02-12 04:00:44', NULL, NULL, '2026-02-12 03:59:44', '2026-02-12 04:00:44', NULL),
 (18, 'BGN-00004', 'BGN-8351', 'ewqewqewq', NULL, 'a', NULL, '0202-02-12', 'Not Registered', 'Male', '09655259387', NULL, '123-A', 2, 4, 11, 'Head of Family', 6, 1, 3, 'New Resident', '2026-02-12', 0, 'Government ID', 'resident_ids/front/xR4Ir6Twzsa4HfQ38FblKjTHAHxOW8mq31wsdTRo.png', 'resident_ids/back/g19HMDcq7VWJ06IlHZa2HiZLRilBTr0cMXaFJxgS.png', 'Verified', NULL, '2026-02-12 05:10:28', NULL, NULL, '2026-02-12 05:09:22', '2026-02-12 05:10:28', NULL),
 (19, NULL, 'BGN-6881', 'ewqewqewq', NULL, 'a', NULL, '0202-02-12', 'Not Registered', 'Male', '09655259387', NULL, '123-A', 2, 4, NULL, 'Head of Family', 7, 1, 3, 'New Resident', '2026-02-12', 0, 'Government ID', 'resident_ids/front/NzHW8RK7luKv53eEpCSMQD8siAiCpC1JUTWk0SXv.png', 'resident_ids/back/4H4BXoHrYMJkwGKhD8FTHzSxaYA0iYZ3mXRh9SJK.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-12 05:13:00', '2026-02-12 05:45:56', NULL),
-(20, 'BGN-00005', 'BGN-0256', 's', NULL, 'a', NULL, '0012-12-12', 'Not Registered', 'Male', '09213058032', NULL, '123-A', 2, 3, 1, 'Head of Family', 4, 1, 4, 'New Resident', '2026-02-12', 0, 'Government ID', 'resident_ids/front/57MBRQU7BAR3QthWUd0RWIiOS5dei8T7SKIW1Dfd.png', 'resident_ids/back/Z9vDQ9TvYJ0OfvdSBzGpbvJgPWIn5lfQyD9ImJsU.png', 'Verified', NULL, '2026-02-12 05:21:59', NULL, NULL, '2026-02-12 05:21:10', '2026-02-12 05:21:59', NULL),
+(20, 'BGN-00005', 'BGN-0256', 's', NULL, 'a', NULL, '0012-12-12', 'Not Registered', 'Female', '09213058032', NULL, '123-B', 2, 3, 2, 'Head of Family', 4, 1, 4, 'New Resident', '2026-01-30', 0, 'Government ID', 'resident_ids/front/57MBRQU7BAR3QthWUd0RWIiOS5dei8T7SKIW1Dfd.png', 'resident_ids/back/Z9vDQ9TvYJ0OfvdSBzGpbvJgPWIn5lfQyD9ImJsU.png', 'Verified', NULL, '2026-02-12 05:21:59', NULL, NULL, '2026-02-12 05:21:10', '2026-02-16 08:42:39', NULL),
 (21, 'BGN-00007', 'BGN-2414', 's', NULL, 'a', NULL, '0012-12-12', 'Not Registered', 'Male', '09213058032', NULL, '123-A', 2, 3, 1, 'Spouse', 3, 1, 4, 'New Resident', '2026-02-12', 0, 'Government ID', 'resident_ids/front/VomXuQQfV0maVA0lb2rpOMcOLaWt8Famsn7ThHCl.png', 'resident_ids/back/mRuTUwFkOUEZvRGKPrxbEnEoHrkQ4unYvuN0DYJP.png', 'Verified', NULL, '2026-02-12 05:40:43', NULL, NULL, '2026-02-12 05:22:39', '2026-02-12 05:40:43', NULL),
 (22, NULL, 'BGN-2921', 'a', NULL, 'a', NULL, '0021-12-12', 'Not Registered', 'Male', '09655259387', NULL, '123-A', 1, 1, NULL, 'Head of Family', 1, 1, 2, 'New Resident', '2026-02-12', 0, 'Government ID', 'resident_ids/front/8lS1LiB0ww9eEbGmG0fy6RzYAudzxF0LMy0qDgsd.png', 'resident_ids/back/s9C8na9up9gOqTwE4Fff7QH5cv9XaARv2zgS0iUu.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-12 05:24:10', '2026-02-12 05:26:17', NULL),
 (23, 'BGN-00006', 'BGN-0531', 'a', NULL, 'a', NULL, '0021-12-12', 'Not Registered', 'Male', '09655259387', NULL, '123-A', 1, 1, 7, 'Head of Family', 3, 1, 5, 'New Resident', '2026-02-12', 0, 'Government ID', 'resident_ids/front/F9TGlBTu4SywfbDv9hpLWh9kylVg1ue97BHwbj2h.png', 'resident_ids/back/YnySXHBhS0PncaRN0P8Nd2DNpxkleZQa4hb0h5c7.png', 'Verified', NULL, '2026-02-12 05:25:02', NULL, NULL, '2026-02-12 05:24:38', '2026-02-12 05:25:02', NULL),
@@ -584,7 +687,7 @@ INSERT INTO `residents` (`id`, `barangay_id`, `tracking_number`, `first_name`, `
 (58, NULL, 'BGN-5933', 'a', 'a', 'a', NULL, '0001-02-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 4, NULL, 'Househelp', 2, 1, 1, 'Old Resident', '2004-01-01', 0, 'Barangay ID', 'resident_ids/front/mnnoOsMRLA2kNs41Mue5PY7bGc8mUHsyt3G1jFHe.png', 'resident_ids/back/4LxFQ0IFHoQnsboABSBvFAjmYZDloum6Rm75BYnj.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-14 10:31:07', '2026-02-14 10:31:07', NULL),
 (59, NULL, 'BGN-8240', 'a', 'a', 'a', NULL, '0213-03-21', 'Registered', 'Male', '09931996212', NULL, '123-A', 5, 9, NULL, 'Spouse', 2, 1, 2, 'Old Resident', '2000-01-01', 0, 'Barangay ID', 'resident_ids/front/gMUzSJPzEv3O2ydtLT5juGMZPlggNSidK7fZkCRN.png', 'resident_ids/back/ETMXpbm2WYoZBpLJttVX8CT90Ijt0HFIbc3CjqSl.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-14 10:56:05', '2026-02-14 10:56:05', NULL),
 (60, 'BGN-00019', 'BGN-0939', 'A', 'a', 'a', NULL, '0222-11-23', 'Registered', 'Female', '09655259387', NULL, '123-A', 2, 3, 1, 'Son', 3, 1, 2, 'Old Resident', '2007-11-21', 0, 'Barangay ID', 'resident_ids/front/v5IAZKNUPPyGVUrqEatGI737qWV8bCJ6nXVCQS1S.png', 'resident_ids/back/KdbbmGeG0LFkYEM6J0jWMLUki8nc0AzRYE2KMfg7.png', 'Verified', NULL, '2026-02-14 13:03:11', NULL, NULL, '2026-02-14 11:00:31', '2026-02-14 13:03:11', NULL),
-(61, 'BRGY-2026-53220', 'BGN-3277', 'Q', 'a', 'a', NULL, '0222-11-23', 'Registered', 'Female', '09655259387', NULL, '123-B', 2, 3, 2, 'Son', 3, 1, 2, 'New Resident', '2004-12-11', 0, 'Barangay ID', 'resident_ids/front/LbH95TTr3zqAiYdwIMWZRrpWCe6qYlmmnxEmElZj.png', 'resident_ids/back/wBzk7SqREiUD0S8N8MklhAYV8iuAcndjTMcnHt4u.png', 'Verified', NULL, '2026-02-14 12:47:06', NULL, NULL, '2026-02-14 11:02:16', '2026-02-14 12:47:06', NULL),
+(61, 'BRGY-2026-53220', 'BGN-3277', 'Q', 'a', 'a', NULL, '0222-11-23', 'Registered', 'Female', '09655259387', NULL, '123-B', 2, 3, 2, 'Son', 3, 1, 2, 'New Resident', '2004-12-11', 0, 'Barangay ID', 'resident_ids/front/LbH95TTr3zqAiYdwIMWZRrpWCe6qYlmmnxEmElZj.png', 'resident_ids/back/wBzk7SqREiUD0S8N8MklhAYV8iuAcndjTMcnHt4u.png', 'Verified', NULL, '2026-02-14 12:47:06', NULL, NULL, '2026-02-14 11:02:16', '2026-02-16 04:41:24', '2026-02-16 04:41:24'),
 (62, 'BGN-00018', 'BGN-7921', 'Z', 's', 'qq', NULL, '0212-03-21', 'Registered', 'Male', '09213058032', NULL, '123-A', 2, 4, 11, 'Spouse', 2, 1, 2, 'New Resident', '2005-11-12', 0, 'Barangay ID', 'resident_ids/front/gEfRGYjFTlIwy87SrpxZmtnyc4hXERG0DgJSTbwi.png', 'resident_ids/back/ko2K93VeKr8DtExBJHht2kAuwQLyocTQgxM8X07f.png', 'Verified', NULL, '2026-02-14 13:02:04', NULL, NULL, '2026-02-14 11:03:27', '2026-02-14 13:02:04', NULL),
 (63, 'BGN-00017', 'BGN-5047', 'a', 'a', 'a', NULL, '0002-03-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 4, 11, 'Househelp', 2, 1, 1, 'Old Resident', '0001-02-12', 1, 'Barangay ID', 'resident_ids/front/WemvUJ7Sp6hMxe0eFqRYwL98pzLbV20UozNlyl72.png', 'resident_ids/back/S7arYLDln5lVDVldyQS80rycitf4EvOluDLCbJWL.png', 'Verified', NULL, '2026-02-14 13:01:07', NULL, NULL, '2026-02-14 11:59:06', '2026-02-14 13:01:07', NULL),
 (64, 'BGN-00020', 'BGN-6192', 'a', 'a', 'a', NULL, '0021-03-21', NULL, 'Female', '09141391637', NULL, '123-A', 3, 5, 3, 'Househelp', NULL, 1, NULL, 'New Resident', NULL, 0, NULL, 'resident_ids/front/QHnLJV12oZeBylQMabNJdeThUEmel0Dlrg7eTMvo.png', 'resident_ids/back/V3nYhnABKg1ry8Q1Q2khslCoGXwYV5NhuFdtX9nd.png', 'Verified', NULL, '2026-02-14 13:54:01', NULL, NULL, '2026-02-14 13:53:39', '2026-02-14 13:54:01', NULL),
@@ -612,7 +715,7 @@ INSERT INTO `residents` (`id`, `barangay_id`, `tracking_number`, `first_name`, `
 (86, NULL, 'BGN-4314', 'wqsad', 'a', 'a', NULL, '2002-03-21', 'Registered', 'Female', '09141391637', NULL, '123-A', 3, 5, NULL, 'Househelp', 2, 1, NULL, 'New Resident', '0312-09-21', 0, NULL, 'resident_ids/front/Hj11jGsAOXdiQd0Akm82o68TtkW1OZB42LMK5Uhj.png', 'resident_ids/back/kihVI2YBXSNZhYh78oyX80Adb7yvYhSj9Ep1HlAz.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-14 14:43:08', '2026-02-14 14:43:08', NULL),
 (87, 'BGN-00023', 'BGN-2956', 'wqsaz', 'a', 'a', NULL, '2002-03-21', 'Registered', 'Female', '09141391637', NULL, '123-A', 3, 5, 3, 'Househelp', 2, 1, NULL, 'New Resident', '0312-09-21', 0, NULL, 'resident_ids/front/XROWMvPgtFOoolU2ca2leJtDhKCVk55tkNCcK4Wp.png', 'resident_ids/back/19X6QgihZjkUPuYqmGF7vV1MlPHv81ANdmU3svPN.png', 'Verified', NULL, '2026-02-14 14:45:46', NULL, NULL, '2026-02-14 14:43:13', '2026-02-14 14:45:46', NULL),
 (88, 'BGN-00022', 'BGN-0798', 'dsadq', 'q', 's', NULL, '0124-04-21', 'Registered', 'Male', '09655259387', NULL, '213', 3, 5, 13, 'Spouse', 4, 1, NULL, 'Old Resident', '2017-11-12', 0, NULL, 'resident_ids/front/qPXUjKmVfeY70QXPYgfjCOmeVnBbH1FyANG6jC1k.png', 'resident_ids/back/ofbCRy4Cc4vG6PW2i1ki3lP1bwcB64Vw5rIY6M2c.png', 'Verified', NULL, '2026-02-14 14:45:39', NULL, NULL, '2026-02-14 14:44:31', '2026-02-14 14:45:39', NULL),
-(89, 'BGN-00024', 'BGN-3546', 'dsadq', 'q', 's', NULL, '0124-04-21', 'Registered', 'Male', '09655259387', NULL, '213', 3, 5, 13, 'Spouse', 4, 1, NULL, 'Old Resident', '2017-11-12', 0, NULL, 'resident_ids/front/bofwzMa0gLP028R6oL49dgpdIkt4wMzrmtyDab6e.png', 'resident_ids/back/W48XDdM952ZnW5U3DUvS0daR94upbULm6OODUkMY.png', 'Verified', NULL, '2026-02-14 14:46:13', NULL, NULL, '2026-02-14 14:46:08', '2026-02-14 14:46:13', NULL),
+(89, 'BGN-00024', 'BGN-3546', 'dsadq', 'q', 's', NULL, '0124-04-21', 'Registered', 'Male', '09655259387', NULL, '213', 3, 5, 13, 'Spouse', 4, 1, NULL, 'Old Resident', '2017-11-12', 0, NULL, 'resident_ids/front/bofwzMa0gLP028R6oL49dgpdIkt4wMzrmtyDab6e.png', 'resident_ids/back/W48XDdM952ZnW5U3DUvS0daR94upbULm6OODUkMY.png', 'Verified', NULL, '2026-02-14 14:46:13', NULL, NULL, '2026-02-14 14:46:08', '2026-02-15 13:49:27', '2026-02-15 13:49:27'),
 (95, NULL, 'BGN-4716', 'a', 'a', 'a', NULL, '0001-02-12', 'Not Registered', 'Male', '09931996212', NULL, '123-AD', 3, 6, NULL, 'Son', 4, 1, NULL, 'New Resident', '2002-12-12', 0, NULL, 'resident_ids/front/6VBghF9zmINwuG7wSBi41NFEhJZ9vDKvSlZmbJOF.png', 'resident_ids/back/MBd4RONsbqFKvVL7MvRljBOiz5ieQgHO4qc1184B.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 01:33:23', '2026-02-15 01:33:23', NULL),
 (96, NULL, 'BGN-0115', 'a', 'a', 'a', 'Sr.', '0123-03-12', 'Not Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, NULL, 'Son', 3, 1, NULL, 'Old Resident', '2002-12-12', 0, NULL, 'resident_ids/front/7btaS73Uk5hxlQfySTSLGOfKl3aAfGCAvDlMlDpT.png', 'resident_ids/back/k465bUt1X7B8e4iugFu3YjoQxwhGJb9W7uckztoc.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 01:35:49', '2026-02-15 01:35:49', NULL),
 (97, NULL, 'BGN-5732', 'a', 'a', 'a', 'Sr.', '0123-03-12', 'Not Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, NULL, 'Son', 3, 1, NULL, 'Old Resident', '2002-12-12', 0, NULL, 'resident_ids/front/XVrkQusyrjzAWtiPDo3k4nilhUmEatoWyN4Dax8P.png', 'resident_ids/back/OK7oVAhWNABWM01eBOpV7XeHw1sRCoHa2pfK1a2u.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 01:36:16', '2026-02-15 01:36:16', NULL),
@@ -621,7 +724,7 @@ INSERT INTO `residents` (`id`, `barangay_id`, `tracking_number`, `first_name`, `
 (100, NULL, 'BGN-4204', 'a', 'a', 'a', NULL, '0021-12-12', 'Registered', 'Male', '09141391637', NULL, '123-A', 3, 5, NULL, 'Househelp', 4, 1, 4, 'Old Resident', '0012-02-21', 0, NULL, 'resident_ids/front/xUwDQTajVZBtC8nanXSgVWGWEhfmxMHQjW4QkmqC.png', 'resident_ids/back/tSztlHkMQsOcrbn02icoQHdRotop76uMBcn8ONB2.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 01:57:50', '2026-02-15 01:57:50', NULL),
 (101, NULL, 'BGN-5555', 'b', 'b', 'b', 'Sr.', '2020-11-11', 'Not Registered', 'Male', '09421849218', NULL, '123-A', 4, 7, NULL, 'Relative', 4, 1, 4, 'New Resident', '2020-12-11', 0, NULL, 'resident_ids/front/lDAJB3eEoLoubRMorrxJR3vw9O6Kijjt0pugoHPp.png', 'resident_ids/back/ypZnKNtbVgCIfbjdmXbgPhmJ2egeCMyMlYe8oKTi.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 02:00:35', '2026-02-15 02:00:35', NULL),
 (102, NULL, 'BGN-2686', 'b', 'b', 'b', 'Sr.', '2020-11-11', 'Not Registered', 'Male', '09421849218', NULL, '123-A', 4, 7, NULL, 'Relative', 4, 2, 4, 'New Resident', '2020-12-11', 0, NULL, 'resident_ids/front/SVK6zt8iy24y2QZP5jyhOiksKHtW9ZvNX3gd0Qt9.png', 'resident_ids/back/hvgml4yhX3ffrTnzjRPKrUCgZo71SVMIaItZ2v7A.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 02:03:27', '2026-02-15 02:03:27', NULL),
-(103, NULL, 'BGN-9424', 'b', 'b', 'b', 'Sr.', '2020-11-11', 'Not Registered', 'Male', '09421849218', NULL, '123-A', 4, 7, NULL, 'Relative', 4, 7, 8, 'New Resident', '2020-12-11', 0, NULL, 'resident_ids/front/IsyPRxV0JWmkrvq6YnIMBd7FH6dQnsrS3PHpZVBs.png', 'resident_ids/back/vcaabH7lVZhslb1K3IiMQTvHzCiLlQWfi6e9VlD5.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 02:06:19', '2026-02-15 02:06:19', NULL),
+(103, NULL, 'BGN-9424', 'b', 'b', 'b', 'Sr.', '2020-11-11', 'Not Registered', 'Male', '09421849218', NULL, '123-A', 4, 7, NULL, 'Relative', 4, 7, NULL, 'New Resident', '2020-12-11', 0, NULL, 'resident_ids/front/IsyPRxV0JWmkrvq6YnIMBd7FH6dQnsrS3PHpZVBs.png', 'resident_ids/back/vcaabH7lVZhslb1K3IiMQTvHzCiLlQWfi6e9VlD5.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 02:06:19', '2026-02-15 02:06:19', NULL),
 (104, NULL, 'BGN-0905', 'b', 'b', 'b', 'Sr.', '2020-11-11', 'Not Registered', 'Male', '09421849218', NULL, '123-A', 4, 7, NULL, 'Relative', 4, 1, 1, 'New Resident', '2020-12-11', 0, NULL, 'resident_ids/front/RlTDlbSdx8BiBNNxCpJ1Zx754N9enR6W9zkdGM7W.png', 'resident_ids/back/T8lnoBrcXmYPhAcqTH2dABArZ3A6iHs6hP2H8fkk.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 02:07:32', '2026-02-15 02:07:32', NULL),
 (105, NULL, 'BGN-8996', 'b', 'b', 'b', 'Sr.', '2020-11-11', 'Not Registered', 'Male', '09421849218', NULL, '123-A', 4, 7, NULL, 'Relative', 4, 8, 1, 'New Resident', '2020-12-11', 0, NULL, 'resident_ids/front/KhWvhInj0BxYS1UzqU3Twv5KgSMpCmgyS92lLRw9.png', 'resident_ids/back/VgfElciQfvKdwuZodurJmy0hZCf25aNqLwKCZAHO.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 02:08:17', '2026-02-15 02:08:17', NULL),
 (106, NULL, 'BGN-7196', 'b', 'b', 'b', 'Sr.', '2020-11-11', 'Not Registered', 'Male', '09421849218', NULL, '123-A', 4, 7, NULL, 'Relative', 2, 8, 6, 'New Resident', '2020-12-11', 0, NULL, 'resident_ids/front/6tzxkCENuluQH3nleU1V3GRT2rT8sO1lEvW1TEQw.png', 'resident_ids/back/ggmoFawZUPKaa7BL7nv17H4GjM9DZbivEWWeDdnk.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 02:08:38', '2026-02-15 02:08:38', NULL),
@@ -639,7 +742,52 @@ INSERT INTO `residents` (`id`, `barangay_id`, `tracking_number`, `first_name`, `
 (118, 'BGN-00025', 'BGN-5465', 'D', 'a', 'a', 'III', '0021-03-21', 'Not Registered', 'Male', '09141391637', NULL, '123-A', 1, 1, 7, 'Son', 1, 1, 1, 'Old Resident', '0121-02-12', 0, NULL, 'resident_ids/front/MRYsvkqRpW3f5U6YGMTfQ2GzKDmSSqrnhvNVaKAH.png', 'resident_ids/back/OxZRNbuc3fK4yQjIp5k00uFMjXrjJAjaoUuILpOD.png', 'Verified', NULL, '2026-02-15 03:00:34', NULL, NULL, '2026-02-15 02:59:54', '2026-02-15 03:00:34', NULL),
 (119, 'BGN-00027', 'BGN-1722', 'D', 'a', 'a', 'III', '0021-03-21', 'Not Registered', 'Male', '09141391637', NULL, '123-A', 1, 1, 7, 'Son', 1, 1, 1, 'Old Resident', '0121-02-12', 0, NULL, 'resident_ids/front/qFjsqVKS2xk2BH8eQQXZpHMCoMkDldf9rBc7rOxE.png', 'resident_ids/back/YPAtAFUC0wXr3J0OpX2ifrccLq7okEtzF22VzoEh.png', 'Verified', NULL, '2026-02-15 03:12:25', NULL, NULL, '2026-02-15 03:12:11', '2026-02-15 03:12:25', NULL),
 (120, NULL, 'BGN-7695', 'E', 'e', 'e', 'Sr.', '2002-12-12', 'Registered', 'Male', '09354898564', NULL, '123-A', 1, 1, NULL, 'Son', 4, 1, 2, 'Old Resident', '2002-02-11', 0, NULL, 'resident_ids/front/ZooryFCLIMOjbS7Zvw7cVm31szFF8iF6CQElByPW.png', 'resident_ids/back/KeNzKA3q5bU8Tmh3SSBp1LQPm3jOeyeYefUR8M5L.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 03:30:03', '2026-02-15 03:30:03', NULL),
-(121, 'BGN-00028', 'BGN-4572', 'E', 'e', 'e', 'Sr.', '2002-12-12', 'Registered', 'Male', '09354898564', NULL, '321-A', 1, 1, 14, 'Son', 4, 1, 2, 'Old Resident', '2002-02-11', 0, NULL, 'resident_ids/front/q7s4KWGPzOjZZGWOkxPlgStC07OKvR6533RKyDr4.png', 'resident_ids/back/2xdW7WZKrCXcW84LfQ9mHplijV9AyBhbhWQaKWUS.png', 'Verified', NULL, '2026-02-15 03:33:53', NULL, NULL, '2026-02-15 03:33:24', '2026-02-15 03:33:53', NULL);
+(121, 'BGN-00028', 'BGN-4572', 'E', 'e', 'e', 'Sr.', '2002-12-12', 'Registered', 'Male', '09354898564', NULL, '321-A', 1, 1, 14, 'Son', 4, 1, 2, 'Old Resident', '2002-02-11', 0, NULL, 'resident_ids/front/q7s4KWGPzOjZZGWOkxPlgStC07OKvR6533RKyDr4.png', 'resident_ids/back/2xdW7WZKrCXcW84LfQ9mHplijV9AyBhbhWQaKWUS.png', 'Verified', NULL, '2026-02-15 03:33:53', NULL, NULL, '2026-02-15 03:33:24', '2026-02-15 03:33:53', NULL),
+(122, 'BGN-00029', 'BGN-0755', 'F', 'G', 'H', 'III', '2005-10-12', 'Registered', 'Female', '09655259387', NULL, '123-C', 3, 5, 15, 'Spouse', 2, 1, 3, 'Old Resident', '2002-12-12', 0, NULL, 'resident_ids/front/OMKoIuOtkcaBJqKMSIszaZX3WEZloIqr4YnoOO9Z.png', 'resident_ids/back/kwm3IwJesV3gWzIK07jERlhJPbkyLqppOjVxY0I6.png', 'Verified', NULL, '2026-02-15 04:11:21', NULL, NULL, '2026-02-15 04:10:44', '2026-02-15 04:11:21', NULL),
+(123, NULL, 'BGN-5011', 'F', 'G', 'H', 'III', '2005-10-12', 'Registered', 'Female', '09655259387', NULL, '123-C', 3, 5, NULL, 'Spouse', 2, 1, 3, 'Old Resident', '2002-12-12', 0, NULL, 'resident_ids/front/3wS3znP9AQjLuLRlQV9HPIx6mtYLru7crYSmcJVs.png', 'resident_ids/back/Ui6v8Tvzr8s1PU3OVi3e68AWyg4FxFvHVIKta6S5.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-15 04:13:15', '2026-02-15 04:24:46', NULL),
+(124, 'BGN-00030', 'BGN-5279', 'F', 'G', 'H', 'III', '2005-10-12', 'Registered', 'Female', '09655259387', NULL, '123-C', 3, 5, 15, 'Spouse', 2, 1, 3, 'Old Resident', '2002-12-12', 1, NULL, 'resident_ids/front/yB721RNqUwmKaCgd4BhN8Rk0xsMO0rkB4bFCmzPm.png', 'resident_ids/back/2bZgr6Ulv81ImQEAOEOzw005rASI54rz5jt4pyxJ.png', 'Verified', NULL, '2026-02-15 04:24:28', NULL, NULL, '2026-02-15 04:22:48', '2026-02-15 04:24:28', NULL),
+(125, 'BGN-00031', 'BGN-0276', 'G', 'H', 'I', 'Jr.', '2009-12-12', 'Registered', 'Male', '09655259387', NULL, '5', 3, 5, 16, 'Spouse', 1, 1, 2, 'Old Resident', '2003-02-01', 1, NULL, 'resident_ids/front/qOTiu3apliPZJ1bOd65jPSKKMGOKYvsaP9UZsAtK.png', 'resident_ids/back/j0fK0bq30R2pfjRMSdrMhMmII7y1PuhdkwKnzE9k.png', 'Verified', NULL, '2026-02-15 04:32:17', NULL, NULL, '2026-02-15 04:31:11', '2026-02-15 04:32:17', NULL),
+(126, NULL, 'BGN-7067', 'G', 'H', 'I', 'Jr.', '2009-12-12', 'Registered', 'Male', '09655259387', NULL, '5', 3, 5, NULL, 'Spouse', 1, 1, 2, 'Old Resident', '2003-02-01', 1, NULL, 'resident_ids/front/8UKxlXowy01k4PK0MiISbOqD4XQe2VDNLrhhbLxx.png', 'resident_ids/back/dzdmxMEDTS2SCL2fM0mI1YciwI8dfegbNsy0jiBz.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-15 04:32:37', '2026-02-15 04:32:44', NULL),
+(127, NULL, 'BGN-6466', 'G', 'H', 'I', 'Jr.', '2009-12-12', 'Registered', 'Male', '09655259387', NULL, '5', 3, 5, NULL, 'Spouse', 1, 1, 2, 'Old Resident', '2003-02-01', 1, NULL, 'resident_ids/front/9LwWz964jzGfxt5ExkSysZLiIgZjpUkJwYv8tcen.png', 'resident_ids/back/cIphuueIaAb9lKn6gT0cR223NutEroj6HUKHv4wC.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 04:33:01', '2026-02-15 04:33:01', NULL);
+INSERT INTO `residents` (`id`, `barangay_id`, `tracking_number`, `first_name`, `middle_name`, `last_name`, `suffix`, `birthdate`, `birth_registration`, `gender`, `contact_number`, `email`, `temp_house_number`, `temp_purok_id`, `temp_street_id`, `household_id`, `household_position`, `marital_status_id`, `nationality_id`, `sector_id`, `residency_status`, `residency_start_date`, `is_voter`, `id_type`, `id_front_path`, `id_back_path`, `status`, `temp_password`, `verified_at`, `verified_by`, `rejection_reason`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(128, 'BGN-00032', 'BGN-8590', 'K', 'L', 'M', 'III', '1937-02-15', 'Not Registered', 'Male', '09277272672', NULL, '1-A', 7, 14, 17, 'Relative', 4, 10, 5, 'New Resident', '2022-02-15', 0, NULL, 'resident_ids/front/JS8gUWjzERk8qYchRGP0W2JTVwsA0VOxHZaquEcj.jpg', 'resident_ids/back/9p1mhAuMLeundweGJ9BYsStzVYoontXmyVreXhAi.jpg', 'Verified', NULL, '2026-02-15 04:35:46', NULL, NULL, '2026-02-15 04:35:09', '2026-02-15 04:35:46', NULL),
+(129, 'BGN-00033', 'BGN-8326', 'G', 'H', 'I', 'Jr.', '2009-12-12', 'Registered', 'Male', '09655259387', NULL, '5', 3, 5, 16, 'Spouse', 1, 1, 2, 'Old Resident', '2003-02-01', 1, NULL, 'resident_ids/front/QnfAu57TSsqbgNlDtZB30IsPnoKL3CG80wR6tEM7.png', 'resident_ids/back/yRZzWKOZO7Uq3wbYJNv9biK5MMiKi1FJ2eFBccDf.png', 'Verified', NULL, '2026-02-15 04:36:48', NULL, NULL, '2026-02-15 04:36:20', '2026-02-15 04:36:48', NULL),
+(130, NULL, 'BGN-6963', 'N', NULL, 'P', NULL, '2001-12-12', 'Not Registered', 'Male', '09141391637', NULL, '123-B', 3, 6, NULL, 'Spouse', 3, 2, 2, 'Old Resident', '2000-02-11', 1, NULL, 'resident_ids/front/Kyny0uNj4GaE9rUvJpRSFphe5AeMHWiiRwV1EL7Z.png', 'resident_ids/back/fF6nLHIhlkQgONhincNCQGKMyuAaYk1zNEwUQuDT.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 06:00:16', '2026-02-15 06:00:16', NULL),
+(131, 'BGN-00034', 'BGN-7899', 'N', NULL, 'P', NULL, '2001-12-12', 'Not Registered', 'Male', '09141391637', NULL, '123-B', 3, 6, 18, 'Spouse', 3, 2, 2, 'Old Resident', '2000-02-11', 1, NULL, 'resident_ids/front/WSgOXAxa2gAepaKuqwOetnWZeA40X8zK4qFk6JAn.png', 'resident_ids/back/2bc5bOObod5GJ9lsNnSt6EJMWbIiTVadzC7GMouF.png', 'Verified', NULL, '2026-02-15 06:01:06', NULL, NULL, '2026-02-15 06:00:28', '2026-02-15 06:01:06', NULL),
+(132, NULL, 'BGN-5323', 'N', NULL, 'P', NULL, '2001-12-12', 'Not Registered', 'Male', '09141391637', NULL, '123-B', 3, 6, NULL, 'Spouse', 3, 2, 2, 'Old Resident', '2000-02-11', 1, NULL, 'resident_ids/front/mZ9FvaDn8Dt4h5cKCREWfXFwXtr0pOY66h2zRPnI.png', 'resident_ids/back/TTyh8RzOBU3PEHcZDSTaehrvkye2GsQOK3xhzWlk.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 06:01:26', '2026-02-15 06:01:26', NULL),
+(133, 'BGN-00035', 'BGN-5321', 'Q', NULL, 'R', NULL, '0231-12-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 1, 2, 19, 'Son', 4, 1, 3, 'New Resident', '1321-03-12', 1, NULL, 'resident_ids/front/XJbOKthYqQeEAnzGNpTHf9XWwmGteziwyyujdQil.png', 'resident_ids/back/jFjdhIG2zo268vnU6OuaSwuJUwxkviM2otQOyBi7.png', 'Verified', NULL, '2026-02-15 06:04:27', NULL, NULL, '2026-02-15 06:04:14', '2026-02-15 06:04:27', NULL),
+(134, 'BGN-00036', 'BGN-5710', 'a', 'a', 'a', NULL, '0012-03-12', 'Registered', 'Male', '09213058032', NULL, '123-A', 2, 3, 1, 'Relative', 2, 1, 2, 'New Resident', '0021-03-21', 1, NULL, 'resident_ids/front/ruL8vXbLHBPXTjOua2lSkXe0Sc94w3XZ9kIeQtW0.png', 'resident_ids/back/i4VdyrMYOw1TjKWp5ac70pDWxKAkaPvzfMs64C4J.png', 'Verified', NULL, '2026-02-15 06:26:28', NULL, NULL, '2026-02-15 06:26:16', '2026-02-15 06:26:28', NULL),
+(135, NULL, 'BGN-7170', 'a', 'a', 'a', NULL, '0012-03-12', 'Registered', 'Male', '09213058032', NULL, '123-A', 2, 3, NULL, 'Relative', 2, 1, 2, 'New Resident', '0021-03-21', 1, NULL, 'resident_ids/front/KK1I7ia9iHAXgN6bMptjQ3mFafat8ITA7teKDzic.png', 'resident_ids/back/fvxe4qbzqIHa9f5NwLyA7HTzpBPxq5LKO3EpM17s.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-15 09:22:20', '2026-02-15 09:22:20', NULL),
+(136, 'BGN-00037', 'BGN-2133', 'a', 'a', 'a', 'III', '0012-03-12', 'Registered', 'Male', '09213058032', NULL, '123-A', 2, 3, 1, 'Relative', 2, 1, 2, 'New Resident', '0021-03-21', 1, NULL, 'resident_ids/front/N3py3uE882l8kLqBIJmdugLjpelUFV1tcpz4Sige.png', 'resident_ids/back/qg5t88EzVLZ59P5IwC3b7kEgpbszuY9rbDrIsR4H.png', 'Verified', NULL, '2026-02-15 09:22:46', NULL, NULL, '2026-02-15 09:22:32', '2026-02-15 09:22:46', NULL),
+(137, 'BGN-00043', 'BGN-2893', 'a', 'a', 'a', NULL, '2002-03-12', 'Registered', 'Male', '09141391637', NULL, '123-A', 1, 1, 7, 'Spouse', 2, 1, 4, 'New Resident', '2001-02-21', 1, NULL, 'resident_ids/front/RfAunElBU25WiLGF13cY5wcXFZooSoG1WGH4yfLb.png', 'resident_ids/back/UefzVZ87eBgzrpvQUHGyudDvsmVquLWrvbnkHaCK.png', 'Verified', NULL, '2026-02-15 22:00:25', NULL, NULL, '2026-02-15 10:15:30', '2026-02-15 22:00:25', NULL),
+(138, 'BGN-00042', 'BGN-3295', 'a', 'a', 'a', NULL, '2002-03-12', 'Registered', 'Male', '09141391637', NULL, '123-A', 1, 1, 7, 'Spouse', 2, 1, 3, 'New Resident', '2001-02-21', 1, NULL, 'resident_ids/front/ZnVR9dSbyH7CBoYMI06BH8blMvKMnrBFqaFjx4KN.png', 'resident_ids/back/Qn58VGdSHq5ir0zzpDkrJKVB9a4t64ibsooPVwTH.png', 'Verified', NULL, '2026-02-15 21:59:32', NULL, NULL, '2026-02-15 10:15:48', '2026-02-15 21:59:32', NULL),
+(139, 'BGN-00041', 'BGN-3195', 'a', 'a', 'a', NULL, '2002-03-12', 'Registered', 'Male', '09141391637', NULL, '123-A', 1, 1, 7, 'Spouse', 2, 1, 3, 'New Resident', '2001-02-21', 1, NULL, 'resident_ids/front/BoYAnhCEzR5x2SZYGssM5LmOZmd7dmxtzsn9VPPq.png', 'resident_ids/back/PJVQwldwOzx0eEGPJM9Jwc36N3HW8jzoJcStp9Xg.png', 'Verified', NULL, '2026-02-15 13:54:50', NULL, NULL, '2026-02-15 11:11:58', '2026-02-15 13:54:50', NULL),
+(140, 'BGN-00038', 'BGN-6322', 'a', 'a', 'a', NULL, '0321-03-12', 'Registered', 'Male', '09354898564', NULL, '123-A', 2, 3, 1, 'Daughter', 2, 2, 2, 'Old Resident', '2018-03-21', 1, NULL, 'resident_ids/front/o9JwXBMuLHZ2Jpt6zlznpzo4aPlHqm9OuwNmrqLs.png', 'resident_ids/back/yTxhwrVYgeFh1X9lhb461Xiy6nYhTSgyTgI2czRz.png', 'Verified', NULL, '2026-02-15 11:13:33', NULL, NULL, '2026-02-15 11:13:18', '2026-02-15 11:13:33', NULL),
+(141, 'BGN-00039', 'BGN-5855', 'a', 'a', 'a', NULL, '1231-03-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 4, 11, 'Daughter', 2, 1, 3, 'Old Resident', '2002-01-31', 1, NULL, 'resident_ids/front/lnqEwolsRzqCmXoSDLumKoYrpno8PLBfAoBXBYkH.png', 'resident_ids/back/Rgv80zso8z0tGqQYbt4tFO8pudQd0riefNPMXVeH.png', 'Verified', NULL, '2026-02-15 13:52:22', NULL, NULL, '2026-02-15 13:52:09', '2026-02-15 13:52:22', NULL),
+(142, NULL, 'BGN-9482', 'aa', 'a', 'a', NULL, '1231-03-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 4, NULL, 'Daughter', 2, 1, 3, 'Old Resident', '2002-01-31', 1, NULL, 'resident_ids/front/qDsRA61CzGhIHwZDapS87cnoDzJMWHMrNXBDtQIN.png', 'resident_ids/back/rJGYyct5V0cecu1c1OlPARRIm9mpEbBecpTBNJPa.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-15 13:53:46', '2026-02-15 13:53:57', NULL),
+(143, 'BGN-00040', 'BGN-5475', 'aas', 'a', 'a', NULL, '1231-03-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 4, 11, 'Daughter', 2, 1, 3, 'Old Resident', '2002-01-31', 1, NULL, 'resident_ids/front/1ZnF3QQrcvPEHVUkQ75bY4BTzWoKb28Tc51AqhDK.png', 'resident_ids/back/GhW3tott5VuFET0cxMu2iq73m76SBg05byflfbRm.png', 'Verified', NULL, '2026-02-15 13:54:32', NULL, NULL, '2026-02-15 13:54:03', '2026-02-15 13:54:32', NULL),
+(144, 'BGN-00044', 'BGN-2890', 'a', 'a', 'a', NULL, '2002-12-12', 'Not Registered', 'Male', '09213058032', NULL, '123-A', 2, 4, 11, 'Son', 3, 1, 3, 'New Resident', '2002-02-11', 1, NULL, 'resident_ids/front/132NX5YqkIAfe53FfgP3KTOT7aI4hAYtvm91ZkX2.png', 'resident_ids/back/2PeR5wX2bVblSZmf4vlclAE13nU7Y8NhZbwWMtc2.png', 'Verified', NULL, '2026-02-16 04:35:25', NULL, NULL, '2026-02-16 04:32:31', '2026-02-16 04:35:25', NULL),
+(145, NULL, 'BGN-4923', 'a', 'a', 'a', NULL, '2002-12-12', 'Not Registered', 'Male', '09213058032', NULL, '123-A', 2, 4, NULL, 'Son', 3, 1, 3, 'New Resident', '2002-02-11', 1, NULL, 'resident_ids/front/qWjNTY8zygpmm079sc5aSVZ7QAEXgPYI0s2AplFO.png', 'resident_ids/back/oQHs68xOo3KdwgKmb8uzCgOiZtjmx16UiOoMPWj2.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-16 06:28:58', '2026-02-16 06:28:58', NULL),
+(146, 'BGN-00045', 'BGN-9169', 'a', 'a', 'a', NULL, '2002-12-12', 'Not Registered', 'Male', '09213058032', NULL, '123-A', 2, 4, 11, 'Son', 3, 1, 3, 'New Resident', '2002-02-11', 1, NULL, 'resident_ids/front/yxx4ECody13Dt75JniQ1ITHLaW8X829AxmNS4UaS.png', 'resident_ids/back/4o6uAoCkgNsZioSKEgPTfFxrAjjepw0GybNAaTg3.png', 'Verified', NULL, '2026-02-16 06:29:24', NULL, NULL, '2026-02-16 06:29:06', '2026-02-16 06:34:09', '2026-02-16 06:34:09'),
+(147, 'BGN-00059', 'BGN-2345', 'a', 'a', 'a', NULL, '2002-12-12', 'Not Registered', 'Male', '09213058032', NULL, '123-AB', 2, 4, 21, 'Son', 3, 1, 3, 'New Resident', '2002-02-11', 1, NULL, 'resident_ids/front/M8oT5TmtCPWtOERrS65dz8ApZHssh2fpoWm9VORv.png', 'resident_ids/back/bJ4J0BHBCLVq82qlW2ofj6bOMnM4Sb3XiC3bTy9X.png', 'Verified', NULL, '2026-02-16 17:16:13', NULL, NULL, '2026-02-16 06:46:56', '2026-02-16 17:16:13', NULL),
+(148, 'BGN-00046', 'BGN-5549', 'a', 'a', 'a', NULL, '2002-12-12', 'Not Registered', 'Male', '09213058032', NULL, '123-AB', 2, 4, 21, 'Son', 3, 1, 3, 'New Resident', '2002-02-11', 1, NULL, 'resident_ids/front/DAX2gkiDIq0NwWzpUAbtSyMHBfw2DWY89fW4IMDL.png', 'resident_ids/back/LJKLK8DIRjZ7cg1pK8QUM5VUFnd14GIKYKA12bws.png', 'Verified', NULL, '2026-02-16 07:01:13', NULL, NULL, '2026-02-16 06:52:05', '2026-02-16 07:01:13', NULL),
+(149, NULL, 'BGN-8288', 'a', 'a', 'a', 'Sr.', '0122-02-21', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, NULL, 'Relative', 3, 1, 2, 'Old Resident', '0123-12-12', 1, NULL, 'resident_ids/front/plLzNw5Z8alol78nIJ4GPfd8UIwmsCZeVgc1etQC.png', 'resident_ids/back/MKgcDfKNDmLAlpbjjluRQFMywGfqp76NP51joUyA.png', 'Pending', NULL, NULL, NULL, NULL, '2026-02-16 07:07:53', '2026-02-16 07:07:53', NULL),
+(150, 'BGN-00047', 'BGN-6601', 'a', 'a', 'a', 'Sr.', '2020-02-21', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Relative', 3, 1, 3, 'Old Resident', '0123-12-12', 1, NULL, 'resident_ids/front/16RFTCISfqOhywopPSIYzVaR3psaZso8wiu7yuFD.png', 'resident_ids/back/6QF4WWz7h0n52GwiyObChMOptcmEXRNj00lRSwZG.png', 'Verified', NULL, '2026-02-16 07:09:39', NULL, NULL, '2026-02-16 07:09:16', '2026-02-16 07:09:39', NULL),
+(151, 'BGN-00062', 'BGN-4961', 'a', 'a', 'a', 'Sr.', '2020-02-21', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Relative', 3, 1, 3, 'Old Resident', '0123-12-12', 1, NULL, 'resident_ids/front/xsVbbpLzDaPzVbcRL2G5m3GXupbZYb7HcSCetrpp.png', 'resident_ids/back/BKQObDAU4v1mhqg6Qoti6DMLbCq8UGTQyRp5TPCe.png', 'Verified', NULL, '2026-02-16 17:28:26', NULL, NULL, '2026-02-16 07:16:41', '2026-02-16 17:28:26', NULL),
+(152, 'BGN-00050', 'BGN-7146', 'a', 'a', 'a', 'Sr.', '2020-02-21', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Relative', 3, 1, 3, 'Old Resident', '0123-12-12', 1, NULL, 'resident_ids/front/IfFxasmlBXawcV3KqupQppTPecCm8nAe23IaO4sc.png', 'resident_ids/back/LP9mkRTBL5bLiO0UkZnukaNA03nPhs4PDMgeDdfS.png', 'Verified', NULL, '2026-02-16 09:09:46', NULL, NULL, '2026-02-16 07:17:25', '2026-02-16 09:09:46', NULL),
+(153, 'BGN-00048', 'BGN-2285', 'a', 'a', 'a', 'Sr.', '2020-02-21', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Relative', 3, 1, 3, 'Old Resident', '0123-12-12', 1, NULL, 'resident_ids/front/nGTSlumV1OySSfx0mM1y46xuzP7jGD7j21sdsSqA.png', 'resident_ids/back/fasBuKQp6N4y4St9QRpa8jOCNUIPMnUTN8CfRsFq.png', 'Verified', NULL, '2026-02-16 08:11:00', NULL, NULL, '2026-02-16 08:10:51', '2026-02-16 08:11:00', NULL),
+(154, 'BGN-00049', 'BGN-9252', 'a', 'a', 'a', 'Sr.', '2020-02-21', 'Registered', 'Male', '09655259387', NULL, '123-A', 2, 3, 1, 'Relative', 3, 1, 3, 'Old Resident', '0123-12-12', 1, NULL, 'resident_ids/front/0jwVTKUsajRMEWG8G552cWM10BPl8RHlEt1WBGqL.png', 'resident_ids/back/7RE5GyvoskK7COEfT8Hv5Mf6JytuN9sTyjOG8Yvv.png', 'Verified', NULL, '2026-02-16 09:04:40', NULL, NULL, '2026-02-16 09:04:28', '2026-02-16 09:04:40', NULL),
+(155, 'BGN-00054', 'BGN-5628', 'a', 'a', 'a', NULL, '1321-03-12', 'Registered', 'Male', '09141391637', NULL, '123-A', 2, 4, 11, 'Son', 3, 2, 3, 'New Resident', '2018-12-12', 1, NULL, 'resident_ids/front/Mu6ho610d8XPHgg6Boy5g0Oi6RWqedXlnNRjMCuK.png', 'resident_ids/back/iaKZgKHurWYbNHxh6yDPiYVRLnx8cjdjksbnOhhi.png', 'Verified', NULL, '2026-02-16 16:25:43', NULL, NULL, '2026-02-16 09:28:04', '2026-02-16 16:25:43', NULL),
+(156, 'BGN-00051', 'BGN-8419', 'a', 'a', 'a', NULL, '1321-03-12', 'Registered', 'Male', '09141391637', NULL, '123-A', 2, 4, 11, 'Son', 3, 2, 3, 'New Resident', '2018-12-12', 1, NULL, 'resident_ids/front/ivT489ACI2vtkSXscYt3WaEkExLHDH3PBSeZz6Zd.png', 'resident_ids/back/XbGAgN1kJN41PZav8iuiWuF1HD7fvVfzlabMrpng.png', 'Verified', NULL, '2026-02-16 09:28:51', NULL, NULL, '2026-02-16 09:28:27', '2026-02-16 09:28:51', NULL),
+(157, 'BGN-00052', 'BGN-9684', 'a', 'a', 'a', NULL, '0013-03-12', 'Registered', 'Male', '09655259387', NULL, '123-A', 3, 6, 26, 'Spouse', 2, 1, 1, 'Old Resident', '2002-02-12', 1, NULL, 'resident_ids/front/MZGbA3RWIPv8A1MJqZo14yUIRiQZB1pAoDTn0wqF.png', 'resident_ids/back/SxjGmRClFvrfDyZ6UqrofGB3AcJ8ni9htjdsXuz0.png', 'Verified', NULL, '2026-02-16 10:48:34', NULL, NULL, '2026-02-16 10:48:17', '2026-02-16 11:04:23', '2026-02-16 11:04:23'),
+(158, 'BGN-00053', 'BGN-9530', 'a', 'a', 'dsa', NULL, '1321-03-21', 'Not Registered', 'Male', '09141391637', NULL, '123-A', 1, 2, 19, 'Son', 4, 1, 6, 'Old Resident', '2002-12-12', 1, NULL, 'resident_ids/front/vZH6jUp479y2gBFa9ARxV4HERu5DkhLiCqkbctJK.png', 'resident_ids/back/vFpPbifpXycRHim1n7OAyDmsil2LKKrrf9Oe9VLE.png', 'Verified', NULL, '2026-02-16 11:44:01', NULL, NULL, '2026-02-16 11:43:51', '2026-02-16 11:44:01', NULL),
+(159, 'BGN-00055', 'BGN-9634', 'a', 'a', 'a', NULL, '0003-12-12', 'Registered', 'Male', '09354898564', NULL, '123-A', 2, 3, 1, 'Spouse', 2, 1, 2, 'Old Resident', '0321-12-12', 1, NULL, 'resident_ids/front/mh4sw1zucMlCN9s3sqefUQvDGKIC5l1ofxuplQRe.png', 'resident_ids/back/4Y6h9nDKV3OPGw7bLDmdHIUw96dYsy01luua1RNk.png', 'Verified', NULL, '2026-02-16 16:45:17', NULL, NULL, '2026-02-16 16:44:57', '2026-02-16 16:45:17', NULL),
+(160, 'BGN-00056', 'BGN-2580', 'Usus', 'Zz', 'Zzz', 'Jr.', '2007-02-16', 'Registered', 'Male', '09277272672', NULL, '123-A', 4, 7, 4, 'Relative', 5, 1, 4, 'New Resident', '2019-02-16', 1, NULL, 'resident_ids/front/PHL5W3g9rV4pFr64ykDqNYYuWgNJlZrRs0IQo9P8.jpg', 'resident_ids/back/D2V42yAtrym31Y8SnmKyRDKEQ6Kr3gfCFQhT8lrj.jpg', 'Verified', NULL, '2026-02-16 17:08:41', NULL, NULL, '2026-02-16 16:59:56', '2026-02-16 17:08:41', NULL),
+(161, 'BGN-00057', 'BGN-6697', 'a', 'a', 'a', NULL, '0021-03-12', 'Registered', 'Male', '09655259387', NULL, '12', 3, 5, 28, 'Son', 4, 1, 3, 'New Resident', '0021-03-21', 0, NULL, 'resident_ids/front/rBrameXqO3nuyJ4jcUzHB6GMMr9z9aOwSb8ICCAp.png', 'resident_ids/back/1APGc83GVANJHlksBTyQWr501QqZ6ttRUhLiU8Ap.png', 'Verified', NULL, '2026-02-16 17:09:31', NULL, NULL, '2026-02-16 17:09:19', '2026-02-16 17:09:31', NULL),
+(162, NULL, 'BGN-5164', 'a', 'a', 'a', NULL, '0021-03-12', 'Registered', 'Male', '09655259387', NULL, '12', 3, 5, NULL, 'Son', 4, 1, 3, 'New Resident', '0021-03-21', 0, NULL, 'resident_ids/front/328bGBCBkiTrjzrYtEuTEyQcZZA8lj5YS8EJ1NAu.png', 'resident_ids/back/1i1WDsv7W5vRSSN6Otxr6wlfpO50nWXhJBOJaICF.png', 'Rejected', NULL, NULL, NULL, NULL, '2026-02-16 17:15:45', '2026-02-16 17:19:46', NULL),
+(163, 'BGN-00058', 'BGN-0166', 'a', 'a', 'a', NULL, '0021-03-12', 'Registered', 'Male', '09655259387', NULL, '12', 3, 5, 28, 'Son', 4, 1, 3, 'New Resident', '0021-03-21', 0, NULL, 'resident_ids/front/BxbO7YAzKOCd1JDWvEGQFLADe1hFDBd1HJfXYKjc.png', 'resident_ids/back/Srpy8VtutmyvP0ptQ3WT7lUEQYKPU3edSTqq3dt0.png', 'Verified', NULL, '2026-02-16 17:16:05', NULL, NULL, '2026-02-16 17:15:59', '2026-02-16 17:16:05', NULL),
+(164, 'BGN-00060', 'BGN-6988', 'a', 'a', 'a', NULL, '0021-03-12', 'Registered', 'Male', '09655259387', NULL, '12', 3, 5, 28, 'Son', 4, 1, 3, 'New Resident', '0021-03-21', 0, NULL, 'resident_ids/front/MBBe8rw7lih0FCE55X213wJN96U4HenuaV9Q9IxC.png', 'resident_ids/back/0rYGVuswSPS1Xu3KhBpxQkXT4HLYTbW2tQxbntvj.png', 'Verified', NULL, '2026-02-16 17:19:37', NULL, NULL, '2026-02-16 17:19:26', '2026-02-16 17:19:37', NULL),
+(165, 'BGN-00061', 'BGN-4358', 'a', 'a', 'a', NULL, '0021-03-12', 'Registered', 'Male', '09655259387', NULL, '12', 3, 5, 28, 'Son', 4, 1, 3, 'New Resident', '0021-03-21', 0, NULL, 'resident_ids/front/jydpHRCxZp1Uqe9WkqZVcqbCNObH2i3Iq7RzlSyM.png', 'resident_ids/back/gy0QSPf3mQKlGwOq0WsnGxeH2HysAAi3qCM7afr3.png', 'Verified', NULL, '2026-02-16 17:20:39', NULL, NULL, '2026-02-16 17:20:28', '2026-02-16 17:20:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -671,7 +819,7 @@ INSERT INTO `resident_accounts` (`id`, `resident_id`, `username`, `password`, `l
 (5, 20, 'BGN-00005', '$2y$12$1o1wZj0ydwNcOyZePCLuFuRohwy66dkbOlS/nVmj2hP8UDRE0UBAe', NULL, 1, 1, '2026-02-12 05:21:59', '2026-02-12 05:21:59'),
 (6, 23, 'BGN-00006', '$2y$12$rpGLxdPnQfqHgMtdWvZnX.tcXw5St78UdTghNhL6QylAXJMq6WdX6', NULL, 1, 1, '2026-02-12 05:25:02', '2026-02-12 05:25:02'),
 (7, 21, 'BGN-00007', '$2y$12$kDqgqvDWGT4uMUy59vxyxO3oZyaguXfNfEEiA0eovAnD7VC06TLse', NULL, 1, 1, '2026-02-12 05:40:43', '2026-02-12 05:40:43'),
-(8, 13, 'BGN-00008', '$2y$12$rG.sIIdDJLICZe6zZX7Fz.SsBOHES4E4kHmLWKjYbLQ7Ev5y9SYOC', NULL, 1, 1, '2026-02-12 05:47:33', '2026-02-12 05:47:33'),
+(8, 13, 'BGN-00008', '$2y$12$rG.sIIdDJLICZe6zZX7Fz.SsBOHES4E4kHmLWKjYbLQ7Ev5y9SYOC', NULL, 1, 0, '2026-02-12 05:47:33', '2026-02-15 13:32:16'),
 (9, 26, 'BGN-00009', '$2y$12$6AeAMEH2HsoS0mw9aYO10O.Ab9DRH4B7Uv/PNTsJ6ATSKxOTkl/ES', NULL, 1, 1, '2026-02-12 05:50:16', '2026-02-12 05:50:16'),
 (10, 1, 'BGN-00010', '$2y$12$RPMjoZaKoM9vphPHTgGyPO0pqSNE.WFKxUMW2Jt9GdLaWUafCm6pC', NULL, 1, 1, '2026-02-12 05:56:44', '2026-02-12 05:56:44'),
 (11, 2, 'BGN-00011', '$2y$12$VJTLsD4Oh8ev5Q9DxtfOxuOuxiZlhtlOcxJTM1LguYFQXO6pawj1u', NULL, 1, 1, '2026-02-12 06:26:24', '2026-02-12 06:26:24'),
@@ -679,7 +827,7 @@ INSERT INTO `resident_accounts` (`id`, `resident_id`, `username`, `password`, `l
 (13, 9, 'BGN-00013', '$2y$12$BrvbX8lHGGYQqXslGRRJn.oMhVEUQLhGAzVZqyxh2ojIBgeMHI43K', NULL, 1, 1, '2026-02-12 08:38:39', '2026-02-12 08:38:39'),
 (14, 11, 'BGN-00014', '$2y$12$FARZPE.2f1JJxDnIEgczwuY/GLgckHld6qAeDnz47ta52mrn6I4lO', NULL, 1, 1, '2026-02-12 08:41:24', '2026-02-12 08:41:24'),
 (15, 28, 'BGN-00015', '$2y$12$AJtu7rzuE1VdUpw7mmzhIO5xDn55sUK2J69gDncF7v1jjDGhjGhze', NULL, 1, 1, '2026-02-13 05:39:33', '2026-02-13 05:39:33'),
-(16, 61, 'BRGY-2026-53220', '$2y$12$MAM3IA3Waw7aRUpJ/vkpR.egh/uGBS3U6iPQNDpXjy8pRhGQcrKmK', NULL, 1, 1, '2026-02-14 12:47:06', '2026-02-14 12:47:06'),
+(16, 61, 'BRGY-2026-53220', '$2y$12$MAM3IA3Waw7aRUpJ/vkpR.egh/uGBS3U6iPQNDpXjy8pRhGQcrKmK', NULL, 1, 0, '2026-02-14 12:47:06', '2026-02-16 04:41:24'),
 (17, 10, 'BGN-00016', '$2y$12$1pSIPOYgnUiYEKTZXjm/rufHnUld0KYFL2NhSCjmsSx3kTqwtqP4i', NULL, 1, 1, '2026-02-14 12:51:32', '2026-02-14 12:51:32'),
 (18, 63, 'BGN-00017', '$2y$12$l1Zd8rVlw.UoKtx8bRmkeuAM6RJMfKBV2SJjpaBAKjyGMSbvr9Tri', NULL, 1, 1, '2026-02-14 13:01:07', '2026-02-14 13:01:07'),
 (19, 62, 'BGN-00018', '$2y$12$QVZObUDbpVh0Xt9t5kDhc.LEPtTpxJN3LPhLcKdY3stZmPYxeKHcm', NULL, 1, 1, '2026-02-14 13:02:04', '2026-02-14 13:02:04'),
@@ -688,11 +836,45 @@ INSERT INTO `resident_accounts` (`id`, `resident_id`, `username`, `password`, `l
 (22, 79, 'BGN-00021', '$2y$12$vs.y/GclMenh9yEocEHXTeQCUa48Og43ohNs0PpcvQ7gkroVBJRZO', NULL, 1, 1, '2026-02-14 14:38:26', '2026-02-14 14:38:26'),
 (23, 88, 'BGN-00022', '$2y$12$oxHljVlKq3DIM5BwDQds9eeNrZS/mvz0mF8tZiJYzNePCV0osEu5q', NULL, 1, 1, '2026-02-14 14:45:39', '2026-02-14 14:45:39'),
 (24, 87, 'BGN-00023', '$2y$12$u7Z0jOluZtMb7YRjMj9V7etHBEy1CPq8hLTHcHU7UEgo3wXRG0ukK', NULL, 1, 1, '2026-02-14 14:45:46', '2026-02-14 14:45:46'),
-(25, 89, 'BGN-00024', '$2y$12$uYPy1H9LxGWYIMGuwnPIuetFI2TbabLH0vgVIGKlglGe67X7QH.CK', NULL, 1, 1, '2026-02-14 14:46:13', '2026-02-14 14:46:13'),
+(25, 89, 'BGN-00024', '$2y$12$uYPy1H9LxGWYIMGuwnPIuetFI2TbabLH0vgVIGKlglGe67X7QH.CK', NULL, 1, 0, '2026-02-14 14:46:13', '2026-02-15 13:49:27'),
 (26, 118, 'BGN-00025', '$2y$12$BO661XiGFGbCfzTcQtfIkOazluZPzzYOlSMYSy9ddQIgMlRfVvbFi', NULL, 1, 1, '2026-02-15 03:00:34', '2026-02-15 03:00:34'),
 (27, 8, 'BGN-00026', '$2y$12$ssKcKMKgV0EZAp2FgBXDT.owR8MkLv2rXohC3uQbG2HlN.FBHbgsm', NULL, 1, 1, '2026-02-15 03:03:27', '2026-02-15 03:03:27'),
 (28, 119, 'BGN-00027', '$2y$12$Tx.ZFkTCPGUSyxhx0RJ.eOixI9ZfSeMSO3/Fdwz2ddhBM2XZJFr.m', NULL, 1, 1, '2026-02-15 03:12:25', '2026-02-15 03:12:25'),
-(29, 121, 'BGN-00028', '$2y$12$jTfussiiFOR/ydu5z5MHuOVwZwRu6QHgKliPgmtemL0GUt0sSGbPK', NULL, 1, 1, '2026-02-15 03:33:53', '2026-02-15 03:33:53');
+(29, 121, 'BGN-00028', '$2y$12$jTfussiiFOR/ydu5z5MHuOVwZwRu6QHgKliPgmtemL0GUt0sSGbPK', NULL, 1, 1, '2026-02-15 03:33:53', '2026-02-15 03:33:53'),
+(30, 122, 'BGN-00029', '$2y$12$el5Jvoi1kjTXIsG4Rx0ik.eWxEmq0riaRSVQTOd8t/FJFc217dmjO', NULL, 1, 1, '2026-02-15 04:11:21', '2026-02-15 04:11:21'),
+(31, 124, 'BGN-00030', '$2y$12$4mV4ZZfuNz4w3waCHhFXcuIAdj0cjncyClWsBB.lggjfrhLv.l41m', NULL, 1, 1, '2026-02-15 04:24:29', '2026-02-15 04:24:29'),
+(32, 125, 'BGN-00031', '$2y$12$.AtjHUVSYmKkdD7wT1ZwpuK2BA9DUMcBYeGwwhEFnnI/a6NHRVcwO', NULL, 1, 1, '2026-02-15 04:32:17', '2026-02-15 04:32:17'),
+(33, 128, 'BGN-00032', '$2y$12$YRrKhKrI2js8OR8YomSAWu/mcr8sFfuia2ju1Bd2FCwnYKooaGdBO', NULL, 1, 1, '2026-02-15 04:35:46', '2026-02-15 04:35:46'),
+(34, 129, 'BGN-00033', '$2y$12$kzi6KzBSGA0XB6iFcUTejuGRDzmsrDUHc4.0OV8ab.5pMXqRlWrey', NULL, 1, 1, '2026-02-15 04:36:48', '2026-02-15 04:36:48'),
+(35, 131, 'BGN-00034', '$2y$12$vVOqbE4COuJyNUPVNsnlBeKY8QqKU9jFnIkKRiYLK6H3o07sM0pFW', NULL, 1, 1, '2026-02-15 06:01:06', '2026-02-15 06:01:06'),
+(36, 133, 'BGN-00035', '$2y$12$MLMorSfooyY9naGNfcgn9eZAllZKelhKdOYlgZ.i.SvXUvJQ0Dzwm', NULL, 1, 1, '2026-02-15 06:04:27', '2026-02-15 06:04:27'),
+(37, 134, 'BGN-00036', '$2y$12$BNu9umyLr4PfXtMJ2MPuCOCLjavJH7GUrx/hQ6QhE..ljpaKDNJyy', NULL, 1, 1, '2026-02-15 06:26:28', '2026-02-15 06:26:28'),
+(38, 136, 'BGN-00037', '$2y$12$cxr8bK.UogdauJOD24fD2OTQZ7UzqJD40X0tFvsfAnssUMK0Qel7q', NULL, 1, 1, '2026-02-15 09:22:46', '2026-02-15 09:22:46'),
+(39, 140, 'BGN-00038', '$2y$12$QrENe8XFOe1KuPA7IqwXDeetq5VLJVG1ruYVM78N0rhxK4JFz75.i', NULL, 1, 1, '2026-02-15 11:13:33', '2026-02-15 11:13:33'),
+(40, 141, 'BGN-00039', '$2y$12$UFnQUd0BR/qeZCHRzyQD0O7b9vF8/feNsEGAmm2Dj3UUoNYTexgg2', NULL, 1, 1, '2026-02-15 13:52:23', '2026-02-15 13:52:23'),
+(41, 143, 'BGN-00040', '$2y$12$He8W5A0J9RuCHCs0s3F61.FRakouEtU.8eDntcsmktHXd8pb9HdpG', NULL, 1, 1, '2026-02-15 13:54:32', '2026-02-15 13:54:32'),
+(42, 139, 'BGN-00041', '$2y$12$k4aOXqHcpQqCogu6kZwqF.7DoeKFKxM0gudjzTNJjVgyIN0ZQqA9a', NULL, 1, 1, '2026-02-15 13:54:50', '2026-02-15 13:54:50'),
+(43, 138, 'BGN-00042', '$2y$12$slenaZ.2fd2DfUR3QC5SX.1fTpm.Nb8xqgtSeLi1ttlS8ba9hz2c2', NULL, 1, 1, '2026-02-15 21:59:32', '2026-02-15 21:59:32'),
+(44, 137, 'BGN-00043', '$2y$12$MvSPURmiBcyMhfTi.sGqV..kDv2yABwXkSK9AT9pw5IjPm/jxbuOW', NULL, 1, 1, '2026-02-15 22:00:26', '2026-02-15 22:00:26'),
+(45, 144, 'BGN-00044', '$2y$12$npRzGfequPcLutk39vNxOOcKZtIuWmNdlFq9F2jZNH0BjNobE0aTG', NULL, 1, 1, '2026-02-16 04:35:25', '2026-02-16 04:35:25'),
+(46, 146, 'BGN-00045', '$2y$12$XueirQx/XsIa.KOLHtyA4.Tmn9CCb1afIY3bcTnafvBk4YRHRltbW', NULL, 1, 0, '2026-02-16 06:29:25', '2026-02-16 06:34:09'),
+(47, 148, 'BGN-00046', '$2y$12$T68ILXafa0AU1uePhluhwO7hn4A5MFWPggElRVpm5eDFBLSCB//j6', NULL, 1, 1, '2026-02-16 07:01:13', '2026-02-16 07:01:13'),
+(48, 150, 'BGN-00047', '$2y$12$46ZwqPEN9M.0XpvODW.MhuJtcXWoCmYbxxZGfarhgU8SEF5XLvKsG', NULL, 1, 1, '2026-02-16 07:09:40', '2026-02-16 07:09:40'),
+(49, 153, 'BGN-00048', '$2y$12$gLiZORbws0DWDp9MGVcp5eCXPV4c29ifqJNXr.TLmSYcQFXvquDOe', NULL, 1, 1, '2026-02-16 08:11:00', '2026-02-16 08:11:00'),
+(50, 154, 'BGN-00049', '$2y$12$26iO1MvI9toU6ugQat84H.KS9VFy5XM1ePQEMg239qBfwbJyVivMm', NULL, 1, 1, '2026-02-16 09:04:40', '2026-02-16 09:04:40'),
+(51, 152, 'BGN-00050', '$2y$12$IIQaX5CSlagJyN71uDWTkOzr0R15PxB1CmF5.UO5BZaAWm6zwyK9u', NULL, 1, 1, '2026-02-16 09:09:46', '2026-02-16 09:09:46'),
+(52, 156, 'BGN-00051', '$2y$12$cFLqRlY/a//e/B2V/cWgsuI.T9di.ZVj1U4fMYdn8N.WY1sea2hZu', NULL, 1, 1, '2026-02-16 09:28:51', '2026-02-16 09:28:51'),
+(53, 157, 'BGN-00052', '$2y$12$j9ud46LwPDDFbUxZLouVZut0leqMMcTebGaFi7jArc6wcVHaCbHbO', NULL, 1, 0, '2026-02-16 10:48:34', '2026-02-16 11:04:23'),
+(54, 158, 'BGN-00053', '$2y$12$Qrb0a9U/1iEDOdnMl2rY3uv7cZdzbUe12ZbMQzwgjRPrPsR3zc27y', NULL, 1, 1, '2026-02-16 11:44:01', '2026-02-16 11:44:01'),
+(55, 155, 'BGN-00054', '$2y$12$LF9zSFiRDkCP6GiPY6Kr/.G6GrKJgzkVtMKaRUCsmNBMK.KDDKnze', NULL, 1, 1, '2026-02-16 16:25:43', '2026-02-16 16:25:43'),
+(56, 159, 'BGN-00055', '$2y$12$1fa6ssBnwrhynOzFWRBvaOpZ1aelNt09lri27MwEahytmEfhV19F.', NULL, 1, 1, '2026-02-16 16:45:17', '2026-02-16 16:45:17'),
+(57, 160, 'BGN-00056', '$2y$12$A3ZKzT4NRL3YIrTrz4fpie3EK/eTjMhKfxXjrHdX98l6alcusspfO', NULL, 1, 1, '2026-02-16 17:08:41', '2026-02-16 17:08:41'),
+(58, 161, 'BGN-00057', '$2y$12$u//bmJ2rRHmJcAvwrYdOfe0fJhzSzCC4MDKvRF91nbcaJf9J7DKmm', NULL, 1, 1, '2026-02-16 17:09:31', '2026-02-16 17:09:31'),
+(59, 163, 'BGN-00058', '$2y$12$gxCACaiC10UEtoEAiz0/f.4qkPzcbEwcBNAAjMqSEHSeGdYax5jf.', NULL, 1, 1, '2026-02-16 17:16:05', '2026-02-16 17:16:05'),
+(60, 147, 'BGN-00059', '$2y$12$J/c8rNjgLkhOE1wW/2ZieOPWKhp3f7nrb2ptuUk1oOcuxsyve8G0G', NULL, 1, 1, '2026-02-16 17:16:13', '2026-02-16 17:16:13'),
+(61, 164, 'BGN-00060', '$2y$12$yB3V/0KOXslneLjZCJipeuAPEEMytF6qQAzPQCEJxQSbzjYuJb4Zq', NULL, 1, 1, '2026-02-16 17:19:37', '2026-02-16 17:19:37'),
+(62, 165, 'BGN-00061', '$2y$12$8H8TbHerLdMM08PST/.ps.GCdbi2X2PIoOSt8nZ3nXxqj61MVMu86', NULL, 1, 1, '2026-02-16 17:20:40', '2026-02-16 17:20:40'),
+(63, 151, 'BGN-00062', '$2y$12$SVg0OxfSnS/OLMRDtOWwTe7/JyyB/nUPvwzCQBXP6sA.BdlXbpYEq', NULL, 1, 1, '2026-02-16 17:28:26', '2026-02-16 17:28:26');
 
 -- --------------------------------------------------------
 
@@ -720,8 +902,7 @@ INSERT INTO `sectors` (`id`, `name`, `description`, `is_active`, `created_at`, `
 (4, 'LGBTQIA+', 'Inclusivity sector for diverse orientations', 1, '2026-02-14 11:33:59', '2026-02-14 11:33:59'),
 (5, 'Kasambahay', 'Domestic workers within the barangay', 1, '2026-02-14 11:33:59', '2026-02-14 11:33:59'),
 (6, 'OFW', 'Overseas Filipino Workers', 1, '2026-02-14 11:33:59', '2026-02-14 11:33:59'),
-(7, 'General Population', 'Regular residents with no special sector classification', 1, '2026-02-14 11:36:39', '2026-02-14 11:36:39'),
-(8, '4', NULL, 1, '2026-02-15 02:06:19', '2026-02-15 02:06:19');
+(7, 'General Population', 'Regular residents with no special sector classification', 1, '2026-02-14 11:36:39', '2026-02-14 11:36:39');
 
 -- --------------------------------------------------------
 
@@ -821,6 +1002,7 @@ ALTER TABLE `households`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_address` (`house_number`,`street_id`,`purok_id`),
   ADD UNIQUE KEY `households_household_id_unique` (`household_id`),
+  ADD UNIQUE KEY `household_id` (`household_id`),
   ADD KEY `households_purok_id_foreign` (`purok_id`),
   ADD KEY `households_street_id_foreign` (`street_id`),
   ADD KEY `households_head_resident_id_index` (`head_resident_id`);
@@ -874,6 +1056,7 @@ ALTER TABLE `residents`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `residents_tracking_number_unique` (`tracking_number`),
   ADD UNIQUE KEY `residents_barangay_id_unique` (`barangay_id`),
+  ADD UNIQUE KEY `barangay_id` (`barangay_id`),
   ADD KEY `residents_marital_status_id_foreign` (`marital_status_id`),
   ADD KEY `residents_nationality_id_foreign` (`nationality_id`),
   ADD KEY `residents_sector_id_foreign` (`sector_id`),
@@ -930,19 +1113,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `education_data`
 --
 ALTER TABLE `education_data`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `employment_data`
 --
 ALTER TABLE `employment_data`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- AUTO_INCREMENT for table `households`
 --
 ALTER TABLE `households`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `marital_statuses`
@@ -960,7 +1143,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `nationalities`
 --
 ALTER TABLE `nationalities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -978,13 +1161,13 @@ ALTER TABLE `puroks`
 -- AUTO_INCREMENT for table `residents`
 --
 ALTER TABLE `residents`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT for table `resident_accounts`
 --
 ALTER TABLE `resident_accounts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `sectors`
