@@ -18,7 +18,6 @@ class ResidentController extends Controller
         $this->service = $service;
     }
 
- 
     public function index()
     {
         try {
@@ -27,27 +26,20 @@ class ResidentController extends Controller
                 ->orderBy('id', 'asc')
                 ->get()
                 ->map(function($resident) {
-                    // Name Formatting
-                    $middleInitial = $resident->middle_name 
-                        ? ' ' . strtoupper(substr($resident->middle_name, 0, 1)) . '.' 
-                        : '';
-                    $suffix = $resident->suffix ? ' ' . $resident->suffix : '';
-                    
-                    $resident->name = trim($resident->first_name . $middleInitial . ' ' . $resident->last_name . $suffix);
-                    
-                    // Age & Address
-                    $resident->age = $resident->birthdate ? Carbon::parse($resident->birthdate)->age : 'N/A';
+                 
+                    $resident->name = $resident->name; 
+                    $resident->age = $resident->age;
                     $resident->resolved_purok = $resident->tempPurok ? "Purok " . $resident->tempPurok->number : 'N/A';
                     $resident->resolved_street = $resident->tempStreet ? $resident->tempStreet->name : 'N/A';
                     $resident->full_address = trim(($resident->temp_house_number ?? '') . ' ' . ($resident->tempStreet->name ?? ''));
 
-                    // Employment Data mapping for React
+                    // Employment Data mapping
                     $resident->employmentStatus = $resident->employmentData->employment_status ?? 'N/A';
                     $resident->occupation = $resident->employmentData->occupation ?? 'None';
                     $resident->monthly_income = $resident->employmentData->monthly_income ?? 'N/A';
                     $resident->incomeSource = $resident->employmentData->income_source ?? 'N/A';
 
-                    // Education Data mapping for React
+                    // Education Data mapping
                     $resident->educationalStatus = $resident->educationData->educational_status ?? 'N/A';
                     $resident->schoolType = $resident->educationData->school_type ?? 'N/A';
                     $resident->schoolLevel = $resident->educationData->school_level ?? 'N/A';
@@ -62,58 +54,55 @@ class ResidentController extends Controller
         }
     }
 
-    /**
-     * Update Resident Information & Household Logic
-     */
     public function update(Request $request, $id) {
         try {
             DB::beginTransaction();
             
             $resident = Resident::findOrFail($id);
             
-            // 1. Pre-capture values
+            // 1. Capture original state
             $oldPosition = $resident->household_position;
-            $newPosition = $request->household_position;
             $oldHouseholdId = $resident->household_id;
-
-            // 2. Address Change Detection
+            
+          
             $addressChanged = ($resident->temp_house_number != $request->temp_house_number || 
                                $resident->temp_purok_id != $request->temp_purok_id || 
                                $resident->temp_street_id != $request->temp_street_id);
 
-            if ($addressChanged) {
          
+            $currentHouseholdId = $oldHouseholdId;
+
+            if ($addressChanged) {
+          
                 if ($oldPosition === 'Head of Family' && $oldHouseholdId) {
                     Household::where('id', $oldHouseholdId)->update(['head_resident_id' => null]);
                 }
 
-                $newHouseholdId = $this->service->transferHousehold($resident, [
+          
+                $currentHouseholdId = $this->service->transferHousehold($resident, [
                     'houseNumber' => $request->temp_house_number,
                     'purokId'     => $request->temp_purok_id,
                     'streetId'    => $request->temp_street_id
                 ]);
-                
-                $resident->household_id = $newHouseholdId;
             }
 
-            // 3. Household Head Logic (The Force Override)
-            $currentHouseholdId = $resident->household_id;
+            // 2. Household Head Logic Override
+            $newPosition = $request->household_position;
 
             if ($newPosition === 'Head of Family') {
-    
+           
                 Household::where('id', $currentHouseholdId)->update(['head_resident_id' => null]);
-                
              
                 Household::where('id', $currentHouseholdId)->update(['head_resident_id' => $resident->id]);
             } 
             elseif ($oldPosition === 'Head of Family' && $newPosition !== 'Head of Family') {
-          
+           
                 Household::where('id', $currentHouseholdId)
                     ->where('head_resident_id', $resident->id)
                     ->update(['head_resident_id' => null]);
             }
 
-            // 4. Update Main Resident Table
+        
             $basicData = $request->only([
                 'first_name', 'middle_name', 'last_name', 'suffix', 'gender', 
                 'contact_number', 'birth_registration', 'temp_house_number', 
@@ -122,32 +111,35 @@ class ResidentController extends Controller
                 'household_position'
             ]);
 
+       
+            $basicData['household_id'] = $currentHouseholdId;
+
             if ($request->has('is_voter')) {
                 $basicData['is_voter'] = ($request->is_voter === 'Yes' || $request->is_voter == 1) ? 1 : 0;
             }
 
+            
             $resident->update($basicData);
 
-           // 5. Update Education Table
-if ($resident->educationData) {
-    $resident->educationData->update([
-   
-        'educational_status'      => $request->educational_status ?? $request->educationalStatus,
-        'school_type'             => $request->school_type ?? $request->schoolType,
-        'school_level'            => $request->school_level ?? $request->schoolLevel,
-        'highest_grade_completed' => $request->highest_attainment ?? $request->highestGrade, 
-    ]);
-}
+            // 4. Update Education Table
+            if ($resident->educationData) {
+                $resident->educationData->update([
+                    'educational_status'      => $request->educational_status ?? $request->educationalStatus,
+                    'school_type'             => $request->school_type ?? $request->schoolType,
+                    'school_level'            => $request->school_level ?? $request->schoolLevel,
+                    'highest_grade_completed' => $request->highest_attainment ?? $request->highestGrade, 
+                ]);
+            }
 
-// 6. Update Employment Table
-if ($resident->employmentData) {
-    $resident->employmentData->update([
-        'employment_status' => $request->employment_status ?? $request->employmentStatus,
-        'occupation'        => $request->occupation,
-        'monthly_income'    => $request->monthly_income,
-        'income_source'     => $request->income_source ?? $request->incomeSource,
-    ]);
-}
+            // 5. Update Employment Table
+            if ($resident->employmentData) {
+                $resident->employmentData->update([
+                    'employment_status' => $request->employment_status ?? $request->employmentStatus,
+                    'occupation'        => $request->occupation,
+                    'monthly_income'    => $request->monthly_income,
+                    'income_source'     => $request->income_source ?? $request->incomeSource,
+                ]);
+            }
 
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Successfully updated!']);
@@ -159,9 +151,6 @@ if ($resident->employmentData) {
         }
     }
 
-    /**
-     * Get Reference Data for Dropdowns
-     */
     public function getReferenceData() {
         return response()->json([
             'puroks' => \App\Models\Purok::all(),
@@ -181,20 +170,15 @@ if ($resident->employmentData) {
         ]);
     }
 
-    /**
-     * Soft Delete Resident & Deactivate Account
-     */
     public function destroy($id) {
         try {
             DB::beginTransaction();
             $resident = Resident::findOrFail($id);
             
-            // Deactivate account if exists
             if ($resident->account) {
                 $resident->account->update(['is_active' => 0]);
             }
 
-            // If head of household, vacate the position first
             if ($resident->household_position === 'Head of Family' && $resident->household_id) {
                 Household::where('id', $resident->household_id)->update(['head_resident_id' => null]);
             }

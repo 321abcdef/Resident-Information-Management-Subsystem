@@ -83,8 +83,10 @@ const Residents = () => {
     <div className="space-y-6 pb-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Record of Inhabitants (RBI)</h1>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Masterlist Management</p>
+         <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-slate-100 uppercase tracking-tight">
+       MASTERLIST MANAGEMENT
+      </h1>
+          {/* <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Masterlist Management</p> */}
         </div>
         <button onClick={handlePrint} className="flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase hover:opacity-90 transition-all shadow-lg active:scale-95">
           <Printer size={16} /> Print
@@ -98,7 +100,7 @@ const Residents = () => {
   counts={sectorCounts} 
 />
 
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none">
         <ResidentFilters 
           searchTerm={searchTerm} 
           setSearchTerm={setSearchTerm} 

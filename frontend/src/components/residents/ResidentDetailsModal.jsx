@@ -93,94 +93,103 @@ const ResidentDetailsModal = ({ isOpen, onClose, resident, onSave, mode }) => {
         const streetName = streetObj ? streetObj.name : '';
         const purokObj = (refs.puroks || []).find(p => String(p.id) === String(formData.temp_purok_id));
         const purokName = purokObj ? `Purok ${purokObj.number || purokObj.name}` : '';
-        return [house, streetName, purokName, "Brgy. Gulod, Quezon City"].filter(p => p && p.trim() !== "").join(", ");
+        return [house, streetName, purokName, "Gulod, QC"].filter(p => p && p.trim() !== "").join(", ");
     };
 
     const TabButton = ({ id, label, icon: Icon }) => (
         <button 
             type="button" 
             onClick={() => setActiveTab(id)}
-            className={`flex-1 flex items-center justify-center gap-2 px-4 py-5 text-[11px] font-black uppercase tracking-[0.15em] transition-all relative ${
+            className={`flex-1 flex items-center justify-center gap-2 py-4 text-[11px] font-bold uppercase tracking-widest transition-all relative ${
                 activeTab === id 
-                ? 'text-blue-600 dark:text-blue-400' 
-                : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
+                ? 'text-blue-600 bg-white dark:bg-slate-900 dark:text-blue-400' 
+                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
         >
-            <Icon size={16} /> {label}
+            <Icon size={14} /> {label}
             {activeTab === id && (
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 dark:bg-blue-500 animate-in fade-in duration-300" />
+                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-500" />
             )}
         </button>
     );
 
     return (
-        <ModalWrapper isOpen={isOpen} onClose={onClose} 
+        <ModalWrapper 
+            isOpen={isOpen} 
+            onClose={onClose} 
+            maxWidth="max-w-5xl"
             title={
-                <div className="flex items-center justify-between w-full pr-4 md:pr-6">
-                    <div className="flex items-center gap-4">
-                        <div className={`h-16 w-16 rounded-2xl flex items-center justify-center font-black text-xl border-4 border-white dark:border-slate-800 shadow-xl ${getAvatarColor(resident?.name || '')}`}>
+                <div className="flex items-center gap-4">
+                    <div className={`h-12 w-12 rounded-xl flex items-center justify-center font-black text-white shadow-inner ring-2 ring-white dark:ring-slate-800 ${getAvatarColor(resident?.name || '')}`}>
+                        <span className="text-lg tracking-tighter">
                             {getInitials(resident?.name || '')}
-                        </div>
-                        <div>
-                            <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                                {isEdit ? 'Modify Records' : 'Resident Profile'}
-                            </h2>
-                            <span className="text-[10px] font-black bg-slate-100 dark:bg-slate-800 text-slate-500 px-2 py-1 rounded-lg mt-1 inline-block uppercase">
-                                ID: {resident?.tracking_number || resident?.id || 'NEW'}
-                            </span>
-                        </div>
+                        </span>
                     </div>
-                    
-                    <button 
-                        type="button" 
-                        onClick={() => setIsEdit(!isEdit)} 
-                        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all active:scale-95 ${
-                            isEdit 
-                            ? 'bg-rose-50 text-rose-600 border border-rose-100 dark:bg-rose-950/20 dark:border-rose-900/30' 
-                            : 'bg-blue-600 text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700'
-                        }`}
-                    >
-                        {isEdit ? <><XCircle size={14} /> Cancel</> : <><Edit3 size={14} /> Edit Record</>}
-                    </button>
+                    <div className="flex flex-col justify-center">
+                        <h2 className="text-base font-black text-slate-800 dark:text-white uppercase tracking-tight leading-none">
+                            {resident?.name || 'Resident Profile'}
+                        </h2>
+                        <span className="text-[10px] font-black text-slate-400 mt-1 uppercase tracking-wider font-mono">
+                            #{resident?.tracking_number || resident?.id || 'NEW'}
+                        </span>
+                    </div>
                 </div>
             }
         >
-            <div className="bg-white dark:bg-slate-900 min-h-[60vh] flex flex-col">
-                {/* Navigation Tabs */}
-                <div className="flex border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 sticky top-0 z-20">
+            <div className="flex flex-col -m-6 h-full">
+                {/* Compact Navigation */}
+                <div className="flex bg-slate-50/50 dark:bg-slate-800/30 border-b dark:border-slate-800 px-6">
                     <TabButton id="basic" label="Identity" icon={IdCard} />
                     <TabButton id="address" label="Address" icon={MapPin} />
                     <TabButton id="socio" label="Socio-Eco" icon={Briefcase} />
                 </div>
 
                 {/* Main Content Area */}
-                <div className="p-6 md:p-10 flex-1 overflow-y-auto">
-                    {activeTab === 'basic' && <IdentityTab isEdit={isEdit} formData={formData} handleChange={handleChange} refs={refs} today={today} />}
-                    {activeTab === 'address' && <AddressTab isEdit={isEdit} formData={formData} handleChange={handleChange} refs={refs} getFullHardcodedAddress={getFullHardcodedAddress} filteredStreets={(refs.streets || []).filter(s => String(s.purok_id) === String(formData.temp_purok_id))} />}
-                    {activeTab === 'socio' && <SocioEcoTab isEdit={isEdit} formData={formData} handleChange={handleChange} refs={refs} />}
+                <div className="flex-1 overflow-y-auto p-6 md:p-10 bg-white dark:bg-slate-900 min-h-[50vh] max-h-[60vh]">
+                    <div className="max-w-4xl mx-auto">
+                        {activeTab === 'basic' && <IdentityTab isEdit={isEdit} formData={formData} handleChange={handleChange} refs={refs} today={today} />}
+                        {activeTab === 'address' && <AddressTab isEdit={isEdit} formData={formData} handleChange={handleChange} refs={refs} getFullHardcodedAddress={getFullHardcodedAddress} filteredStreets={(refs.streets || []).filter(s => String(s.purok_id) === String(formData.temp_purok_id))} />}
+                        {activeTab === 'socio' && <SocioEcoTab isEdit={isEdit} formData={formData} handleChange={handleChange} refs={refs} />}
+                    </div>
                 </div>
 
-                {/* Footer Actions */}
-                <div className="p-6 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
+              
+                <div className="p-6 bg-slate-50 dark:bg-slate-800/50 border-t dark:border-slate-800 flex justify-between items-center px-10">
                     <button 
                         type="button" 
                         onClick={onClose} 
-                        className="px-6 py-3 text-[11px] font-black uppercase text-slate-400 hover:text-slate-600 transition-colors"
+                        className="text-[11px] font-black uppercase text-slate-400 hover:text-slate-600 transition-colors tracking-widest"
                     >
                         Close Profile
                     </button>
                     
-                    {isEdit && (
+                    <div className="flex items-center gap-3">
+                        {/* Edit / Cancel Toggle Button */}
                         <button 
                             type="button" 
-                            onClick={handleSave} 
-                            disabled={loading} 
-                            className="flex items-center gap-2 px-12 py-4 bg-emerald-600 text-white text-[11px] font-black uppercase rounded-2xl shadow-xl shadow-emerald-600/20 transition-all hover:bg-emerald-500 active:scale-95 disabled:opacity-50"
+                            onClick={() => setIsEdit(!isEdit)} 
+                            className={`flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 border ${
+                                isEdit 
+                                ? 'bg-white text-rose-600 border-rose-200 hover:bg-rose-50' 
+                                : 'bg-white text-blue-600 border-blue-200 hover:bg-blue-50 dark:bg-slate-800 dark:border-slate-700'
+                            }`}
                         >
-                            <Save size={16} />
-                            {loading ? 'Saving Data...' : 'Save All Changes'}
+                            {isEdit ? <><XCircle size={14} /> Cancel Edit</> : <><Edit3 size={14} /> Edit Record</>}
                         </button>
-                    )}
+
+                        {/* Save Button (Visible only when in edit mode) */}
+                        {isEdit && (
+                            <button 
+                                type="button" 
+                                onClick={handleSave} 
+                                disabled={loading} 
+                                className="flex items-center gap-2 px-10 py-3 bg-emerald-600 text-white text-[11px] font-black uppercase rounded-xl shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 transition-all active:scale-95 disabled:opacity-50"
+                            >
+                                <Save size={16} />
+                                {loading ? 'Saving...' : 'Save Changes'}
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
         </ModalWrapper>

@@ -33,20 +33,10 @@ const HouseholdRow = ({ item, onView, onDelete }) => {
       </td>
 
       {/* 2. Name Section - Natural Case (Removed uppercase) */}
-      <td className="px-6 py-5 flex items-center gap-4">
-        <div 
-          title={`Household Head: ${item.head}`}
-          className={`h-11 w-11 rounded-full border-2 border-white dark:border-slate-700 shadow-sm flex items-center justify-center font-bold text-sm cursor-help ${getAvatarColor(item.head || "")}`}
-        >
-          {getInitials(item.head || "")}
-        </div>
-        <div>
-          <p className="text-base font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
-            {item.head}
-          </p>
-        </div>
-      </td>
-      
+   
+<td className={`px-6 py-5 font-bold ${item.head === 'No Head Assigned' ? 'text-slate-400 italic' : 'text-slate-900 dark:text-white'}`}>
+    {item.head}
+</td>
       {/* 3. Address - Natural Case */}
       <td className="px-6 py-5 text-base text-slate-700 dark:text-slate-300 truncate max-w-[200px]" title={`Full Address: ${item.address}`}>
         {item.address}
@@ -71,13 +61,6 @@ const HouseholdRow = ({ item, onView, onDelete }) => {
             className="p-3 text-slate-600 dark:text-slate-300 hover:bg-emerald-600 hover:text-white border-r border-slate-300 dark:border-slate-600 transition-all"
           >
             <Eye size={20} />
-          </button>
-          <button 
-            onClick={() => onDelete(item.id)} 
-            title="Delete Household Record"
-            className="p-3 text-slate-600 dark:text-slate-300 hover:bg-rose-600 hover:text-white transition-all"
-          >
-            <Trash2 size={20} />
           </button>
         </div>
       </td>

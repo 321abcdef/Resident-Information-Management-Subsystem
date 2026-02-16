@@ -7,6 +7,7 @@ import VerificationFilters from '../components/verification/VerificationFilters'
 import VerificationSuccessModal from '../components/verification/VerificationSuccessModal';
 import DetailView from '../components/verification/VerificationDetailView';
 import Pagination from '@/components/common/pagination';
+import { useSound } from '@/hooks/useSound';
 
 const Verification = () => {
   const { submissions, loading, updateStatus } = useVerification();
@@ -18,13 +19,13 @@ const Verification = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [accountDetails, setAccountDetails] = useState(null);
   const [isMinimized, setIsMinimized] = useState(false);
+  const { playFeedback } = useSound();
 
   // ✅ PAGINATION STATES
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Change this as needed
 
   // Audio Reference
-  const audioPlayer = useRef(null);
   const lastCountRef = useRef(0);
 
   useEffect(() => { window.scrollTo(0, 0); }, [view]);
@@ -34,16 +35,9 @@ const Verification = () => {
     const pendingRequests = submissions.filter(s => s.status === 'Pending');
     const currentCount = pendingRequests.length;
 
+   
     if (currentCount > lastCountRef.current && lastCountRef.current !== 0) {
-      if (audioPlayer.current) {
-        audioPlayer.current.currentTime = 0; 
-        const playPromise = audioPlayer.current.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.log("Autoplay prevented.", error);
-          });
-        }
-      }
+      playFeedback('notify'); // 
     }
     lastCountRef.current = currentCount;
   }, [submissions]);
@@ -68,12 +62,16 @@ const Verification = () => {
 
   const handleAction = async (id, status) => {
     const actionText = status === 'Verified' ? 'APPROVE' : status === 'For Verification' ? 'set for VISIT' : 'REJECT';
-    if (!window.confirm(`Are you sure you want to ${actionText} this submission?`)) return;
+    
+   if (!window.confirm(`Are you sure you want to ${actionText} this submission?`)) return;
 
     const result = await updateStatus(id, status);
 
     if (result.success) {
       if (status === 'Verified') {
+     
+        playFeedback('success'); 
+
         setAccountDetails({
           name: selectedRes.name,
           id: result.residentData?.id,
@@ -83,11 +81,13 @@ const Verification = () => {
         setShowSuccess(true);
         setIsMinimized(false);
       } else {
+        
         setView('list');
         setSelectedRes(null);
         setActiveTab(status);
       }
     } else {
+      playFeedback('error');
       alert(`Error: ${result.message}`);
     }
   };
@@ -100,7 +100,7 @@ const Verification = () => {
 
   return (
     <div className="font-sans min-h-screen pb-20 px-4 md:px-0 relative">
-      <audio ref={audioPlayer} src="/sounds/notification.mp3" preload="auto" />
+  
 
       {zoomedImg && (
         <div className="fixed inset-0 z-[9999] bg-slate-950/95 flex items-center justify-center p-4 cursor-zoom-out" onClick={() => setZoomedImg(null)}>
@@ -143,7 +143,9 @@ const Verification = () => {
 
       {view === 'list' ? (
         <div className="animate-in fade-in duration-500 space-y-8">
-          <h1 className="text-2xl font-bold uppercase tracking-tight">Identity Verification</h1>
+         <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-slate-100 uppercase tracking-tight">
+        Identity Verification
+      </h1>
           <VerificationStats submissions={submissions} />
           
           <div className="flex overflow-x-auto gap-1 bg-slate-100 dark:bg-slate-800/50 p-1 rounded-xl">
@@ -159,7 +161,7 @@ const Verification = () => {
             ))}
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm flex flex-col">
             <VerificationFilters searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             
             {loading ? (
