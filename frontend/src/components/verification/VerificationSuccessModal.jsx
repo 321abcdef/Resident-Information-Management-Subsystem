@@ -2,14 +2,12 @@ import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { ShieldCheck, Smartphone, Camera, User, Key, IdCard, AlertTriangle, Download } from 'lucide-react';
 import ModalWrapper from '../common/ModalWrapper';
+import { FRONTEND_URL } from '@/config/api';
 
 const VerificationSuccessModal = ({ isOpen, onClose, data }) => {
     if (!data) return null;
 
-const myIP = "192.168.8.159";
-const port = "5173"; 
-const qrUrl = `http://${myIP}:${port}/verify/${data.id}`;
-
+const qrUrl = `${FRONTEND_URL}/verify/${data.id}`;
 
 // const currentHost = window.location.hostname; 
 // const currentPort = window.location.port || "5173";
