@@ -51,7 +51,7 @@ const INCOME_ORDER = [
 // ─── TABS ─────────────────────────────────────────────────────────────────────
 const TABS = [
   { id:"overview",      label:"Overview",        icon:"🏠" },
-  { id:"heatmap",       label:"Purok Heatmap",   icon:"🗺️" },
+  // { id:"heatmap",       label:"Purok Heatmap",   icon:"🗺️" },
   { id:"demographics",  label:"Demographics",    icon:"👥" },
   { id:"sectors",       label:"Sectors",         icon:"📊" },
   { id:"registration",  label:"Registration",    icon:"📋" },
