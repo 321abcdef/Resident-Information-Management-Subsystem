@@ -14,6 +14,8 @@ import {
   Globe,
 } from "lucide-react";
 
+// pull
+
 import bsbPic from "../assets/bgygulod.png";
 import logoPic from "../assets/bgylogo.png";
 
