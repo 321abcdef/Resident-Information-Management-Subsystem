@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import { UserProvider } from "./context/UserContext";
 
@@ -7,6 +7,7 @@ import DashboardLayout from "./layout/DashboardLayout";
 
 // Public Pages
 import HomePage from "./homepage/HomePage";
+import AuthPage from "./homepage/AuthPage";
 import PublicVerify from "./pages/publicverify"; 
 
 // Dashboard Pages
@@ -29,6 +30,7 @@ function App() {
           <Routes>
             {/* PUBLIC ROUTES */}
             <Route path="/" element={<HomePage />} />
+            <Route path="/auth" element={<AuthPage />} />
             
             {/*QR Scanner link*/}
             <Route path="/verify/:id" element={<PublicVerify />} />
@@ -48,7 +50,7 @@ function App() {
             </Route>
 
             {/* FALLBACK */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<HomePage />} />
           </Routes>
         </Router>
       </UserProvider>
