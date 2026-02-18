@@ -11,7 +11,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const { logout } = useUser();
 
   const menuItems = [
-    { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard and Analytics', to: '/dashboard' },
+    { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard', to: '/dashboard' },
     { id: 'Verification', icon: IdCard, label: 'ID Verification', to: '/verification' },
     { id: 'Residents', icon: Users, label: 'Residents', to: '/residents' },
     { id: 'Households', icon: House, label: 'Households', to: '/households' },
