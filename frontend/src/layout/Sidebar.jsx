@@ -16,7 +16,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { id: 'Residents', icon: Users, label: 'Residents', to: '/residents' },
     { id: 'Households', icon: House, label: 'Households', to: '/households' },
     // { id: 'Certificates', icon: FileText, label: 'Certificates', to: '/certificates'},
-    // { id: 'Analytics', icon: BarChart3, label: 'Analytics', to: '/analytics' },
+    { id: 'Analytics', icon: BarChart3, label: 'Analytics', to: '/analytics' },
     // { id: 'Scanner', icon: ScanQrCode, label: 'Scanner', to: '/scanner' },
   ];
 
