@@ -65,7 +65,7 @@ const Step4Upload = ({ formData, handleChange, isDarkMode, setStep, previews, ha
                 {isReady ? "🚀 I-submit Registration" : "Complete the form"}
             </button>
             
-            <button type="button" onClick={() => setStep(3)} className="w-full py-2 text-slate-400 font-black text-[9px] uppercase hover:text-slate-600 transition-colors">← Bumalik sa nakaraan</button>
+            <button type="button" onClick={() => setStep(3)} className="w-full py-2 text-black font-black text-[10px] text-xs uppercase">BACK</button>
         </div>
     );
 };

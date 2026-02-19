@@ -32,6 +32,7 @@ export const verificationService = {
         return {
           id: res.id,
           trackingNumber: res.tracking_number,
+          qrToken: res.user ? res.user.qr_token : null,
           name: `${res.first_name || ''} ${res.middle_name || ''} ${res.last_name || ''} ${res.suffix || ''}`.replace(/\s+/g, ' ').trim(),
           date: formatDate(res.created_at),
           status: res.status,

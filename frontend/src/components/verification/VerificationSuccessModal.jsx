@@ -2,20 +2,12 @@ import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { ShieldCheck, Smartphone, Camera, User, Key, IdCard, AlertTriangle, Download } from 'lucide-react';
 import ModalWrapper from '../common/ModalWrapper';
-import { FRONTEND_URL } from '@/config/api';
+import { VERIFY_URL } from '@/config/api';
 
 const VerificationSuccessModal = ({ isOpen, onClose, data }) => {
     if (!data) return null;
 
-const qrUrl = `${FRONTEND_URL}/verify/${data.id}`;
-
-// const currentHost = window.location.hostname; 
-// const currentPort = window.location.port || "5173";
-
-// const qrUrl = `http://${currentHost}:${currentPort}/verify/${data.id}`;
-
-    // const currentHost = window.location.host; 
-    // const qrUrl = `${window.location.origin}/verify/${data.id}`;
+const qrUrl = `${VERIFY_URL}/v/${data.id}?token=${data.token}`;
 
     const downloadQR = () => {
         const svg = document.getElementById("resident-qr");
@@ -64,16 +56,19 @@ const qrUrl = `${FRONTEND_URL}/verify/${data.id}`;
             <div className="flex flex-col md:flex-row gap-8 items-stretch p-2">
                 
                 {/* LEFT: QR CODE SECTION */}
-                <div className="w-full md:w-2/5 flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-[2.5rem] border-2 border-slate-200 dark:border-slate-700 shadow-inner">
-                    <div className="bg-white p-4 rounded-3xl shadow-2xl mb-4 border border-slate-100">
-                        <QRCodeSVG 
-                            id="resident-qr"
-                            value={qrUrl}
-                            size={200} 
-                            level="H" 
-                            includeMargin={true}
-                        />
-                    </div>
+              <div className="w-full md:w-2/5 flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-[2.5rem] border-2 border-slate-200 dark:border-slate-700 shadow-inner">
+    <div className="bg-white p-4 rounded-3xl shadow-2xl mb-4 border border-slate-100">
+        {/* BINALOT NG ANCHOR TAG PARA CLICKABLE */}
+        <a href={qrUrl} target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:opacity-80 transition-opacity">
+            <QRCodeSVG 
+                id="resident-qr"
+                value={qrUrl}
+                size={200} 
+                level="H" 
+                includeMargin={true}
+            />
+        </a>
+    </div>
                     <button 
                         onClick={downloadQR}
                         className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white dark:bg-white dark:text-black rounded-2xl text-[10px] font-black uppercase hover:scale-105 transition-all shadow-lg mb-4 w-full justify-center"

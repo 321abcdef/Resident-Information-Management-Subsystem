@@ -13,7 +13,6 @@ use App\Http\Controllers\BarangayAnalyticsController;
 Route::post('/register', [RegistrationController::class, 'register']);
 Route::get('/track/{trackingNumber}', [RegistrationController::class, 'track']);
 Route::post('/check-household', [RegistrationController::class, 'checkHousehold']);
-Route::get('/residents/verify-public/{barangay_id}', [StaffController::class, 'publicVerify']);
 
 // 2. VERIFICATION PAGE (Staff Submissions)
 Route::get('/submissions', [StaffController::class, 'index']); 

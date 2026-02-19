@@ -8,7 +8,7 @@ import DashboardLayout from "./layout/DashboardLayout";
 // Public Pages
 import HomePage from "./homepage/HomePage";
 import AuthPage from "./homepage/AuthPage";
-import PublicVerify from "./pages/publicverify"; 
+// import PublicVerify from "./pages/publicverify"; 
 
 // Dashboard Pages
 import Dashboard from "./pages/dashboard";
@@ -33,7 +33,7 @@ function App() {
             <Route path="/auth" element={<AuthPage />} />
             
             {/*QR Scanner link*/}
-            <Route path="/verify/:id" element={<PublicVerify />} />
+            {/* <Route path="/verify/:id" element={<PublicVerify />} /> */}
 
             {/* PRIVATE ROUTES (Sidebar/DashboardLayout) */}
             <Route element={<DashboardLayout />}>

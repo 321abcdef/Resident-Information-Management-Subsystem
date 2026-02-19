@@ -30,7 +30,6 @@ class Resident extends Model
 
     protected $hidden = ['temp_password'];
 
-    // Para awtomatikong isama ang name sa JSON response
     protected $appends = ['name', 'age'];
 
     /** ACCESSORS **/
@@ -40,7 +39,7 @@ class Resident extends Model
         $middleInitial = $this->middle_name ? ' ' . strtoupper(substr($this->middle_name, 0, 1)) . '.' : '';
         $suffix = $this->suffix ? ' ' . $this->suffix : '';
         return trim($this->first_name . $middleInitial . ' ' . $this->last_name . $suffix);
-    }
+}
 
     public function getAgeAttribute() {
         return $this->birthdate ? Carbon::parse($this->birthdate)->age : 'N/A';
@@ -56,5 +55,5 @@ class Resident extends Model
     public function sector() { return $this->belongsTo(Sector::class, 'sector_id'); }
     public function employmentData() { return $this->hasOne(EmploymentData::class, 'resident_id'); }
     public function educationData() { return $this->hasOne(EducationData::class, 'resident_id'); }
-    public function account() { return $this->hasOne(ResidentAccount::class, 'resident_id'); }
+    public function account() { return $this->hasOne(User::class, 'resident_id'); }
 }

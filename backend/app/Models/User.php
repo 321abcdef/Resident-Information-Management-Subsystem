@@ -2,36 +2,45 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable; 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     protected $fillable = [
-        'employee_id',
-        'name',
-        'email',
+        'name',      
+        'email',      
+        'resident_id',
+        'username',
         'password',
-        'role',
-        'position',
-        'is_active'
+        'qr_token',
+        'role',      
+        'last_login_at',
+        'must_change_password',
+        'is_active',
+        'remember_token'
     ];
 
     protected $hidden = [
         'password',
-        'remember_token'
+        'remember_token',
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'is_active' => 'boolean'
+        'email_verified_at' => 'datetime', 
+        'last_login_at' => 'datetime',
+        'must_change_password' => 'boolean',
+        'is_active' => 'boolean',
+        'password' => 'hashed',
     ];
 
-    public function verifiedResidents()
+    public function resident()
     {
-        return $this->hasMany(Resident::class, 'verified_by');
+        return $this->belongsTo(Resident::class, 'resident_id');
     }
 }

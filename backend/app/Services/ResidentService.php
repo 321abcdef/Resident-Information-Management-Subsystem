@@ -7,6 +7,8 @@ use App\Models\Household;
 use App\Models\EmploymentData;
 use App\Models\EducationData;
 use App\Models\Nationality;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash; 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -176,4 +178,29 @@ class ResidentService
 
     return $newHouse->id;
 }
+
+public function verifyResident($residentId)
+{
+    return DB::transaction(function () use ($residentId) {
+        $resident = Resident::findOrFail($residentId);
+        
+        // 1. Update Resident Status
+        $resident->update([
+            'status' => 'Verified',
+            'barangay_id' => $this->generateBarangayId(), // Dito na magkakaroon ng BGN ID
+        ]);
+
+        // 2. Create User Account + QR Token
+        return User::create([
+            'resident_id' => $resident->id,
+            'username'    => $resident->tracking_number, // Default username
+            'password'    => Hash::make('default_password'),
+            'qr_token'    => Str::random(32), // <--- DITO MO NA I-GE-GENERATE
+            'is_active'   => 1,
+            'role'        => 'resident',
+        ]);
+    });
 }
+
+}
+

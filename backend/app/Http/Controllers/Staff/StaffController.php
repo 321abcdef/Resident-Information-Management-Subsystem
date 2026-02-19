@@ -8,7 +8,7 @@ use App\Services\ResidentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\ResidentAccount;
+use App\Models\User;
 use App\Models\Household;
 use Illuminate\Support\Facades\Log;
 
@@ -59,6 +59,7 @@ public function updateStatus(Request $request, $id) {
             
             $barangayId  = $this->service->generateBarangayId();
             $tempPass    = $this->service->generateTempPassword();
+            $qrToken = \Illuminate\Support\Str::random(32);
             $verifiedBy  = auth()->check() ? auth()->id() : null;
 
             $resident->update([
@@ -69,11 +70,12 @@ public function updateStatus(Request $request, $id) {
                 'verified_by' => $verifiedBy
             ]);
 
-            ResidentAccount::updateOrCreate(
+            User::updateOrCreate(
                 ['resident_id' => $resident->id],
                 [
                     'username' => $barangayId, 
                     'password' => Hash::make($tempPass), 
+                    'qr_token' => $qrToken,
                     'must_change_password' => true
                 ]
             );
@@ -85,7 +87,8 @@ public function updateStatus(Request $request, $id) {
                     'id'   => $barangayId,
                     'name' => $resident->name, 
                     'user' => $barangayId,
-                    'pass' => $tempPass
+                    'pass' => $tempPass,
+                    'token' => $qrToken
                 ]
             ]);
         }
@@ -102,27 +105,21 @@ public function updateStatus(Request $request, $id) {
 }
 
  
-    public function publicVerify($barangay_id) {
-        $resident = Resident::where('barangay_id', $barangay_id)
-            ->select('first_name', 'last_name', 'middle_name', 'suffix', 'status', 'barangay_id', 'created_at')
-            ->first();
+   public function publicVerify(Request $request, $trackingNumber)
+{
+    $token = $request->query('token');
 
-        if (!$resident) {
-            return response()->json(['success' => false, 'message' => 'Invalid ID'], 404);
-        }
+    $user = User::where('username', $trackingNumber)
+                ->where('qr_token', $token)
+                ->where('is_active', 1)
+                ->with('resident') 
+                ->first();
 
-        if ($resident->status !== 'Verified') {
-            return response()->json(['success' => false, 'message' => 'This ID is not yet verified.'], 403);
-        }
-
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'full_name' => trim("{$resident->first_name} {$resident->middle_name} {$resident->last_name} {$resident->suffix}"),
-                'id' => $resident->barangay_id,
-                'status' => $resident->status,
-                'member_since' => $resident->created_at->format('F Y')
-            ]
-        ]);
+    if (!$user) {
+  
+        return view('public.verify-error', ['message' => 'Invalid or Expired QR Code']);
     }
+
+    return view('public.verify-success', ['resident' => $user->resident]);
+}
 }

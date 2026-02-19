@@ -77,6 +77,7 @@ const Verification = () => {
           id: result.residentData?.id,
           user: result.residentData?.user,
           pass: result.residentData?.pass,
+          token: result.residentData?.token,
         });
         setShowSuccess(true);
         setIsMinimized(false);
