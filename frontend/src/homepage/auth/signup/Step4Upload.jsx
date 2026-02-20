@@ -41,19 +41,49 @@ const Step4Upload = ({ formData, handleChange, isDarkMode, setStep, previews, ha
         })}
       </div>
 
-            <button 
-                type="button" 
-                onClick={handleSubmit} 
-                disabled={!isReady}
-                className={`w-full p-5 rounded-2xl font-black uppercase tracking-widest transition-all 
-                    ${isReady ? 'bg-green-600 text-white shadow-xl scale-[1.02] active:scale-95' : 'bg-slate-100 text-slate-400 opacity-50 cursor-not-allowed'}`}
-            >
-                {isReady ? "🚀 I-submit Registration" : "Complete the form"}
-            </button>
-            
-            <button type="button" onClick={() => setStep(3)} className="w-full py-2 text-black font-black text-[10px] text-xs uppercase">BACK</button>
-        </div>
-    );
+      <div className="space-y-1">
+        <label className={labelClass}>Contact Number *</label>
+        <input
+          type="text"
+          name="contact"
+          value={formData.contact}
+          onChange={handleChange}
+          maxLength={11}
+          className={`w-full p-4 rounded-xl border-2 bg-transparent text-center font-mono tracking-widest outline-none transition-colors ${
+            isDarkMode
+              ? "border-slate-700 text-slate-100 focus:border-emerald-500"
+              : "border-slate-200 text-slate-900 focus:border-emerald-500"
+          }`}
+          placeholder="09XXXXXXXXX"
+        />
+      </div>
+
+      <button
+        type="button"
+        onClick={onReviewSubmit}
+        disabled={!isReady}
+        className={`w-full p-5 rounded-2xl font-black uppercase tracking-widest transition-all ${
+          isReady
+            ? "bg-emerald-700 text-white shadow-xl hover:bg-emerald-800 active:scale-95"
+            : isDarkMode
+              ? "bg-slate-800 text-slate-500 opacity-70 cursor-not-allowed"
+              : "bg-slate-100 text-slate-400 opacity-60 cursor-not-allowed"
+        }`}
+      >
+        {loading ? "Submitting..." : isReady ? "Review Information" : "Complete Required Fields"}
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setStep(3)}
+        className={`w-full py-2 font-black text-[9px] uppercase tracking-wider transition-colors ${
+          isDarkMode ? "text-slate-500 hover:text-slate-300" : "text-slate-400 hover:text-slate-600"
+        }`}
+      >
+        Back to Previous Step
+      </button>
+    </div>
+  );
 };
 
 export default Step4Upload;
