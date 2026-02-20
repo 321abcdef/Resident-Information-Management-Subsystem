@@ -30,8 +30,10 @@ const Residents = () => {
     // Solidify sector check
     const residentSectorName = (typeof r.sector === 'object' ? r.sector?.name : r.sector) || 'GENERAL POPULATION';
     
-    const matchesCategory = categoryFilter === 'All' || 
-                           residentSectorName.toUpperCase() === categoryFilter.toUpperCase();
+    const normalizedCategory = (categoryFilter || '').toUpperCase();
+    const matchesCategory =
+      normalizedCategory === 'ALL' ||
+      residentSectorName.toUpperCase() === normalizedCategory;
 
     return matchesSearch && matchesCategory;
   });

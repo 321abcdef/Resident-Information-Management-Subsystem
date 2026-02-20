@@ -3,26 +3,28 @@ export const useSound = () => {
   const playFeedback = (type = 'light') => {
     try {
       const context = new (window.AudioContext || window.webkitAudioContext)();
-      const gain = context.createGain();
       const now = context.currentTime;
+      const masterGain = context.createGain();
+      masterGain.connect(context.destination);
+      masterGain.gain.setValueAtTime(type === 'notify' ? 2.1 : 1.0, now);
 
-      const createTone = (freq, start, duration, vol) => {
+      const createTone = (freq, start, duration, vol, toneType = 'sine') => {
         const osc = context.createOscillator();
         const g = context.createGain();
-        osc.type = 'sine'; 
+        osc.type = toneType;
         osc.frequency.setValueAtTime(freq, start);
         g.gain.setValueAtTime(vol, start);
         g.gain.exponentialRampToValueAtTime(0.001, start + duration);
         osc.connect(g);
-        g.connect(context.destination);
+        g.connect(masterGain);
         osc.start(start);
         osc.stop(start + duration);
       };
 
       if (type === 'notify') {
-
-        createTone(880, now, 0.2, 0.1);     
-        createTone(1100, now + 0.08, 0.2, 0.1); 
+        // Extra-loud alert pair for incoming verification notifications
+        createTone(880, now, 0.3, 0.5, 'triangle');
+        createTone(1100, now + 0.08, 0.3, 0.52, 'triangle');
       } 
       else if (type === 'success') {
         // "Victory" upward slide

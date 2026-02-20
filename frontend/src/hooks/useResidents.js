@@ -31,8 +31,10 @@ export const useResidents = () => {
                 (r.full_address?.toLowerCase().includes(searchLower)) ||
                 (r.barangay_id?.toLowerCase().includes(searchLower));
                                      
-            const matchesCategory = categoryFilter === 'All' || 
-                                   sectorName.includes(categoryFilter.toLowerCase());
+            const normalizedCategory = (categoryFilter || '').toLowerCase();
+            const matchesCategory =
+                normalizedCategory === 'all' ||
+                sectorName.includes(normalizedCategory);
 
             return matchesSearch && matchesCategory;
         });

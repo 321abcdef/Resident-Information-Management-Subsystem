@@ -38,7 +38,7 @@ const Step2Address = ({
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-right-3 duration-300">
       {/* Residency Details */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1">
           <label className={labelClass}>Residency Type{requiredStar}</label>
           <select name="residencyStatus" value={formData.residencyStatus || ""} onChange={handleChange} className="full-input-sm">
@@ -63,7 +63,7 @@ const Step2Address = ({
       </div>
 
       {/* House Number & Purok Selection */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1">
           <label className={labelClass}>House No.{requiredStar}</label>
           <input 
@@ -71,7 +71,7 @@ const Step2Address = ({
             name="houseNumber" 
             value={formData.houseNumber || ""} 
             onChange={handleHouseNumberChange} 
-            className="full-input-sm uppercase" 
+            className="full-input-sm" 
             placeholder="123-A" 
           />
         </div>
@@ -117,11 +117,15 @@ const Step2Address = ({
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <button 
           type="button" 
           onClick={() => setStep(1)} 
-          className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 rounded-2xl font-black text-xs uppercase tracking-widest"
+          className={`flex-1 py-4 rounded-2xl font-black text-xs uppercase tracking-widest border transition-colors ${
+            isDarkMode
+              ? "bg-slate-900 border-white/10 text-slate-200 hover:bg-slate-800"
+              : "bg-slate-100 border-black/10 text-slate-700 hover:bg-slate-200"
+          }`}
         >
           Back
         </button>
@@ -129,7 +133,7 @@ const Step2Address = ({
           type="button" 
           disabled={!isStep2Valid} 
           onClick={() => setStep(3)} 
-          className="flex-[2] py-4 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-widest disabled:opacity-30"
+          className="sm:flex-[2] py-4 bg-emerald-700 text-white rounded-2xl font-black text-xs uppercase tracking-widest disabled:opacity-30 transition-colors hover:bg-emerald-800"
         >
           Next: Education & Work
         </button>

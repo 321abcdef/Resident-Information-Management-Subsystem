@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { authService } from './auth';
 
-export const useAuthLogic = (navigate, updateUser) => {
+export const useAuthLogic = (navigate) => {
   const [loading, setLoading] = useState(false);
   const [authSuccess, setAuthSuccess] = useState(null);
   const [trackingNum, setTrackingNum] = useState("");
@@ -30,12 +30,15 @@ export const useAuthLogic = (navigate, updateUser) => {
     const fetchLocations = async () => {
       try {
         const res = await authService.getLocations();
-        if (res.success) {
-          setPurokList(res.puroks || []);
-          setAllStreets(res.streets || []);
-        }
+        const puroks = Array.isArray(res?.puroks) ? res.puroks : [];
+        const streets = Array.isArray(res?.streets) ? res.streets : [];
+
+        setPurokList(puroks);
+        setAllStreets(streets);
       } catch (err) {
-        console.error("Failed to load locations.");
+        console.error("Failed to load locations.", err?.message || err);
+        setPurokList([]);
+        setAllStreets([]);
       }
     };
     fetchLocations();
@@ -118,7 +121,14 @@ export const useAuthLogic = (navigate, updateUser) => {
       }
     } catch (error) {
       const errorData = error.response?.data;
-      if (errorData?.errors) {
+      const statusCode = error.response?.status;
+      const isNetworkError = !error.response;
+
+      if (isNetworkError) {
+        alert("Cannot connect to the registration server. Please check your network and make sure backend is reachable on this device.");
+      } else if (statusCode === 503 || errorData?.code === 'DB_UNAVAILABLE') {
+        alert(errorData?.message || "Registration service is temporarily unavailable. Please try again later.");
+      } else if (errorData?.errors) {
         const firstError = Object.values(errorData.errors)[0][0];
         alert(`Validation: ${firstError}`);
       } else {
@@ -137,6 +147,7 @@ export const useAuthLogic = (navigate, updateUser) => {
         const res = await authService.track(input);
         if (res.success) setSearchResult(res.data);
       } catch (err) {
+        console.warn("Tracking lookup failed.", err?.message || err);
         setSearchResult({ status: "NOT_FOUND", message: "Not found." });
       }
     } else {

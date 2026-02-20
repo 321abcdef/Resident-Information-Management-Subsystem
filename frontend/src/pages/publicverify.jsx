@@ -3,7 +3,7 @@
 // import axios from 'axios';
 // import { Loader2 } from 'lucide-react';
 // import { QRCodeSVG } from 'qrcode.react';
-// import { API_BASE_URL, FRONTEND_URL } from '../config/api';
+// import { API_BASE_URL, FRONTEND_URL, STORAGE_URL } from '../config/api';
 
 // // Asset Imports
 // import bgyLogo from '../assets/bgylogo.png';
@@ -15,20 +15,48 @@
 //     const [loading, setLoading] = useState(true);
 //     const [error, setError] = useState(null);
 
-//     useEffect(() => {
-//         const fetchVerification = async () => {
-//             try {
-//                 const response = await axios.get(`${API_BASE_URL}/barangay-id/${id}`);
-//                 setResident(response.data); 
-//             } catch (err) {
-//                 console.error("API Error:", err);
-//                 setError(err.response?.data?.message || "Invalid Barangay ID");
-//             } finally {
-//                 setLoading(false);
-//             }
-//         };
-//         fetchVerification();
-//     }, [id]);
+    useEffect(() => {
+        const fetchVerification = async () => {
+            try {
+                const normalizedId = (String(id || '').toUpperCase().match(/BGN-\d+/) || [String(id || '').toUpperCase()])[0];
+                const response = await axios.get(`${API_BASE_URL}/barangay-id/${encodeURIComponent(normalizedId)}`);
+                setResident(response.data); 
+            } catch (err) {
+                console.error("API Error:", err);
+                if (!err.response) {
+                    setError("Cannot connect to verification server");
+                } else {
+                    setError(err.response?.data?.message || "Invalid Barangay ID");
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchVerification();
+    }, [id]);
+
+    const resolveStorageMediaUrl = (rawUrl) => {
+        if (!rawUrl) return null;
+        const baseStorage = String(STORAGE_URL || '').replace(/\/+$/, '');
+
+        if (rawUrl.startsWith('/storage/')) {
+            return `${baseStorage}/${rawUrl.replace(/^\/storage\//, '')}`;
+        }
+
+        try {
+            const parsed = new URL(rawUrl, window.location.origin);
+            const marker = '/storage/';
+            const idx = parsed.pathname.indexOf(marker);
+            if (idx !== -1) {
+                const relative = parsed.pathname.slice(idx + marker.length).replace(/^\/+/, '');
+                return `${baseStorage}/${relative}`;
+            }
+        } catch {
+            return rawUrl;
+        }
+
+        return rawUrl;
+    };
 
 //     if (loading) return (
 //         <div className="min-h-screen flex flex-col items-center justify-center bg-slate-100 font-sans tracking-widest uppercase">
@@ -71,12 +99,19 @@
 //                                 </div>
 //                             </div>
 
-//                             <div className="flex mt-6 justify-between items-start">
-//                                 <img src={bgyLogo} className="w-20" alt="Barangay Seal" />
-//                                 <div className="w-[110px] h-[110px] border-2 border-black bg-white shadow-sm overflow-hidden">
-//                                     <img src={resident?.photo} className="w-full h-full object-cover" alt="Resident" />
-//                                 </div>
-//                             </div>
+                            <div className="flex mt-6 justify-between items-start">
+                                <img src={bgyLogo} className="w-20" alt="Barangay Seal" />
+                                <div className="w-[110px] h-[110px] border-2 border-black bg-white shadow-sm overflow-hidden">
+                                    <img
+                                        src={resolveStorageMediaUrl(resident?.photo)}
+                                        className="w-full h-full object-cover"
+                                        alt="Resident"
+                                        onError={(e) => {
+                                            e.currentTarget.style.display = 'none';
+                                        }}
+                                    />
+                                </div>
+                            </div>
 
 //                             <div className="mt-4 grid grid-cols-2 gap-4">
 //                                 <div className="flex flex-col">
@@ -142,11 +177,11 @@
 //                                 </div>
 //                             </div>
 
-//                             <div className="flex justify-center my-6">
-//                                 <div className="p-2 bg-white border border-slate-200 shadow-sm">
-//                                     <QRCodeSVG value={`${FRONTEND_URL}/verify/${id}`} size={80} />
-//                                 </div>
-//                             </div>
+                            <div className="flex justify-center my-6">
+                                <div className="p-2 bg-white border border-slate-200 shadow-sm">
+                                    <QRCodeSVG value={`${FRONTEND_URL}/verify/${encodeURIComponent(String(id || '').trim())}`} size={80} />
+                                </div>
+                            </div>
 
 //                             <div className="mt-auto flex flex-col items-center">
 //                                 <div className="w-full flex justify-between items-end gap-2">
@@ -174,4 +209,4 @@
 //     );
 // };
 
-// export default PublicVerify;
+export default PublicVerify;

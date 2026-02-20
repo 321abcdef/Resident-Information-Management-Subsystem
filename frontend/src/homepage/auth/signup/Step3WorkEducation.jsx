@@ -13,7 +13,7 @@ const Step3WorkEducation = ({ formData, handleChange, isDarkMode, setStep }) => 
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-right-3 duration-300">
       <p className="text-xs font-black text-green-600 uppercase tracking-widest">Education Information</p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1">
           <label className={labelClass}>Educational Status{requiredStar}</label>
           <select name="educationalStatus" value={formData.educationalStatus || ""} onChange={handleChange} className="full-input-sm">
@@ -62,10 +62,10 @@ const Step3WorkEducation = ({ formData, handleChange, isDarkMode, setStep }) => 
         </div>
       </div>
 
-      <div className="h-px bg-slate-200 my-2" />
+      <div className={`h-px my-2 ${isDarkMode ? "bg-slate-700" : "bg-slate-200"}`} />
 
       <p className="text-xs font-black text-green-600 uppercase tracking-widest">Economic Activity</p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1">
           <label className={labelClass}>Work Status{requiredStar}</label>
           <select name="employmentStatus" value={formData.employmentStatus || ""} onChange={handleChange} className="full-input-sm">
@@ -110,9 +110,24 @@ const Step3WorkEducation = ({ formData, handleChange, isDarkMode, setStep }) => 
         </div>
       </div>
 
-      <div className="flex gap-2 pt-4">
-        <button type="button" onClick={() => setStep(2)} className="flex-1 py-4 bg-slate-100 rounded-2xl font-black text-xs uppercase tracking-widest">Back</button>
-        <button type="button" disabled={!isStep3Valid} onClick={() => setStep(4)} className="flex-[2] py-4 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-widest disabled:opacity-30">
+      <div className="flex flex-col sm:flex-row gap-2 pt-4">
+        <button
+          type="button"
+          onClick={() => setStep(2)}
+          className={`flex-1 py-4 rounded-2xl font-black text-xs uppercase tracking-widest border transition-colors ${
+            isDarkMode
+              ? "bg-slate-900 border-white/10 text-slate-200 hover:bg-slate-800"
+              : "bg-slate-100 border-black/10 text-slate-700 hover:bg-slate-200"
+          }`}
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          disabled={!isStep3Valid}
+          onClick={() => setStep(4)}
+          className="sm:flex-[2] py-4 bg-emerald-700 text-white rounded-2xl font-black text-xs uppercase tracking-widest disabled:opacity-30 transition-colors hover:bg-emerald-800"
+        >
           Next: ID Upload
         </button>
       </div>

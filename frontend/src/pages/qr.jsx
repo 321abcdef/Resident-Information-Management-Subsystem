@@ -32,11 +32,16 @@ const QRScanner = () => {
       const result = await html5QrCode.scanFile(file, true);
       
     
-      const matchedRes = submissions.find(res => {
-        const qrText = result.toUpperCase();
+      const qrText = result.toUpperCase();
+      const extractedBarangayId = qrText.match(/BGN-\d+/)?.[0] || null;
+
+      const matchedRes = submissions.find((res) => {
         const resName = res.name?.toUpperCase();
         const resId = res.barangay_id?.toUpperCase();
+        const isVerified = (res.status || "").toUpperCase() === "VERIFIED";
 
+        if (!isVerified) return false;
+        if (extractedBarangayId && resId) return resId === extractedBarangayId;
         return (resName && qrText.includes(resName)) || (resId && qrText.includes(resId));
       });
 

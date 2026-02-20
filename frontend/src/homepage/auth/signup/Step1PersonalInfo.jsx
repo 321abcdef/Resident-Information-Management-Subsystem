@@ -18,7 +18,7 @@ const Step1PersonalInfo = ({ formData, handleChange, isDarkMode, setStep }) => {
 
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-right-3 duration-300">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
         <div className="col-span-1 space-y-1">
           <label className={labelClass}>First Name{requiredStar}</label>
           <input type="text" name="firstName" value={formData.firstName || ""} onChange={handleChange} className="full-input-sm" placeholder="Juan" />
@@ -42,8 +42,8 @@ const Step1PersonalInfo = ({ formData, handleChange, isDarkMode, setStep }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
-        <div className="col-span-2 space-y-1">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="sm:col-span-2 space-y-1">
           <label className={labelClass}>Birthdate{requiredStar}</label>
           <input type="date" name="birthdate" value={formData.birthdate || ""} onChange={handleChange} max={today} className="full-input-sm" />
         </div>
@@ -53,7 +53,7 @@ const Step1PersonalInfo = ({ formData, handleChange, isDarkMode, setStep }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1">
           <label className={labelClass}>Gender{requiredStar}</label>
           <select name="gender" value={formData.gender || ""} onChange={handleChange} className="full-input-sm">
@@ -68,7 +68,7 @@ const Step1PersonalInfo = ({ formData, handleChange, isDarkMode, setStep }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1">
           <label className={labelClass}>Marital Status</label>
           <select name="maritalStatus" value={formData.maritalStatus || ""} onChange={handleChange} className="full-input-sm">
@@ -96,7 +96,7 @@ const Step1PersonalInfo = ({ formData, handleChange, isDarkMode, setStep }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1">
           <label className={labelClass}>Household Position{requiredStar}</label>
           <select name="householdPosition" value={formData.householdPosition || ""} onChange={handleChange} className="full-input-sm">
@@ -114,12 +114,19 @@ const Step1PersonalInfo = ({ formData, handleChange, isDarkMode, setStep }) => {
         </div>
       </div>
 
-      <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl">
+      <div className={`flex items-center gap-3 p-4 rounded-2xl ${isDarkMode ? "bg-slate-800/70" : "bg-slate-50"}`}>
         <input type="checkbox" id="isVoter" name="isVoter" checked={formData.isVoter || false} onChange={handleChange} className="w-5 h-5 rounded accent-green-600" />
-        <label htmlFor="isVoter" className="text-xs font-bold text-slate-600 dark:text-slate-300">I am a registered voter in this barangay</label>
+        <label htmlFor="isVoter" className={`text-xs font-bold ${isDarkMode ? "text-slate-300" : "text-slate-600"}`}>
+          I am a registered voter in this barangay
+        </label>
       </div>
 
-      <button type="button" disabled={!isValid} onClick={() => setStep(2)} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black uppercase text-xs tracking-widest disabled:opacity-30 transition-all">
+      <button
+        type="button"
+        disabled={!isValid}
+        onClick={() => setStep(2)}
+        className="w-full py-4 bg-emerald-700 text-white rounded-2xl font-black uppercase text-xs tracking-widest disabled:opacity-30 transition-all hover:bg-emerald-800"
+      >
         Continue to Address
       </button>
     </div>
