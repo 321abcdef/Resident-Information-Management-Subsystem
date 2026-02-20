@@ -6,6 +6,9 @@ import Pagination from '../components/common/pagination';
 import { useResidents } from '../hooks/useResidents';
 import { usePrinter } from '../hooks/usePrinter'; 
 import SectorLegend from '@/components/common/SectorLegend';
+import FilterSelect from '@/components/common/FilterSelect';
+import { PUROK_OPTIONS, RESIDENCY_OPTIONS, VOTER_OPTIONS } from '@/constants/filter';
+import { getResidencyLabel } from '@/utils/residency';
 
 const Residents = () => {
   const { 
@@ -17,116 +20,105 @@ const Residents = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  const [purokFilter, setPurokFilter] = useState('All');
+  const [residencyFilter, setResidencyFilter] = useState('All');
+  const [voterFilter, setVoterFilter] = useState('All');
+
+  const handlePrint = () => {
+    const columns = [
+      { header: 'Full Name', key: 'name' },
+      { header: 'Age', key: 'age' },
+      { header: 'Purok', key: 'display_purok' },
+      { header: 'Sector', key: 'display_sector' },
+      { header: 'Voter', key: 'display_voter' },
+      { header: 'Residency', key: 'display_residency' }
+    ];
+
+    const dataToPrint = filteredResidents.map(r => ({
+      ...r,
+      display_purok: r.resolved_purok || `Purok ${r.temp_purok_id}`,
+      display_sector: (typeof r.sector === 'object' ? r.sector?.name : r.sector) || 'GENERAL POPULATION',
+      display_voter: (r.is_voter == 1 || r.is_voter === 'Yes') ? 'Registered' : 'Non-Registered',
+      display_residency: getResidencyLabel(r.residency_start_date).toUpperCase()
+    }));
+
+    printTable("Barangay Resident Masterlist", columns, dataToPrint, `Sector: ${categoryFilter}, Purok: ${purokFilter}`);
+  };
+
+  const resetFilters = () => {
+    setSearchTerm('');
+    setCategoryFilter('All');
+    setPurokFilter('All');
+    setResidencyFilter('All');
+    setVoterFilter('All');
+  };
+
   const filteredResidents = residents.filter(r => {
-    const fullName = r.name?.toLowerCase() || "";
-    const barangayId = r.barangay_id?.toLowerCase() || "";
-    const fullAddress = r.full_address?.toLowerCase() || "";
     const searchLower = searchTerm.toLowerCase();
-
-    const matchesSearch = fullName.includes(searchLower) || 
-                         barangayId.includes(searchLower) || 
-                         fullAddress.includes(searchLower);
-    
-    // Solidify sector check
+    const matchesSearch = (r.name?.toLowerCase() || "").includes(searchLower) || (r.barangay_id?.toLowerCase() || "").includes(searchLower);
     const residentSectorName = (typeof r.sector === 'object' ? r.sector?.name : r.sector) || 'GENERAL POPULATION';
-    
-    const normalizedCategory = (categoryFilter || '').toUpperCase();
-    const matchesCategory =
-      normalizedCategory === 'ALL' ||
-      residentSectorName.toUpperCase() === normalizedCategory;
+    const matchesCategory = categoryFilter === 'All' || residentSectorName.toUpperCase() === categoryFilter.toUpperCase();
+    const matchesPurok = purokFilter === 'All' || String(r.temp_purok_id) === purokFilter;
+    const residentVoter = (r.is_voter == 1 || r.is_voter === 'Yes') ? 'Yes' : 'No';
+    const matchesVoter = voterFilter === 'All' || residentVoter === voterFilter;
+    const resLabel = getResidencyLabel(r.residency_start_date);
+    const matchesResidency = residencyFilter === 'All' || resLabel === residencyFilter;
 
-    return matchesSearch && matchesCategory;
+    return matchesSearch && matchesCategory && matchesPurok && matchesVoter && matchesResidency;
   });
 
-  // 2. 🔢 PAGINATION CALCULATIONS: Base on filtered results
- const totalPages = Math.ceil(filteredResidents.length / itemsPerPage) || 1;
-  const currentItems = filteredResidents.slice(
-    (currentPage - 1) * itemsPerPage, 
-    currentPage * itemsPerPage
-  );
+  const totalPages = Math.ceil(filteredResidents.length / itemsPerPage) || 1;
+  const currentItems = filteredResidents.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const sectorCounts = residents.reduce((acc, r) => {
     const sectorName = (typeof r.sector === 'object' ? r.sector?.name : r.sector) || 'GENERAL POPULATION';
     const key = sectorName.toUpperCase();
     acc[key] = (acc[key] || 0) + 1;
     return acc;
-}, {});
+  }, {});
 
-
-  useEffect(() => { setCurrentPage(1); }, [searchTerm, categoryFilter]);
-
-  const handlePrint = () => {
-    const printableData = filteredResidents.map(r => {
-        let sectorLabel = "GENERAL POPULATION";
-        if (typeof r.sector === 'object' && r.sector !== null) {
-            sectorLabel = r.sector.name;
-        } else if (typeof r.sector === 'string' && r.sector.trim() !== "") {
-            sectorLabel = r.sector;
-        }
-
-        return {
-            ...r,
-            sector: sectorLabel.toUpperCase(), 
-            full_info_address: `${r.full_address || ''} (Purok ${r.temp_purok_id || 'N/A'})`.trim()
-        };
-    });
-
-    const columns = [
-        { header: 'NAME OF RESIDENT', key: 'name', style: 'font-weight: bold; font-size: 14px; border-bottom: 1px solid #ccc; padding: 10px 5px;' },
-        { header: 'AGE', key: 'age', style: 'text-align: center; font-size: 14px; border-bottom: 1px solid #ccc; width: 60px;' },
-        { header: 'ADDRESS / ZONE', key: 'full_info_address', style: 'font-size: 13px; border-bottom: 1px solid #ccc; padding: 10px 5px;' },
-        { header: 'SECTOR', key: 'sector', style: 'text-align: center; font-size: 12px; border-bottom: 1px solid #ccc; font-weight: bold;' }
-    ];
-
-    printTable("BARANGAY RESIDENT MASTERLIST", columns, printableData, categoryFilter);
-  };
+  useEffect(() => { setCurrentPage(1); }, [searchTerm, categoryFilter, purokFilter, residencyFilter, voterFilter]);
 
   return (
     <div className="space-y-6 pb-10">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-         <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-slate-100 uppercase tracking-tight">
-       MASTERLIST MANAGEMENT
-      </h1>
-          {/* <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Masterlist Management</p> */}
+          <h1 className="text-2xl font-black text-gray-900 dark:text-slate-100 uppercase tracking-tight">Masterlist Management</h1>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Official Barangay Records</p>
         </div>
-        <button onClick={handlePrint} className="flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase hover:opacity-90 transition-all shadow-lg active:scale-95">
-          <Printer size={16} /> Print
+        <button onClick={handlePrint} disabled={filteredResidents.length === 0} className="flex items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-2xl font-black text-xs uppercase hover:opacity-90 shadow-lg transition-all active:scale-95 disabled:opacity-50">
+          <Printer size={16} /> Print Masterlist
         </button>
       </div>
 
-      {/* CLICKABLE LEGEND - Connected to categoryFilter state */}
-    <SectorLegend 
-  activeFilter={categoryFilter} 
-  onFilterChange={setCategoryFilter}
-  counts={sectorCounts} 
-/>
+      <SectorLegend activeFilter={categoryFilter} onFilterChange={setCategoryFilter} counts={sectorCounts} />
 
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none">
-        <ResidentFilters 
-          searchTerm={searchTerm} 
-          setSearchTerm={setSearchTerm} 
-        />
-        
-        <div className="w-full">
-          {loading ? (
-            <div className="p-20 text-center">
-              <div className="animate-spin inline-block w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full mb-4"></div>
-              <p className="font-black text-slate-400 uppercase tracking-widest text-xs">Loading...</p>
-            </div>
-          ) : (
-            <>
-              <ResidentTable residents={currentItems} onUpdate={handleUpdate} onDelete={handleDelete} />
-              
-              <Pagination 
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-                totalItems={filteredResidents.length}
-                itemsPerPage={itemsPerPage}
-              />
-            </>
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-sm">
+        {/* ITO YUNG FIXED ALIGNMENT SECTION */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between p-6 gap-4 border-b border-slate-100 dark:border-slate-800">
+          <div className="flex-1 w-full lg:max-w-md">
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1.5 ml-1 block">
+              Search Resident
+            </span>
+            <ResidentFilters searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          </div>
+          <div className="flex flex-wrap md:flex-nowrap gap-3 items-end w-full lg:w-auto">
+            <FilterSelect label="Purok" value={purokFilter} onChange={setPurokFilter} options={PUROK_OPTIONS} />
+            <FilterSelect label="Voter Status" value={voterFilter} onChange={setVoterFilter} options={VOTER_OPTIONS} />
+            <FilterSelect label="Residency" value={residencyFilter} onChange={setResidencyFilter} options={RESIDENCY_OPTIONS} />
+          </div>
+        </div>
+
+        <div className="px-8 py-4 bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center text-[10px] font-black uppercase">
+          <span className="text-slate-500">Results: <span className="text-emerald-600">{filteredResidents.length} Found</span></span>
+          {(searchTerm || categoryFilter !== 'All' || purokFilter !== 'All') && (
+            <button onClick={resetFilters} className="text-rose-500 hover:underline">Clear Filters ✕</button>
           )}
+        </div>
+        
+        <ResidentTable residents={currentItems} onUpdate={handleUpdate} handleDelete={handleDelete} />
+        <div className="p-6 border-t border-slate-100 dark:border-slate-800">
+          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} totalItems={filteredResidents.length} itemsPerPage={itemsPerPage} />
         </div>
       </div>
     </div>
