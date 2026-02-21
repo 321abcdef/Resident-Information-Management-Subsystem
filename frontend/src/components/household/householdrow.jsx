@@ -24,45 +24,54 @@ const getAvatarColor = (name) => {
 };
 
 const HouseholdRow = ({ item, onView, onDelete }) => {
+  // Color coding logic
+  const getTenureColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'owned': return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400';
+      case 'rented': return 'bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400';
+      case 'sharer': return 'bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400';
+      default: return 'bg-slate-100 text-slate-600';
+    }
+  };
+
   return (
     <tr className="border-b last:border-none border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all">
+      <td className="px-6 py-5 text-base text-emerald-600 font-bold">{item.id}</td>
       
-      {/* 1. Household ID */}
-      <td className="px-6 py-5 text-base text-emerald-600 font-bold tracking-tight" title="Household Identification Number">
-        {item.id}
+      <td className={`px-6 py-5 font-bold ${item.head === 'No Head Assigned' ? 'text-slate-400 italic' : 'text-slate-900 dark:text-white'}`}>
+        {item.head}
       </td>
 
-      {/* 2. Name Section - Natural Case (Removed uppercase) */}
-   
-<td className={`px-6 py-5 font-bold ${item.head === 'No Head Assigned' ? 'text-slate-400 italic' : 'text-slate-900 dark:text-white'}`}>
-    {item.head}
-</td>
-      {/* 3. Address - Natural Case */}
-      <td className="px-6 py-5 text-base text-slate-700 dark:text-slate-300 truncate max-w-[200px]" title={`Full Address: ${item.address}`}>
-        {item.address}
+      <td className="px-6 py-5 text-base text-slate-700 dark:text-slate-300">
+        <div className="flex flex-col">
+          <span className="truncate max-w-[180px]">{item.address}</span>
+          <span className="text-[10px] font-black text-slate-400 uppercase">Purok {item.purok}</span>
+        </div>
       </td>
       
-      {/* 4. Purok */}
-      <td className="px-6 py-5 text-base font-bold text-slate-900 dark:text-white tracking-tight">
-        Purok {item.purok}
+      {/* NEW: Tenure Status with Badge */}
+      <td className="px-6 py-5">
+        <span className={`text-[10px] px-2.5 py-1 rounded-lg font-black uppercase tracking-wider ${getTenureColor(item.tenure_status)}`}>
+          {item.tenure_status || 'N/A'}
+        </span>
       </td>
 
-      {/* 5. Members count */}
-      <td className="px-6 py-5 text-center text-base font-black text-slate-700 dark:text-slate-200" title="Total Number of Members">
+      {/* NEW: Wall Material Info */}
+      <td className="px-6 py-5 text-xs font-bold text-slate-600 dark:text-slate-400">
+        {item.wall_material || '---'}
+      </td>
+
+      <td className="px-6 py-5 text-center text-base font-black text-slate-700 dark:text-slate-200">
         {item.members}
       </td>
 
-      {/* 7. Actions */}
       <td className="px-6 py-5">
-        <div className="flex items-center gap-0 border border-slate-300 dark:border-slate-600 w-fit bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-md">
-          <button 
-            onClick={() => onView(item)} 
-            title="View Household Members"
-            className="p-3 text-slate-600 dark:text-slate-300 hover:bg-emerald-600 hover:text-white border-r border-slate-300 dark:border-slate-600 transition-all"
-          >
-            <Eye size={20} />
-          </button>
-        </div>
+        <button 
+          onClick={() => onView(item)} 
+          className="p-3 text-slate-600 dark:text-slate-300 hover:bg-emerald-600 hover:text-white border border-slate-300 dark:border-slate-600 rounded-lg transition-all shadow-sm"
+        >
+          <Eye size={18} />
+        </button>
       </td>
     </tr>
   );

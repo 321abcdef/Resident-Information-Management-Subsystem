@@ -15,7 +15,7 @@ class Resident extends Model
         'barangay_id', 'tracking_number', 'first_name', 'middle_name', 'last_name', 'suffix',
         'birthdate', 'birth_registration', 'gender', 'contact_number', 'email',
         'household_id', 'household_position', 'marital_status_id', 'nationality_id',
-        'sector_id', 'residency_status', 'residency_start_date', 'is_voter',
+        'sector_id', 'residency_status', 'residency_start_date', 'is_voter','registration_payload',
         'id_type', 'id_front_path', 'id_back_path', 'status', 'temp_password',
         'verified_at', 'verified_by', 'rejection_reason',
         'temp_house_number', 'temp_purok_id', 'temp_street_id'
@@ -25,7 +25,8 @@ class Resident extends Model
         'birthdate' => 'date',
         'residency_start_date' => 'date',
         'verified_at' => 'datetime',
-        'is_voter' => 'boolean'
+        'is_voter' => 'boolean',
+        'registration_payload' => 'array'
     ];
 
     protected $hidden = ['temp_password'];

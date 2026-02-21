@@ -4,122 +4,134 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Resident;
+use App\Models\User;
 use App\Services\ResidentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Models\Household;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class StaffController extends Controller
 {
     protected $service;
 
-    public function __construct(ResidentService $service) {
+    public function __construct(ResidentService $service) 
+    {
         $this->service = $service;
     }
 
-  
-   public function index() {
-    try {
-        $submissions = Resident::with([
-            'maritalStatus', 
-            'nationality', 
-            'sector', 
-            'employmentData', 
-            'educationData',
-            'tempPurok',   
-            'tempStreet'   
-        ])
-     
-        ->orderBy('created_at', 'desc')
-        ->get()
-        ->map(function ($resident) {
-            $resident->resolved_purok = $resident->tempPurok ? "Purok " . $resident->tempPurok->number : 'N/A';
-            $resident->resolved_street = $resident->tempStreet ? $resident->tempStreet->name : 'N/A';
-            return $resident;
-        });
-
-        return response()->json($submissions);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Failed to fetch submissions.'], 500);
-    }
-}
-
-public function updateStatus(Request $request, $id) {
-    $resident = Resident::findOrFail($id);
-    $status = $request->status;
-
-    DB::beginTransaction();
-    try {
-        if ($status === 'Verified') {
-        
-            $householdId = $this->service->assignToHouseholdLogic($resident);
-            
-            $barangayId  = $this->service->generateBarangayId();
-            $tempPass    = $this->service->generateTempPassword();
-            $qrToken = \Illuminate\Support\Str::random(32);
-            $verifiedBy  = auth()->check() ? auth()->id() : null;
-
-            $resident->update([
-                'status' => 'Verified', 
-                'barangay_id' => $barangayId,
-                'household_id' => $householdId,
-                'verified_at' => now(),
-                'verified_by' => $verifiedBy
-            ]);
-
-            User::updateOrCreate(
-                ['resident_id' => $resident->id],
-                [
-                    'username' => $barangayId, 
-                    'password' => Hash::make($tempPass), 
-                    'qr_token' => $qrToken,
-                    'must_change_password' => true
-                ]
-            );
-
-            DB::commit();
-            return response()->json([
-                'success' => true,
-                'residentData' => [
-                    'id'   => $barangayId,
-                    'name' => $resident->name, 
-                    'user' => $barangayId,
-                    'pass' => $tempPass,
-                    'token' => $qrToken
-                ]
-            ]);
+    public function index() 
+    {
+        try {
+            $submissions = Resident::with([
+                'maritalStatus', 'nationality', 'sector', 
+                'employmentData', 'educationData', 'tempPurok', 'tempStreet'
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($resident) {
+                $resident->resolved_purok = $resident->tempPurok ? "Purok " . $resident->tempPurok->number : 'N/A';
+                $resident->resolved_street = $resident->tempStreet ? $resident->tempStreet->name : 'N/A';
+                $resident->name = trim("{$resident->first_name} " . ($resident->middle_name ? $resident->middle_name[0] . '. ' : '') . "{$resident->last_name}");
+                return $resident;
+            });
+            return response()->json($submissions);
+        } catch (\Exception $e) {
+            Log::error("Index Error: " . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch submissions.'], 500);
         }
-
-        $resident->update(['status' => $status]);
-        DB::commit();
-        return response()->json(['success' => true]);
-
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error("Update Status Error (ID $id): " . $e->getMessage());
-        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
-    }
-}
-
- 
-   public function publicVerify(Request $request, $trackingNumber)
-{
-    $token = $request->query('token');
-
-    $user = User::where('username', $trackingNumber)
-                ->where('qr_token', $token)
-                ->where('is_active', 1)
-                ->with('resident') 
-                ->first();
-
-    if (!$user) {
-  
-        return view('public.verify-error', ['message' => 'Invalid or Expired QR Code']);
     }
 
-    return view('public.verify-success', ['resident' => $user->resident]);
-}
+    public function updateStatus(Request $request, $id) 
+    {
+        // 1. Map the incoming status to correct capitalization
+        $statusMap = [
+            'pending' => 'Pending',
+            'verified' => 'Verified',
+            'rejected' => 'Rejected',
+            'for verification' => 'For Verification' // Added this
+        ];
+
+        $inputStatus = strtolower(trim($request->status));
+        $formattedStatus = $statusMap[$inputStatus] ?? ucfirst($inputStatus);
+        
+        $request->merge(['status' => $formattedStatus]);
+
+     
+        $request->validate([
+            'status' => 'required|string|in:Pending,Verified,Rejected,For Verification'
+        ]);
+
+        $resident = Resident::findOrFail($id);
+
+        DB::beginTransaction();
+        try {
+            if ($formattedStatus === 'Verified') {
+                $householdId = $this->service->assignToHouseholdLogic($resident);
+                $barangayId  = $this->service->generateBarangayId();
+                $tempPass    = $this->service->generateTempPassword();
+                $qrToken     = Str::random(32);
+
+                $resident->update([
+                    'status' => 'Verified',
+                    'barangay_id' => $barangayId,
+                    'household_id' => $householdId,
+                    'verified_at' => now(),
+                    'verified_by' => auth()->id() ?? 1
+                ]);
+
+                User::updateOrCreate(
+                    ['resident_id' => $resident->id],
+                    [
+                        'username' => $barangayId,
+                        'password' => Hash::make($tempPass),
+                        'qr_token' => $qrToken,
+                        'is_active' => 1,
+                        'must_change_password' => true
+                    ]
+                );
+
+                DB::commit();
+                return response()->json([
+                    'success' => true,
+                    'residentData' => [
+                        'id'    => $barangayId,
+                        'name'  => "{$resident->first_name} {$resident->last_name}",
+                        'user'  => $barangayId,
+                        'pass'  => $tempPass,
+                        'token' => $qrToken
+                    ]
+                ]);
+            }
+
+            $resident->update(['status' => $formattedStatus]);
+            DB::commit();
+            
+            return response()->json([
+                'success' => true, 
+                'message' => "Status updated to $formattedStatus"
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Update Error: " . $e->getMessage());
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function publicVerify(Request $request, $trackingNumber)
+    {
+        $token = $request->query('token');
+        $user = User::where('username', $trackingNumber)
+                    ->where('qr_token', $token)
+                    ->where('is_active', 1)
+                    ->with('resident') 
+                    ->first();
+
+        if (!$user) {
+            return view('public.verify-error', ['message' => 'Invalid or Expired QR Code']);
+        }
+        return view('public.verify-success', ['resident' => $user->resident]);
+    }
 }

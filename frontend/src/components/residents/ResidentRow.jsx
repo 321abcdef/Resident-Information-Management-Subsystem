@@ -39,11 +39,29 @@ const ResidentRow = ({ r, onView, onEdit, onDelete }) => {
                     {sectorName}
                 </span>
             </td>
-            <td className="px-6 py-5 text-right">
-                <div className="flex items-center gap-0 border border-slate-300 dark:border-slate-600 w-fit bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-sm ml-auto">
-                    <button onClick={() => onView(r)} className="p-3 text-slate-600 hover:bg-emerald-600 hover:text-white border-r border-slate-300 dark:border-slate-600 transition-all"><Eye size={18} /></button>
-                    <button onClick={() => onEdit(r)} className="p-3 text-slate-600 hover:bg-blue-600 hover:text-white border-r border-slate-300 dark:border-slate-600 transition-all"><Pencil size={18} /></button>
-                    <button onClick={() => onDelete(r.id, displayName)} className="p-3 text-slate-600 hover:bg-rose-600 hover:text-white transition-all"><Trash2 size={18} /></button>
+           <td className="px-6 py-5 text-right">
+                <div className="flex items-center gap-0 border border-slate-300 dark:border-slate-600 w-fit bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-sm">
+                    <button 
+                        onClick={() => onView(r)} 
+                        title="View Profile"
+                        className="p-3 text-slate-600 hover:bg-emerald-600 hover:text-white border-r border-slate-300 dark:border-slate-600 transition-all"
+                    >
+                        <Eye size={18} />
+                    </button>
+                    <button 
+                        onClick={() => onEdit(r)} 
+                        title="Edit Resident"
+                        className="p-3 text-slate-600 hover:bg-blue-600 hover:text-white border-r border-slate-300 dark:border-slate-600 transition-all"
+                    >
+                        <Pencil size={18} />
+                    </button>
+                    <button 
+                        onClick={() => onDelete(r.id, displayName)} 
+                        title="Delete Resident"
+                        className="p-3 text-slate-600 hover:bg-rose-600 hover:text-white transition-all"
+                    >
+                        <Trash2 size={18} />
+                    </button>
                 </div>
             </td>
         </tr>

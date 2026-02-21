@@ -2,11 +2,13 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../config/api';
 
 export const authService = {
+  
     getLocations: async () => {
         try {
             const response = await axios.get(`${API_BASE_URL}/locations`);
             return response.data;
         } catch (error) {
+          
             return {
                 success: true,
                 puroks: [
@@ -34,47 +36,79 @@ export const authService = {
                     { id: 13, purok_id: 7, name: 'Alfarez St.' },
                     { id: 14, purok_id: 7, name: 'Dona Victorina St.' }
                 ],
-                source: 'fallback',
-                reason: error?.message || 'request_failed'
+                source: 'fallback'
             };
         }
     },
 
+   
+   checkHouseholdHead: async (params) => {
+    try {
+     
+        if (!params.houseNumber || !params.street || !params.purok) {
+            return { exists: false };
+        }
+
+        const response = await axios.get(`${API_BASE_URL}/households/check-head`, {
+            params: {
+                house_number: params.houseNumber,
+                street_id: params.street,
+                purok_id: params.purok
+            }
+        });
+
+      
+        return response.data; 
+
+    } catch (error) {
+        console.error('Check Head Error:', error);
+        
+    
+    
+        return { exists: false, error: true };
+    }
+},
+
+    // 3. Register Resident
     register: async (formData) => {
-        try {
-            const data = new FormData();
-            
-            // Append all non-file fields
-            Object.keys(formData).forEach(key => {
-                if (key !== 'idFront' && key !== 'idBack') {
-                    // Convert boolean to integer for Laravel compatibility
-                    const value = typeof formData[key] === 'boolean' ? (formData[key] ? 1 : 0) : (formData[key] || '');
+    try {
+        const data = new FormData();
+        
+        // Loop through all fields in formData
+        Object.keys(formData).forEach(key => {
+      
+            if (key !== 'idFront' && key !== 'idBack') {
+                let value = formData[key];
+
+                // Convert boolean to 1 or 0 for Laravel
+                if (typeof value === 'boolean') {
+                    value = value ? 1 : 0;
+                }
+
+                if (value !== null && value !== undefined) {
                     data.append(key, value);
                 }
-            });
-
-            // Append Files correctly
-            if (formData.idFront instanceof File) {
-                data.append('idFront', formData.idFront);
             }
-            if (formData.idBack instanceof File) {
-                data.append('idBack', formData.idBack);
+        });
+
+        // Append Files
+        if (formData.idFront) data.append('idFront', formData.idFront);
+        if (formData.idBack) data.append('idBack', formData.idBack);
+
+        const response = await axios.post(`${API_BASE_URL}/register`, data, {
+            headers: { 
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json'
             }
-
-            const response = await axios.post(`${API_BASE_URL}/register`, data, {
-                headers: { 
-                    'Content-Type': 'multipart/form-data',
-                    'Accept': 'application/json'
-                }
-            });
-            
-            return response.data;
-        } catch (error) {
-            console.error('Registration API Error:', error.response?.data || error.message);
-            throw error;
-        }
-    },
-
+        });
+        
+        return response.data;
+    } catch (error) {
+        console.error('Registration API Error:', error.response?.data || error.message);
+        throw error;
+    }
+},
+    // 4. Track Application
     track: async (trackingNumber) => {
         try {
             const cleanedNumber = trackingNumber.toUpperCase().trim();
@@ -86,11 +120,13 @@ export const authService = {
         }
     },
 
+    // 5. Login (Simplified)
     login: async (username, password) => {
-        return {
-            success: true,
-            user: { username, role: 'Admin', hasPassword: Boolean(password) },
-            token: 'dev-token-' + Date.now()
-        };
+        try {
+            const response = await axios.post(`${API_BASE_URL}/login`, { username, password });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 };

@@ -17,13 +17,18 @@ class Household extends Model
         'street_id',
         'head_resident_id',
         'established_date',
-        'is_active'
+        'is_active',
+        'tenure_status',
+    'wall_material',
+    'roof_material',
+    'water_source',
+    'is_indigent',
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
-        'established_date' => 'date'
-    ];
+   protected $casts = [
+    'registration_payload' => 'array', 
+    'birthdate' => 'date',
+];
 
     /**
      * Household belongs to a Purok

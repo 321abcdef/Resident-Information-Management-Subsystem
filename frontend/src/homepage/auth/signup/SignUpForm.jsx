@@ -12,7 +12,8 @@ const SignupForm = ({
   handleSubmit, 
   loading = false,
   purokList = [], 
-  allStreets = [] 
+  allStreets = [],
+  addressExists 
 }) => {
   const [step, setStep] = useState(1);
   const [previews, setPreviews] = useState({ front: null, back: null });
@@ -123,21 +124,24 @@ const SignupForm = ({
       ],
     },
     {
-      title: "Residency and Address",
-      rows: [
-        { label: "Residency Type", value: formData.residencyStatus || "-" },
-        { label: "Residency Start", value: formatDate(formData.residencyStartDate) },
-        { label: "House No.", value: formData.houseNumber || "-" },
-        { label: "Purok", value: purokLabel },
-        { label: "Street", value: streetLabel },
-      ],
-    },
+  title: "Residency and Housing Details",
+  rows: [
+    { label: "Residency Type", value: formData.residencyStatus || "-" },
+    { label: "House No.", value: formData.houseNumber || "-" },
+    { label: "Street", value: streetLabel },
+    { label: "Purok", value: purokLabel },
+{ label: "Housing Status", value: formData.tenureStatus || "-" }, 
+{ label: "Wall Material", value: formData.wallMaterial || "-" }, 
+{ label: "Roof Material", value: formData.roofMaterial || "-" }, 
+// { label: "Water Source", value: formData.water_source || "-" },
+  ],
+},
     {
-      title: "Contact and Account",
+      title: "Contact Information",
       rows: [
         { label: "Contact Number", value: formData.contact || "-" },
         { label: "Email", value: formData.email || "-" },
-        { label: "Username", value: formData.username || "-" },
+        // { label: "Username", value: formData.username || "-" },
       ],
     },
     {
@@ -186,13 +190,14 @@ const SignupForm = ({
         {step === 1 && <Step1PersonalInfo {...commonProps} />}
         
         {step === 2 && (
-          <Step2Address 
-            {...commonProps} 
-            streets={filteredStreets} 
-            purokList={purokList} 
-            handleHouseNumberChange={handleHouseNumberChange} 
-          />
-        )}
+  <Step2Address 
+    {...commonProps} 
+    addressExists={addressExists} 
+    streets={filteredStreets} 
+    purokList={purokList} 
+    handleHouseNumberChange={handleHouseNumberChange} 
+  />
+)}
         
         {step === 3 && <Step3WorkEducation {...commonProps} />}
         

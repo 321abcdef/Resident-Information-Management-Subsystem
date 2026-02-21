@@ -8,19 +8,25 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\BarangayIDController;
 use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\BarangayAnalyticsController; 
+use App\Http\Controllers\Auth\ResidentLoginController;
 
-// 1. PUBLIC & REGISTRATION
+// 1. STAFF ROUTES 
+Route::prefix('staff')->group(function () {
+    Route::get('/residents', [StaffController::class, 'index']);
+    Route::put('/residents/{id}/status', [StaffController::class, 'updateStatus']);
+});
+
+// ADD THIS LINE: frontend verificationService.getSubmissions()
+Route::get('/submissions', [StaffController::class, 'index']);
+
+// 2. PUBLIC & REGISTRATION
 Route::post('/register', [RegistrationController::class, 'register']);
 Route::get('/track/{trackingNumber}', [RegistrationController::class, 'track']);
 Route::post('/check-household', [RegistrationController::class, 'checkHousehold']);
 
-// 2. VERIFICATION PAGE (Staff Submissions)
-Route::get('/submissions', [StaffController::class, 'index']); 
-
-// 3. RESIDENT MANAGEMENT (RBI - Verified Only)
+// 3. RESIDENT MANAGEMENT (RBI)
 Route::get('/residents', [ResidentController::class, 'index']); 
-Route::put('/residents/{id}', [ResidentController::class, 'update']);
-Route::get('/reference-data', [ResidentController::class, 'getReferenceData']);
+Route::put('/residents/{id}', [ResidentController::class, 'update']); // General update (profile edit)
 Route::delete('/residents/{id}', [ResidentController::class, 'destroy']);
 
 // 4. ACTION
@@ -51,3 +57,7 @@ Route::prefix('analytics')->group(function () {
     Route::get('/insights',     [BarangayAnalyticsController::class, 'insights']);
     Route::get('/all',          [BarangayAnalyticsController::class, 'all']);
 });
+
+// Find group of households or residents
+Route::get('/households/check-head', [App\Http\Controllers\Resident\RegistrationController::class, 'checkHousehold']);
+
