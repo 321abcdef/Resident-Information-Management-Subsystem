@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Clock, MapPin, XCircle, Key, Bell, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Clock, MapPin, XCircle, Key, X } from 'lucide-react';
 import { useVerification } from '../hooks/useVerification';
 import VerificationStats from '../components/verification/verificationstats';
 import PendingVerificationTable from '../components/verification/VerificationTable';
@@ -20,7 +20,6 @@ const Verification = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [accountDetails, setAccountDetails] = useState(null);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [notificationBanner, setNotificationBanner] = useState(null);
   const [pendingAction, setPendingAction] = useState(null);
   const { playFeedback } = useSound();
 
@@ -28,40 +27,7 @@ const Verification = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Change this as needed
 
-  // Audio Reference
-  const lastCountRef = useRef(0);
-  const bannerTimerRef = useRef(null);
-
   useEffect(() => { window.scrollTo(0, 0); }, [view]);
-
-  useEffect(() => {
-    return () => {
-      if (bannerTimerRef.current) {
-        clearTimeout(bannerTimerRef.current);
-      }
-    };
-  }, []);
-
-  // ✅ MONITOR SUBMISSIONS FOR SOUND
-  useEffect(() => {
-    const pendingRequests = submissions.filter(s => s.status === 'Pending');
-    const currentCount = pendingRequests.length;
-
-   
-    if (currentCount > lastCountRef.current && lastCountRef.current !== 0) {
-      const newCount = currentCount - lastCountRef.current;
-      playFeedback('notify');
-      setNotificationBanner({
-        newCount,
-        totalPending: currentCount,
-      });
-      if (bannerTimerRef.current) {
-        clearTimeout(bannerTimerRef.current);
-      }
-      bannerTimerRef.current = setTimeout(() => setNotificationBanner(null), 6000);
-    }
-    lastCountRef.current = currentCount;
-  }, [submissions]);
 
   // ✅ FILTERING LOGIC
   const filteredSubmissions = submissions.filter(s => {
@@ -136,35 +102,6 @@ const Verification = () => {
 
   return (
     <div className="font-sans min-h-screen pb-20 px-4 md:px-0 relative">
-      {notificationBanner && (
-        <div className="fixed top-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-[110] animate-in slide-in-from-top-3 duration-300">
-          <div className="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 shadow-xl">
-            <div className="mt-0.5 p-2 rounded-xl bg-emerald-600 text-white">
-              <Bell size={16} />
-            </div>
-            <div className="flex-1">
-              <p className="text-xs font-black uppercase tracking-wider text-emerald-700">
-                New Verification Request
-              </p>
-              <p className="text-xs text-emerald-900 font-semibold mt-1">
-                {notificationBanner.newCount} new pending {notificationBanner.newCount > 1 ? 'requests' : 'request'}.
-              </p>
-              <p className="text-[11px] text-emerald-800 mt-1">
-                Total pending: {notificationBanner.totalPending}
-              </p>
-            </div>
-            <button
-              onClick={() => setNotificationBanner(null)}
-              className="p-1 text-emerald-700 hover:bg-emerald-100 rounded-lg transition-colors"
-              aria-label="Dismiss notification"
-            >
-              <X size={16} />
-            </button>
-          </div>
-        </div>
-      )}
-  
-
       {zoomedImg && (
         <div className="fixed inset-0 z-[9999] bg-slate-950/95 flex items-center justify-center p-4 cursor-zoom-out" onClick={() => setZoomedImg(null)}>
           <img src={zoomedImg} className="max-w-full max-h-full object-contain" alt="Zoomed" />

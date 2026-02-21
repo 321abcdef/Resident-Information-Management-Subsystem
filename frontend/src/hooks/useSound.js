@@ -1,6 +1,8 @@
 // src/hooks/useSound.js
+import { useCallback } from 'react';
+
 export const useSound = () => {
-  const playFeedback = (type = 'light') => {
+  const playFeedback = useCallback((type = 'light') => {
     try {
       const context = new (window.AudioContext || window.webkitAudioContext)();
       const now = context.currentTime;
@@ -42,7 +44,7 @@ export const useSound = () => {
     } catch (e) {
       console.log("Audio Error:", e);
     }
-  };
+  }, []);
 
   return { playFeedback };
 };

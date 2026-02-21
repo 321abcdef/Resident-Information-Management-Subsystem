@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import VerificationNotificationListener from '@/components/common/VerificationNotificationListener';
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -13,6 +14,7 @@ const DashboardLayout = () => {
 
       <div className="flex flex-col flex-1 lg:ml-[280px] min-w-0 w-full">
         <Header toggleSidebar={toggleSidebar} />
+        <VerificationNotificationListener />
         
         <main className="p-4 md:p-8 w-full flex-1">
           <div className="w-full max-w-[1600px] mx-auto">
