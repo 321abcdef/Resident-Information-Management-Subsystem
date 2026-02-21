@@ -9,6 +9,14 @@ import {
 import bsbPic from "../assets/bgygulod.png";
 import logoPic from "../assets/bgylogo.png";
 import officialFallback from "../assets/atl.png";
+import vaccineDrivePic from "../assets/vaccine-drive.jpg";
+import digitalIdPic from "../assets/digital-id.png";
+import cleanupDrivePic from "../assets/cleanup-drive.jpg";
+import picture1 from "../assets/reynaldo-rivera.jpg";
+import picture2 from "../assets/jose-santos.jpg";
+import picture3 from "../assets/maria-ramos.jpg";
+import picture4 from "../assets/carlos-garcia.jpg";
+import picture5 from "../assets/sofia-mercado.avif";
 
 export default function HomePage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -107,7 +115,8 @@ export default function HomePage() {
         title: "Purok Vaccination Drive", 
         desc: "Free health check-ups and flu vaccines available at the Barangay Hall medical center.", 
         fullContent: "The Barangay Health Office, in partnership with the City Health Department, will conduct a mass vaccination drive. This initiative aims to protect our residents from seasonal flu and provide basic medical check-ups for seniors and children. Please bring your health card and a valid ID.",
-        urgent: true 
+        urgent: true,
+        image: vaccineDrivePic,
     },
     { 
         date: "Feb 18, 2026", 
@@ -115,7 +124,8 @@ export default function HomePage() {
         title: "Digital ID Rollout", 
         desc: "All residents are encouraged to register for the new Digital Resident ID for faster transactions.", 
         fullContent: "Our new Digital Resident ID system is now live! This modern identification system will streamline the process of getting clearances, permits, and other barangay documents. Residents can register through this portal or visit the registration booth at the Barangay Hall lobby starting Monday.",
-        urgent: false 
+        urgent: false,
+        image: digitalIdPic,
     },
     { 
         date: "Feb 15, 2026", 
@@ -123,7 +133,8 @@ export default function HomePage() {
         title: "Clean-up Drive", 
         desc: "Join our 'Tapat Ko, Linis Ko' initiative this Saturday starting at 6:00 AM.", 
         fullContent: "Let's keep Barangay Gulod clean and green! We are inviting all residents to participate in our community-wide clean-up drive. Materials like trash bags and gloves will be provided by the barangay. We will meet at the Purok centers before heading to the main streets.",
-        urgent: false 
+        urgent: false,
+        image: cleanupDrivePic,
     }
   ];
 
@@ -133,32 +144,12 @@ export default function HomePage() {
     { icon: Users, title: "Social Services", desc: "Access health programs, financial aid, and community training.", color: "text-amber-500" },
   ];
 
-  const officialImageExtensions = ["jpg", "jpeg", "png", "webp"];
-  const officialImageBase = `${import.meta.env.BASE_URL}officials/`;
-  const getOfficialImageSrc = (imageKey, extension = officialImageExtensions[0]) =>
-    `${officialImageBase}${imageKey}.${extension}`;
-
-  const handleOfficialImageError = (e) => {
-    const currentIndex = Number(e.currentTarget.dataset.extIndex || "0");
-    const imageKey = e.currentTarget.dataset.imageKey;
-    const nextIndex = currentIndex + 1;
-
-    if (imageKey && nextIndex < officialImageExtensions.length) {
-      e.currentTarget.dataset.extIndex = String(nextIndex);
-      e.currentTarget.src = getOfficialImageSrc(imageKey, officialImageExtensions[nextIndex]);
-      return;
-    }
-
-    e.currentTarget.onerror = null;
-    e.currentTarget.src = officialFallback;
-  };
-
   const officials = [
-    { name: "Hon. Reynaldo B. Rivera", role: "Punong Barangay", committee: "Administration & Finance", imgKey: "reynaldo-rivera" },
-    { name: "Hon. Jose M. Santos", role: "Barangay Kagawad", committee: "Peace & Order / Public Safety", imgKey: "jose-santos" },
-    { name: "Hon. Maria A. Ramos", role: "Barangay Kagawad", committee: "Health & Social Services", imgKey: "maria-ramos" },
-    { name: "Hon. Carlos P. Garcia", role: "Barangay Kagawad", committee: "Infrastructure & Education", imgKey: "carlos-garcia" },
-    { name: "Hon. Sofia L. Mercado", role: "SK Chairperson", committee: "Youth & Sports Development", imgKey: "sofia-mercado" },
+    { name: "Hon. Reynaldo B. Rivera", role: "Punong Barangay", committee: "Administration & Finance", image: picture1 },
+    { name: "Hon. Jose M. Santos", role: "Barangay Kagawad", committee: "Peace & Order / Public Safety", image: picture2 },
+    { name: "Hon. Maria A. Ramos", role: "Barangay Kagawad", committee: "Health & Social Services", image: picture3 },
+    { name: "Hon. Carlos P. Garcia", role: "Barangay Kagawad", committee: "Infrastructure & Education", image: picture4 },
+    { name: "Hon. Sofia L. Mercado", role: "SK Chairperson", committee: "Youth & Sports Development", image: picture5 },
   ];
 
   return (
@@ -264,18 +255,31 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {announcements.map((news, i) => (
-              <div key={i} className={`group p-6 md:p-8 rounded-[32px] md:rounded-[40px] border transition-all hover:-translate-y-2 ${isDarkMode ? "bg-slate-900 border-white/5" : "bg-white border-black/5 shadow-sm hover:shadow-xl"}`}>
-                <div className="flex justify-between items-center mb-6">
-                  <span className={`text-[8px] md:text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest ${news.urgent ? "bg-red-500 text-white" : "bg-emerald-500/20 text-emerald-600"}`}>
-                    {news.tag}
-                  </span>
-                  <span className="text-[9px] md:text-[10px] opacity-40 font-bold tracking-widest">{news.date}</span>
+              <div key={i} className={`group rounded-[32px] md:rounded-[40px] border overflow-hidden transition-all hover:-translate-y-2 ${isDarkMode ? "bg-slate-900 border-white/5" : "bg-white border-black/5 shadow-sm hover:shadow-xl"}`}>
+                <div className="h-44 md:h-52 overflow-hidden">
+                  <img
+                    src={news.image}
+                    alt={news.title}
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = bsbPic;
+                    }}
+                  />
                 </div>
-                <h4 className="text-lg md:text-xl font-black uppercase mb-4 leading-tight group-hover:text-emerald-600 transition-colors">{news.title}</h4>
-                <p className="text-xs md:text-sm opacity-60 leading-relaxed mb-8">{news.desc}</p>
-                <button onClick={() => setSelectedNews(news)} className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 text-emerald-600 hover:gap-4 transition-all">
-                  Read More <ArrowUp size={12} className="rotate-45" />
-                </button>
+                <div className="p-6 md:p-8">
+                  <div className="flex justify-between items-center mb-6">
+                    <span className={`text-[8px] md:text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest ${news.urgent ? "bg-red-500 text-white" : "bg-emerald-500/20 text-emerald-600"}`}>
+                      {news.tag}
+                    </span>
+                    <span className="text-[9px] md:text-[10px] opacity-40 font-bold tracking-widest">{news.date}</span>
+                  </div>
+                  <h4 className="text-lg md:text-xl font-black uppercase mb-4 leading-tight group-hover:text-emerald-600 transition-colors">{news.title}</h4>
+                  <p className="text-xs md:text-sm opacity-60 leading-relaxed mb-8">{news.desc}</p>
+                  <button onClick={() => setSelectedNews(news)} className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 text-emerald-600 hover:gap-4 transition-all">
+                    Read More <ArrowUp size={12} className="rotate-45" />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -286,9 +290,17 @@ export default function HomePage() {
       {selectedNews && (
           <div className="fixed inset-0 z-[400] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
               <div className={`w-full max-w-2xl rounded-[32px] md:rounded-[40px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 ${isDarkMode ? "bg-slate-900 border border-white/10" : "bg-white"}`}>
-                  <div className="relative h-48 md:h-64 bg-emerald-800 flex items-center justify-center overflow-hidden">
-                      <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
-                      <Bell size={64} className="text-white/20 animate-pulse" />
+                  <div className="relative h-48 md:h-64 overflow-hidden">
+                      <img
+                        src={selectedNews.image}
+                        alt={selectedNews.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = bsbPic;
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                       <button onClick={() => setSelectedNews(null)} className="absolute top-6 right-6 p-3 rounded-full bg-black/20 text-white hover:bg-black/40 transition-colors">
                           <X size={20} />
                       </button>
@@ -344,12 +356,13 @@ export default function HomePage() {
               <div key={i} className="text-center group">
                 <div className={`relative aspect-[3/4] rounded-[24px] md:rounded-[32px] overflow-hidden mb-4 md:mb-6 border-2 transition-all duration-500 group-hover:border-emerald-500 ${isDarkMode ? "border-white/5 bg-slate-900" : "border-black/5 bg-slate-50"}`}>
                   <img
-                    src={getOfficialImageSrc(person.imgKey)}
+                    src={person.image}
                     alt={person.name}
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110"
-                    data-image-key={person.imgKey}
-                    data-ext-index="0"
-                    onError={handleOfficialImageError}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = officialFallback;
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <Award className="text-white mb-2" size={16} />
