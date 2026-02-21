@@ -22,6 +22,10 @@ class HouseholdController extends Controller
                 'purok' => $hh->purok->number ?? 'N/A',
                 'members' => $hh->residents->count(),
                 'status' => $hh->is_active ? 'Active' : 'Inactive',
+              'tenure_status' => $hh->tenure_status, 
+                'wall_material' => $hh->wall_material, 
+                'roof_material' => $hh->roof_material, 
+              'is_indigent' => (int) $hh->is_indigent, 
                 'memberList' => $hh->residents->map(function ($res) {
                     return [
                         'name' => $res->name,

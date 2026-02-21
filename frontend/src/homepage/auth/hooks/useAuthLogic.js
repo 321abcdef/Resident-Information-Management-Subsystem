@@ -6,9 +6,9 @@ export const useAuthLogic = (navigate) => {
   const [authSuccess, setAuthSuccess] = useState(null);
   const [trackingNum, setTrackingNum] = useState("");
   const [searchResult, setSearchResult] = useState(null);
-  
   const [purokList, setPurokList] = useState([]);
   const [allStreets, setAllStreets] = useState([]);
+  const [addressExists, setAddressExists] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "", middleName: "", lastName: "", suffix: "", 
@@ -20,46 +20,59 @@ export const useAuthLogic = (navigate) => {
     contact: "", email: "",
     employmentStatus: "N/A", occupation: "", incomeSource: "N/A", monthlyIncome: "0",
     educationalStatus: "N/A", schoolType: "N/A", schoolLevel: "N/A", highestGrade: "N/A",
-    idFront: null,
-    idBack: null,
-    idType: "Barangay ID",
-    username: "", password: ""
+    idFront: null, idBack: null, idType: "Barangay ID",
+    username: "", password: "",
+    tenureStatus: "Owned", wallMaterial: "Concrete", roofMaterial: "G.I. Sheet",
+    waterSource: "Maynilad", isIndigent: 0,
   });
 
   useEffect(() => {
     const fetchLocations = async () => {
       try {
         const res = await authService.getLocations();
-        const puroks = Array.isArray(res?.puroks) ? res.puroks : [];
-        const streets = Array.isArray(res?.streets) ? res.streets : [];
-
-        setPurokList(puroks);
-        setAllStreets(streets);
-      } catch (err) {
-        console.error("Failed to load locations.", err?.message || err);
-        setPurokList([]);
-        setAllStreets([]);
-      }
+        setPurokList(Array.isArray(res?.puroks) ? res.puroks : []);
+        setAllStreets(Array.isArray(res?.streets) ? res.streets : []);
+      } catch (err) { console.error("Failed to load locations:", err); }
     };
     fetchLocations();
   }, []);
+
+  // ADDRESS CHECK LOGIC WITH DEBOUNCE
+  useEffect(() => {
+    const checkAddress = async () => {
+  if (formData.houseNumber && formData.street && formData.purok) {
+    try {
+      const res = await authService.checkHouseholdHead({
+        houseNumber: formData.houseNumber,
+        street: formData.street,
+        purok: formData.purok
+      });
+
+
+      if (res && typeof res.exists !== 'undefined') {
+        setAddressExists(!!res.exists); 
+      }
+    } catch (err) {
+      console.error("Address check failed:", err);
+      setAddressExists(false); 
+    }
+  } else {
+    setAddressExists(false);
+  }
+};
+    const delayDebounceFn = setTimeout(() => {
+      checkAddress();
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [formData.houseNumber, formData.street, formData.purok]);
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
 
     if (type === 'file') {
       const selectedFile = files[0];
-      if (selectedFile) {
-        if (!selectedFile.type.startsWith('image/')) {
-          alert("Images only please (JPG, PNG).");
-          e.target.value = ""; 
-          return;
-        }
-        if (selectedFile.size > 10 * 1024 * 1024) {
-          alert("File is too large (Max 10MB).");
-          e.target.value = "";
-          return;
-        }
+      if (selectedFile && selectedFile.type.startsWith('image/')) {
         setFormData(prev => ({ ...prev, [name]: selectedFile }));
       }
       return;
@@ -82,13 +95,11 @@ export const useAuthLogic = (navigate) => {
       let calculatedAge = today.getFullYear() - birthDate.getFullYear();
       const m = today.getMonth() - birthDate.getMonth();
       if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) calculatedAge--;
-      
-      const finalAge = isNaN(calculatedAge) || calculatedAge < 0 ? "" : calculatedAge;
       setFormData(prev => ({ 
         ...prev, 
         birthdate: value, 
-        age: finalAge,
-        sector: finalAge >= 60 ? "3" : prev.sector 
+        age: isNaN(calculatedAge) || calculatedAge < 0 ? "" : calculatedAge,
+        sector: calculatedAge >= 60 ? "3" : prev.sector 
       }));
       return;
     }
@@ -97,13 +108,6 @@ export const useAuthLogic = (navigate) => {
   };
 
   const submitAuth = async (isSignup) => {
-    if (isSignup) {
-      if (!formData.idFront || !formData.idBack) {
-        alert("Please upload front and back of your ID.");
-        return;
-      }
-    }
-
     setLoading(true);
     try {
       if (isSignup) {
@@ -111,7 +115,7 @@ export const useAuthLogic = (navigate) => {
         if (res.success) {
           setAuthSuccess({
             title: "Registration Submitted!",
-            msg: "Please wait for verification.",
+            msg: "Application is now for review.",
             code: res.trackingNumber,
             resident: res.resident
           });
@@ -120,20 +124,7 @@ export const useAuthLogic = (navigate) => {
         navigate("/dashboard");
       }
     } catch (error) {
-      const errorData = error.response?.data;
-      const statusCode = error.response?.status;
-      const isNetworkError = !error.response;
-
-      if (isNetworkError) {
-        alert("Cannot connect to the registration server. Please check your network and make sure backend is reachable on this device.");
-      } else if (statusCode === 503 || errorData?.code === 'DB_UNAVAILABLE') {
-        alert(errorData?.message || "Registration service is temporarily unavailable. Please try again later.");
-      } else if (errorData?.errors) {
-        const firstError = Object.values(errorData.errors)[0][0];
-        alert(`Validation: ${firstError}`);
-      } else {
-        alert(errorData?.message || "Internal server error.");
-      }
+      alert(error.response?.data?.message || "Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -147,8 +138,7 @@ export const useAuthLogic = (navigate) => {
         const res = await authService.track(input);
         if (res.success) setSearchResult(res.data);
       } catch (err) {
-        console.warn("Tracking lookup failed.", err?.message || err);
-        setSearchResult({ status: "NOT_FOUND", message: "Not found." });
+        setSearchResult({ status: "NOT_FOUND", message: "Tracking number not found." });
       }
     } else {
       setSearchResult(null);
@@ -156,8 +146,8 @@ export const useAuthLogic = (navigate) => {
   };
 
   return { 
-    formData, handleChange, submitAuth, loading, authSuccess, 
-    setAuthSuccess, trackingNum, handleTrackSearch, searchResult,
-    purokList, allStreets
+    formData, setFormData, handleChange, submitAuth, loading, 
+    authSuccess, setAuthSuccess, trackingNum, handleTrackSearch, 
+    searchResult, purokList, allStreets, addressExists 
   };
 };

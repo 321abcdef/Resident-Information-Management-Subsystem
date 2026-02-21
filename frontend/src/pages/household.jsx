@@ -1,164 +1,150 @@
-import React, { useState } from 'react';
-import { Printer } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Printer, Home, Users, Landmark, MapPin } from 'lucide-react';
 import HouseholdFilters from '../components/household/householdfilters';
 import HouseholdTable from '../components/household/householdtable';
 import HouseholdModal from '../components/household/householdmodal';
 import Pagination from '../components/common/pagination';
-
-// Import hooks and services
 import { useHouseholds } from '../hooks/useHousehold';
-import { householdService } from '../services/household';
+import { usePrinter } from '../hooks/usePrinter'; 
 
 const Households = () => {
-    // custom hook 
-    const { households, setHouseholds, loading } = useHouseholds();
-
+    const { households, loading } = useHouseholds();
+    const { printTable } = usePrinter(); 
+    
     const [searchTerm, setSearchTerm] = useState("");
-    const [purokFilter, setPurokFilter] = useState("All Puroks");
+    const [purokFilter, setPurokFilter] = useState("All");
+    const [statusFilter, setStatusFilter] = useState("All");
+    const [materialFilter, setMaterialFilter] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedHousehold, setSelectedHousehold] = useState(null);
 
-    // --- FIX: Logic for resetting page when filtering ---
-    const handleSearch = (value) => {
-        setSearchTerm(value);
-        setCurrentPage(1); 
-    };
+    // 1. STATS LOGIC (Optimized with useMemo)
+    const stats = useMemo(() => {
+        if (!households || households.length === 0) {
+            return { total: 0, avgSize: 0, indigents: 0, density: 'N/A' };
+        }
+        const total = households.length;
+        const totalMembers = households.reduce((sum, h) => sum + (Number(h.members) || 0), 0);
+        const indigents = households.filter(h => Number(h.is_indigent) === 1).length;
+        const purokCounts = households.reduce((acc, h) => {
+            if(h.purok) acc[h.purok] = (acc[h.purok] || 0) + 1;
+            return acc;
+        }, {});
+        const topPurok = Object.entries(purokCounts).sort((a,b) => b[1]-a[1])[0]?.[0] || 'N/A';
+        return { total, avgSize: (totalMembers / total).toFixed(1), indigents, density: `Purok ${topPurok}` };
+    }, [households]);
 
-    const handlePurokFilter = (value) => {
-        setPurokFilter(value);
-        setCurrentPage(1); 
-    };
+    // 2. FILTERING LOGIC
+    const filtered = useMemo(() => {
+        return households.filter(h => {
+            const searchLower = searchTerm.toLowerCase();
+            const matchesSearch = (h.head?.toLowerCase() || "").includes(searchLower) || 
+                                 (h.id?.toLowerCase() || "").includes(searchLower);
+            const matchesPurok = purokFilter === "All" || String(h.purok) === purokFilter;
+            const matchesStatus = statusFilter === "All" || String(h.is_indigent) === statusFilter;
+            const matchesMaterial = materialFilter === "All" || h.wall_material === materialFilter;
 
-    // 2. Logic for filtering (with Safety checks)
-    const filtered = households.filter(h => {
-        const headName = h.head ? String(h.head).toLowerCase() : "";
-        const householdId = h.id ? String(h.id).toLowerCase() : "";
-        const search = searchTerm.toLowerCase();
+            return matchesSearch && matchesPurok && matchesStatus && matchesMaterial;
+        });
+    }, [households, searchTerm, purokFilter, statusFilter, materialFilter]);
 
-        const matchesSearch = headName.includes(search) || householdId.includes(search);
+    // 3. UPDATED PRINT HANDLE
+    const handlePrint = () => {
+        const columns = [
+            { header: "No.", key: "no", width: "40px", align: "center" }, // Added auto-numbering
+            { header: 'Household ID', key: 'id', width: "100px" },
+            { header: 'Head of Family', key: 'head', width: "180px" },
+            { header: 'Purok', key: 'display_purok', align: "center" },
+            { header: 'Status', key: 'display_status', align: "center" },
+            { header: 'Material', key: 'wall_material' },
+            { header: 'Members', key: 'members', width: "70px", align: "center" }
+        ];
+
+        const dataToPrint = filtered.map(h => ({
+            ...h,
+            display_purok: h.purok ? `Purok ${h.purok}` : 'N/A',
+            display_status: Number(h.is_indigent) === 1 ? 'INDIGENT' : 'GENERAL',
+        }));
+
+        // Pagsasama ng filters para sa Subtitle ng Report
+        const activeStatus = statusFilter === '1' ? 'Indigent' : statusFilter === '0' ? 'General' : 'All';
+        const subtitle = `Purok: ${purokFilter} | Status: ${activeStatus} | Material: ${materialFilter}`;
         
-        // String comparison for Purok safety
-        const matchesPurok = purokFilter === "All Puroks" || String(h.purok) === String(purokFilter);
-        
-        return matchesSearch && matchesPurok;
-    });
+        printTable("Barangay Household Masterlist", columns, dataToPrint, subtitle);
+    };
 
     const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
     const currentItems = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-    const handlePrint = () => {
-        if (filtered.length === 0) return alert("No records to print.");
-        const printWindow = window.open('', '_blank');
-        const tableRows = filtered.map(h => `
-            <tr>
-                <td>${h.id}</td>
-                <td style="font-weight: bold;">${h.head}</td>
-                <td>${h.address || "N/A"}</td>
-                <td style="text-align: center;">Purok ${h.purok}</td>
-                <td style="text-align: center;">${h.members}</td>
-                <td style="text-align: center;">${h.status || 'Active'}</td>
-            </tr>
-        `).join('');
-
-        printWindow.document.write(`
-            <html>
-                <head>
-                    <title>Household Registry Report</title>
-                    <style>
-                        body { font-family: sans-serif; padding: 40px; color: #1e293b; }
-                        .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 25px; }
-                        .header h1 { margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }
-                        .header p { margin: 5px 0 0; font-size: 13px; color: #64748b; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-                        th { background: #f8fafc; border: 1px solid #000; padding: 12px 8px; font-size: 11px; text-transform: uppercase; }
-                        td { border: 1px solid #000; padding: 10px 8px; font-size: 11px; }
-                        .footer { margin-top: 50px; display: flex; justify-content: space-between; align-items: flex-end; }
-                        .sig-box { border-top: 1px solid #000; width: 220px; text-align: center; padding-top: 5px; font-size: 12px; font-weight: bold; }
-                    </style>
-                </head>
-                <body onload="window.print()">
-                    <div class="header">
-                        <h1>Barangay Household Registry</h1>
-                        <p>Official Masterlist | Generated on: ${new Date().toLocaleDateString()}</p>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Household ID</th>
-                                <th>Head of Family</th>
-                                <th>Address</th>
-                                <th>Purok</th>
-                                <th>Members</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>${tableRows}</tbody>
-                    </table>
-                    <div class="footer">
-                        <div style="font-size: 11px;">Total Record Count: ${filtered.length}</div>
-                        <div class="sig-box text-uppercase">Barangay Captain / Secretary</div>
-                    </div>
-                </body>
-            </html>
-        `);
-        printWindow.document.close();
-    };
+    useEffect(() => { setCurrentPage(1); }, [searchTerm, purokFilter, statusFilter, materialFilter]);
 
     return (
         <div className="space-y-6 pb-10">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-2">
-              <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-slate-100 uppercase tracking-tight">
-        Household Registry
-      </h1>
-                <button onClick={handlePrint} className="flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-all shadow-lg active:scale-95">
-                    <Printer size={16} /> Print
+            <div className="flex justify-between items-center">
+                <div>
+                    <h1 className="text-2xl font-black text-gray-900 dark:text-slate-100 uppercase tracking-tight">Household Registry</h1>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Housing & Family Records</p>
+                </div>
+                <button 
+                    onClick={handlePrint} 
+                    disabled={filtered.length === 0}
+                    className="flex items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-2xl font-black text-xs uppercase hover:opacity-90 shadow-lg transition-all active:scale-95 disabled:opacity-50"
+                >
+                    <Printer size={16} /> Print Masterlist
                 </button>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden rounded-xl">
-                <HouseholdFilters 
-                    searchTerm={searchTerm} 
-                    setSearchTerm={handleSearch} // Updated to use handler
-                    purokFilter={purokFilter} 
-                    setPurokFilter={handlePurokFilter} // Updated to use handler
-                />
-                
-                <div className="w-full">
-                    {loading ? (
-                        <div className="p-20 text-center font-bold text-emerald-600 text-sm tracking-[4px] animate-pulse uppercase">Syncing Registry...</div>
-                    ) : (
-                        <HouseholdTable 
-                            households={currentItems} 
-                            onView={(item) => { setSelectedHousehold(item); setIsModalOpen(true); }}
-                            onDelete={async (id) => {
-                                if (window.confirm("Are you sure? This will remove the household record.")) {
-                                    await householdService.delete(id);
-                                    setHouseholds(prev => prev.filter(h => h.id !== id));
-                                }
-                            }}
-                        />
-                    )}
-                </div>
-
-                <Pagination 
-                    currentPage={currentPage} 
-                    totalPages={totalPages} 
-                    onPageChange={setCurrentPage}
-                    totalItems={filtered.length} 
-                    itemsPerPage={itemsPerPage}
-                />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <StatCard icon={<Home />} label="Total Households" value={stats.total} color="text-slate-600" />
+                <StatCard icon={<Users />} label="Avg. Family Size" value={`${stats.avgSize} Pers.`} color="text-blue-500" />
+                <StatCard icon={<Landmark />} label="Indigent Families" value={stats.indigents} color="text-rose-500" />
+                <StatCard icon={<MapPin />} label="Densest Area" value={stats.density} color="text-amber-500" />
             </div>
 
-            <HouseholdModal 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
-                data={selectedHousehold} 
-            />
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-sm">
+                <HouseholdFilters 
+                    searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+                    purokFilter={purokFilter} setPurokFilter={setPurokFilter}
+                    statusFilter={statusFilter} setStatusFilter={setStatusFilter}
+                    materialFilter={materialFilter} setMaterialFilter={setMaterialFilter}
+                    totalResults={filtered.length}
+                />
+                
+                {loading ? (
+                    <div className="p-20 text-center font-bold text-emerald-600 tracking-[4px] animate-pulse uppercase">Syncing Registry...</div>
+                ) : (
+                    <HouseholdTable 
+                        households={currentItems} 
+                        onView={(item) => { setSelectedHousehold(item); setIsModalOpen(true); }} 
+                    />
+                )}
+
+                <div className="p-6 border-t border-slate-100 dark:border-slate-800">
+                    <Pagination 
+                        currentPage={currentPage} totalPages={totalPages} 
+                        onPageChange={setCurrentPage} totalItems={filtered.length} 
+                        itemsPerPage={itemsPerPage} 
+                    />
+                </div>
+            </div>
+
+            <HouseholdModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={selectedHousehold} />
         </div>
     );
 };
+
+// Sub-component for Stats to keep it clean
+const StatCard = ({ icon, label, value, color }) => (
+    <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4 hover:scale-[1.02] transition-all">
+        <div className={`p-3 rounded-2xl bg-slate-50 dark:bg-slate-800 ${color}`}>{icon}</div>
+        <div>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
+            <h3 className="text-xl font-black text-slate-800 dark:text-white leading-none">{value}</h3>
+        </div>
+    </div>
+);
 
 export default Households;

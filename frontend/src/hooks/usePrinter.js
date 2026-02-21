@@ -1,16 +1,33 @@
+import bgyLogo from "../assets/bgylogo.png"; 
+
 export const usePrinter = () => {
-  //For Reports/Tables (RBI Masterlist, etc.)
   const printTable = (title, columns, data, filterName = "All") => {
-    if (!data || data.length === 0) return alert("No records to print.");
+    if (!data || data.length === 0) {
+      return alert("No records to print.");
+    }
 
     const printWindow = window.open('', '_blank');
-    const tableHeaders = columns.map(col => `<th>${col.header}</th>`).join('');
-    const tableRows = data.map(item => `
+
+    const isLandscape = columns.length >= 7;
+    const isLargeData = data.length > 25;
+    const fontSize = isLargeData ? "8px" : "9px";
+    const headerFontSize = isLargeData ? "12px" : "14px";
+
+    const tableHeaders = columns.map(col => `
+      <th style="width:${col.width || 'auto'}; text-align:${col.align || 'left'};">
+        ${col.header}
+      </th>
+    `).join('');
+
+    const tableRows = data.map((item, index) => `
       <tr>
         ${columns.map(col => {
-          const value = item[col.key] || "";
-          const style = col.style || "";
-          return `<td style="${style}">${value}</td>`;
+          let value = col.key === "no" ? (index + 1) : item[col.key];
+          return `
+            <td style="text-align:${col.align || 'left'};">
+              ${value ?? ""}
+            </td>
+          `;
         }).join('')}
       </tr>
     `).join('');
@@ -20,30 +37,107 @@ export const usePrinter = () => {
         <head>
           <title>${title}</title>
           <style>
-            body { font-family: 'Inter', sans-serif; padding: 40px; color: #1e293b; }
-            .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 25px; }
-            .header h1 { margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
-            .header p { margin: 5px 0 0; font-size: 12px; color: #64748b; }
-            table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-            th { background: #f8fafc; border: 1px solid #000; padding: 10px 5px; font-size: 10px; text-transform: uppercase; }
-            td { border: 1px solid #000; padding: 8px 5px; font-size: 10px; }
-            .footer { margin-top: 50px; display: flex; justify-content: space-between; align-items: flex-end; }
-            .sig-box { border-top: 1px solid #000; width: 200px; text-align: center; padding-top: 5px; font-size: 11px; font-weight: bold; }
+            @media print {
+              @page {
+                size: ${isLandscape ? "A4 landscape" : "A4 portrait"};
+                margin: 10mm;
+              }
+              body { margin: 0; }
+              .page-footer {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                font-size: 8px;
+              }
+              .page-footer::after { content: "Page " counter(page); }
+            }
+
+            body {
+              font-family: 'Segoe UI', Arial, sans-serif;
+              font-size: ${fontSize};
+              color: #000;
+              padding: 20px;
+              counter-reset: page;
+            }
+
+            .header { text-align: center; margin-bottom: 20px; position: relative; }
+            .header img { width: 75px; height: auto; margin-bottom: 5px; }
+            .header p { margin: 1px 0; font-size: 10px; text-transform: uppercase; }
+            .header .lgu-info { margin-bottom: 10px; }
+            .header h1 { 
+              margin: 10px 0; 
+              font-size: ${headerFontSize}; 
+              text-transform: uppercase; 
+              border-top: 1px solid #000;
+              border-bottom: 1px solid #000;
+              padding: 5px 0;
+            }
+
+            .info-bar { 
+              display: flex; 
+              justify-content: space-between; 
+              font-size: 9px; 
+              margin-bottom: 10px; 
+              font-style: italic; 
+            }
+
+            table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+            th, td {
+              border: 1px solid #000;
+              padding: 5px;
+              word-wrap: break-word;
+              vertical-align: middle;
+            }
+            th { background: #f2f2f2 !important; -webkit-print-color-adjust: exact; font-weight: bold; }
+
+            .footer-section {
+              margin-top: 50px;
+              display: flex;
+              justify-content: space-between;
+            }
+            .sign-box { width: 30%; text-align: center; }
+            .sign-line {
+              margin-top: 35px;
+              border-top: 1px solid #000;
+              padding-top: 5px;
+              font-weight: bold;
+              font-size: 10px;
+              text-transform: uppercase;
+            }
           </style>
         </head>
-        <body onload="window.print();">
+        <body onload="setTimeout(() => { window.print(); }, 800);">
           <div class="header">
+            <img src="${bgyLogo}" alt="Barangay Gulod Logo" />
+            <div class="lgu-info">
+              <p>Republic of the Philippines</p>
+              <p>District 5, Quezon City</p>
+              <p>Novaliches</p>
+              <p><strong>Barangay Gulod</strong></p>
+            </div>
             <h1>${title}</h1>
-            <p>Filter: ${filterName} | Date: ${new Date().toLocaleDateString()}</p>
           </div>
+
+          <div class="info-bar">
+            <span>Filters: ${filterName}</span>
+            <span>Date: ${new Date().toLocaleDateString('en-PH', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+          </div>
+
           <table>
             <thead><tr>${tableHeaders}</tr></thead>
             <tbody>${tableRows}</tbody>
           </table>
-          <div class="footer">
-            <div style="font-size: 10px;">Total Records: ${data.length}</div>
-            <div class="sig-box uppercase">Barangay Captain</div>
+
+          <div style="margin-top: 15px; font-weight: bold;">
+            Total Records: ${data.length}
           </div>
+
+          <div class="footer-section">
+            <div class="sign-box"><div class="sign-line">Prepared by</div></div>
+            <div class="sign-box"><div class="sign-line">Verified by</div></div>
+            <div class="sign-box"><div class="sign-line">Barangay Captain</div></div>
+          </div>
+          <div class="page-footer"></div>
         </body>
       </html>
     `);

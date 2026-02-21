@@ -4,15 +4,13 @@ const Step1PersonalInfo = ({ formData, handleChange, isDarkMode, setStep }) => {
   const labelClass = `text-[10px] font-black uppercase tracking-wider ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`;
   const requiredStar = <span className="text-rose-500 ml-0.5">*</span>;
   const today = new Date().toISOString().split("T")[0];
-  const householdPositions = ["Head of Family", "Spouse", "Son", "Daughter", "Relative", "Househelp", "Others"];
 
-  const isValid = 
+const isValid = 
     formData.firstName?.trim() && 
     formData.lastName?.trim() && 
     formData.birthdate && 
     formData.gender && 
     formData.sector && 
-    formData.householdPosition && 
     formData.birthRegistration &&
     formData.age !== "" && !isNaN(formData.age);
 
@@ -96,14 +94,7 @@ const Step1PersonalInfo = ({ formData, handleChange, isDarkMode, setStep }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="space-y-1">
-          <label className={labelClass}>Household Position{requiredStar}</label>
-          <select name="householdPosition" value={formData.householdPosition || ""} onChange={handleChange} className="full-input-sm">
-            <option value="">Select Position</option>
-            {householdPositions.map(pos => <option key={pos} value={pos}>{pos}</option>)}
-          </select>
-        </div>
+      <div className="grid grid-cols-1 gap-3">
         <div className="space-y-1">
           <label className={labelClass}>Birth Registration{requiredStar}</label>
           <select name="birthRegistration" value={formData.birthRegistration || ""} onChange={handleChange} className="full-input-sm">

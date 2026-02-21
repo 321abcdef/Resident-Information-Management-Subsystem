@@ -3,7 +3,7 @@ import Table from '../common/table';
 import HouseholdRow from './householdrow';
 
 const HouseholdTable = ({ households, onView, onDelete }) => {
-  const headers = ["Household ID", "Head of Family", "Address", "Purok", "Members", "View"];
+  const headers = ["ID", "Head of Family", "Location", "Tenure", "Wall Type", "Members", "Action"];
 
   return (
     <Table headers={headers}>
