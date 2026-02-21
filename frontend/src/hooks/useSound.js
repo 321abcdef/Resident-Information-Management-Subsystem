@@ -6,7 +6,7 @@ export const useSound = () => {
       const now = context.currentTime;
       const masterGain = context.createGain();
       masterGain.connect(context.destination);
-      masterGain.gain.setValueAtTime(type === 'notify' ? 2.1 : 1.0, now);
+      masterGain.gain.setValueAtTime(type === 'notify' ? 4.0 : 1.0, now);
 
       const createTone = (freq, start, duration, vol, toneType = 'sine') => {
         const osc = context.createOscillator();
@@ -23,8 +23,8 @@ export const useSound = () => {
 
       if (type === 'notify') {
         // Extra-loud alert pair for incoming verification notifications
-        createTone(880, now, 0.3, 0.5, 'triangle');
-        createTone(1100, now + 0.08, 0.3, 0.52, 'triangle');
+        createTone(880, now, 0.3, 1.0, 'triangle');
+        createTone(1100, now + 0.08, 0.3, 1.0, 'triangle');
       } 
       else if (type === 'success') {
         // "Victory" upward slide

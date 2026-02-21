@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Clock, MapPin, XCircle, Key } from 'lucide-react';
+import { Clock, MapPin, XCircle, Key, Bell, X } from 'lucide-react';
 import { useVerification } from '../hooks/useVerification';
 import VerificationStats from '../components/verification/verificationstats';
 import PendingVerificationTable from '../components/verification/VerificationTable';
 import VerificationFilters from '../components/verification/VerificationFilters';
 import VerificationSuccessModal from '../components/verification/VerificationSuccessModal';
 import DetailView from '../components/verification/VerificationDetailView';
+import ModalWrapper from '../components/common/ModalWrapper';
 import Pagination from '@/components/common/pagination';
 import { useSound } from '@/hooks/useSound';
 
@@ -19,6 +20,8 @@ const Verification = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [accountDetails, setAccountDetails] = useState(null);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [notificationBanner, setNotificationBanner] = useState(null);
+  const [pendingAction, setPendingAction] = useState(null);
   const { playFeedback } = useSound();
 
   // ✅ PAGINATION STATES
@@ -27,8 +30,17 @@ const Verification = () => {
 
   // Audio Reference
   const lastCountRef = useRef(0);
+  const bannerTimerRef = useRef(null);
 
   useEffect(() => { window.scrollTo(0, 0); }, [view]);
+
+  useEffect(() => {
+    return () => {
+      if (bannerTimerRef.current) {
+        clearTimeout(bannerTimerRef.current);
+      }
+    };
+  }, []);
 
   // ✅ MONITOR SUBMISSIONS FOR SOUND
   useEffect(() => {
@@ -37,7 +49,16 @@ const Verification = () => {
 
    
     if (currentCount > lastCountRef.current && lastCountRef.current !== 0) {
-      playFeedback('notify'); // 
+      const newCount = currentCount - lastCountRef.current;
+      playFeedback('notify');
+      setNotificationBanner({
+        newCount,
+        totalPending: currentCount,
+      });
+      if (bannerTimerRef.current) {
+        clearTimeout(bannerTimerRef.current);
+      }
+      bannerTimerRef.current = setTimeout(() => setNotificationBanner(null), 6000);
     }
     lastCountRef.current = currentCount;
   }, [submissions]);
@@ -60,11 +81,25 @@ const Verification = () => {
     setCurrentPage(1);
   }, [activeTab, searchTerm]);
 
-  const handleAction = async (id, status) => {
-    const actionText = status === 'Verified' ? 'APPROVE' : status === 'For Verification' ? 'set for VISIT' : 'REJECT';
-    
-   if (!window.confirm(`Are you sure you want to ${actionText} this submission?`)) return;
+  const getActionConfig = (status) => {
+    if (status === 'Verified') {
+      return { actionText: 'APPROVE', buttonText: 'Approve', buttonClass: 'bg-emerald-600 hover:bg-emerald-700' };
+    }
+    if (status === 'For Verification') {
+      return { actionText: 'SET FOR VISIT', buttonText: 'Set for Visit', buttonClass: 'bg-amber-500 hover:bg-amber-600' };
+    }
+    return { actionText: 'REJECT', buttonText: 'Reject', buttonClass: 'bg-red-600 hover:bg-red-700' };
+  };
 
+  const handleAction = (id, status) => {
+    const { actionText } = getActionConfig(status);
+    setPendingAction({ id, status, actionText });
+  };
+
+  const confirmPendingAction = async () => {
+    if (!pendingAction) return;
+    const { id, status } = pendingAction;
+    setPendingAction(null);
     const result = await updateStatus(id, status);
 
     if (result.success) {
@@ -73,7 +108,7 @@ const Verification = () => {
         playFeedback('success'); 
 
         setAccountDetails({
-          name: selectedRes.name,
+          name: selectedRes?.name,
           id: result.residentData?.id,
           user: result.residentData?.user,
           pass: result.residentData?.pass,
@@ -101,6 +136,33 @@ const Verification = () => {
 
   return (
     <div className="font-sans min-h-screen pb-20 px-4 md:px-0 relative">
+      {notificationBanner && (
+        <div className="fixed top-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-[110] animate-in slide-in-from-top-3 duration-300">
+          <div className="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 shadow-xl">
+            <div className="mt-0.5 p-2 rounded-xl bg-emerald-600 text-white">
+              <Bell size={16} />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-black uppercase tracking-wider text-emerald-700">
+                New Verification Request
+              </p>
+              <p className="text-xs text-emerald-900 font-semibold mt-1">
+                {notificationBanner.newCount} new pending {notificationBanner.newCount > 1 ? 'requests' : 'request'}.
+              </p>
+              <p className="text-[11px] text-emerald-800 mt-1">
+                Total pending: {notificationBanner.totalPending}
+              </p>
+            </div>
+            <button
+              onClick={() => setNotificationBanner(null)}
+              className="p-1 text-emerald-700 hover:bg-emerald-100 rounded-lg transition-colors"
+              aria-label="Dismiss notification"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+      )}
   
 
       {zoomedImg && (
@@ -120,6 +182,33 @@ const Verification = () => {
         }}
         data={accountDetails}
       />
+
+      <ModalWrapper
+        isOpen={!!pendingAction}
+        onClose={() => setPendingAction(null)}
+        title="Confirm Submission Action"
+        maxWidth="max-w-md"
+      >
+        <div className="space-y-5">
+          <p className="text-sm text-slate-700 dark:text-slate-300">
+            Are you sure you want to {pendingAction?.actionText} this submission?
+          </p>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => setPendingAction(null)}
+              className="px-4 py-2 rounded-lg text-sm font-bold border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={confirmPendingAction}
+              className={`px-4 py-2 rounded-lg text-sm font-bold text-white transition-colors ${pendingAction ? getActionConfig(pendingAction.status).buttonClass : 'bg-emerald-600 hover:bg-emerald-700'}`}
+            >
+              {pendingAction ? getActionConfig(pendingAction.status).buttonText : 'Confirm'}
+            </button>
+          </div>
+        </div>
+      </ModalWrapper>
 
       {isMinimized && accountDetails && (
         <div className="fixed bottom-10 right-10 z-[100] flex items-center gap-2">

@@ -1,18 +1,30 @@
 import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 
-const ModalWrapper = ({ isOpen, onClose, title, children, maxWidth = "max-w-2xl" }) => {
+const ModalWrapper = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  maxWidth = "max-w-2xl",
+  lockBodyScroll = true,
+}) => {
   useEffect(() => {
     const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
+    const previousOverflow = document.body.style.overflow;
     if (isOpen) {
       window.addEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'hidden';
+      if (lockBodyScroll) {
+        document.body.style.overflow = 'hidden';
+      }
     }
     return () => {
       window.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'unset';
+      if (lockBodyScroll) {
+        document.body.style.overflow = previousOverflow;
+      }
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, lockBodyScroll]);
 
   if (!isOpen) return null;
 
