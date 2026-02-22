@@ -13,7 +13,7 @@ import AuthPage from "./homepage/AuthPage";
 // Dashboard Pages
 import Dashboard from "./pages/dashboard";
 import Residents from "./pages/residents";
-import Analytics from "./pages/analytics";
+// import Analytics from "./pages/analytics";
 import Scanner from "./pages/qr";
 import Verification from "./pages/verification";
 import Households from "./pages/household";
@@ -39,7 +39,7 @@ function App() {
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/residents" element={<Residents />} />
-              <Route path="/analytics" element={<Analytics />} />
+              {/* <Route path="/analytics" element={<Analytics />} /> */}
               <Route path="/scanner" element={<Scanner />} />
               <Route path="/verification" element={<Verification />} />
               <Route path="/households" element={<Households />} />

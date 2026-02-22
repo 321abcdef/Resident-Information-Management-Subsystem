@@ -1,70 +1,138 @@
-import React, { useState, useEffect } from 'react';
-import StatsOverview from '../components/dashboard/statsoverview';
-// import SectorDistribution from '../components/dashboard/SectorDistribution';
-// import PurokDistribution from '../components/dashboard/PurokDistribution';
-import RecentRegistration from '../components/dashboard/recentregistration';
-import Pagination from '../components/common/pagination'; 
-import { getDashboardData } from '../services/dashboard';
+// ============================================================
+// pages/Analytics.jsx
+// Main analytics page. Route: /analytics
+// Fetches: GET /api/analytics/all
+// ============================================================
 
-const Dashboard = () => {
-  const [data, setData] = useState({ stats: null, registrations: [] });
-  const [loading, setLoading] = useState(true);
-  
-  // Dashboard Table Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; 
+import { useState, useEffect } from 'react';
+import { Spinner }        from '../components/analytics/AnalyticsInterface';
+import { TABS }           from '../components/analytics/analyticsConfig';
+import OverviewTab        from '../components/analytics/OverviewTab';
+import HeatmapTab         from '../components/analytics/HeatmapTab';
+import DemographicsTab    from '../components/analytics/DemographicsTab';
+import SectorsTab         from '../components/analytics/SectorsTab';
+import RegistrationTab    from '../components/analytics/RegistrationTab';
+import LivelihoodTab      from '../components/analytics/LivelihoodTab';
+import DecisionGuideTab   from '../components/analytics/DecisionguideTab';
 
-  useEffect(() => {
-    getDashboardData().then(res => {
-      setData(res);
+const API_BASE = import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000/api';
+
+function renderTab(id, data) {
+  switch (id) {
+    case 'overview':     return <OverviewTab      raw={data} />;
+    case 'heatmap':      return <HeatmapTab       raw={data} />;
+    case 'demographics': return <DemographicsTab  raw={data} />;
+    case 'sectors':      return <SectorsTab       raw={data} />;
+    case 'registration': return <RegistrationTab  raw={data} />;
+    case 'livelihood':   return <LivelihoodTab    raw={data} />;
+    case 'insights':     return <DecisionGuideTab raw={data} />;
+    default:             return null;
+  }
+}
+
+export default function Dashboard() {
+  const [activeTab,    setActiveTab]    = useState('overview');
+  const [data,         setData]         = useState(null);
+  const [loading,      setLoading]      = useState(true);
+  const [error,        setError]        = useState(null);
+  const [lastUpdated,  setLastUpdated]  = useState(null);
+
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API_BASE}/analytics/all`, {
+        headers: { Accept: 'application/json' },
+        credentials: 'include',
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      setData(await res.json());
+      setLastUpdated(new Date());
+    } catch (err) {
+      setError(err.message);
+    } finally {
       setLoading(false);
-    });
-  }, []);
+    }
+  };
+  
 
-  if (loading) return (
-  <div className="p-10 text-emerald-600 dark:text-emerald-400 font-black uppercase text-xl tracking-tight animate-pulse text-center">
-    Loading System Data...
-  </div>
-);
+  useEffect(() => { fetchData(); }, []);
 
-  // Pagination Logic for Dashboard Table
-  const totalPages = Math.ceil(data.registrations.length / itemsPerPage);
-  const currentRegs = data.registrations.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const tabMeta = TABS.find(t => t.id === activeTab);
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500 transition-colors">
-      {/* PAGE TITLE */}
-      <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-slate-100 uppercase tracking-tight">
-        Dashboard Overview
-      </h1>
-      
-      {/* STATS */}
-      <StatsOverview stats={data.stats} />
-      
-      {/* Charts Section (optional) */}
-      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SectorDistribution />
-        <PurokDistribution />
-      </div> */}
+    <div className="min-h-screen" style={{ background: '#f0f4f8' }}>
 
-      {/* Recent Registrations Card */}
-      <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-800 transition-colors">
-        <RecentRegistration registrations={currentRegs} />
-        
-        {/* Pagination */}
-        <Pagination 
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          totalItems={data.registrations.length}
-          itemsPerPage={itemsPerPage}
-        />
+      {/* Header */}
+      <header className="sticky top-0 z-30 bg-white shadow-sm border-b border-gray-200 px-4 sm:px-6 py-3 flex items-center justify-between">
+        <div>
+          <h1 className="text-base font-black text-[#0d2b4e]">
+            {tabMeta?.icon} Analytics — {tabMeta?.label}
+          </h1>
+          <p className="text-xs text-gray-400">
+            {lastUpdated
+              ? `Updated: ${lastUpdated.toLocaleTimeString('en-PH')} · Barangay Gulod`
+              : 'Barangay Gulod, Novaliches, Quezon City'}
+          </p>
+        </div>
+        <button
+          onClick={fetchData}
+          disabled={loading}
+          className="text-xs font-bold bg-[#1a5276] text-white px-3 py-1.5 rounded-lg
+            hover:bg-[#154360] disabled:opacity-50 transition-colors"
+        >
+          {loading ? '⟳ Loading…' : '⟳ Refresh'}
+        </button>
+      </header>
+
+      {/* Tabs */}
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 overflow-x-auto">
+        <div className="flex gap-1 min-w-max">
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-3 py-3 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${
+                activeTab === tab.id
+                  ? 'border-[#1a5276] text-[#1a5276]'
+                  : 'border-transparent text-gray-500 hover:text-[#1a5276] hover:border-gray-300'
+              }`}
+            >
+              {tab.icon} {tab.label}
+            </button>
+          ))}
+        </div>
       </div>
+
+      {/* Content */}
+      <main className="p-4 sm:p-6 max-w-7xl mx-auto">
+        {loading && (
+          <div className="flex flex-col items-center justify-center py-24 gap-4">
+            <div className="w-12 h-12 border-4 border-[#1a5276] border-t-transparent rounded-full animate-spin" />
+            <p className="text-gray-500 text-sm font-medium">Loading analytics data…</p>
+          </div>
+        )}
+
+        {!loading && error && (
+          <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+            <div className="text-3xl mb-2">⚠️</div>
+            <h3 className="font-black text-red-700 text-lg mb-1">Cannot load data</h3>
+            <p className="text-red-600 text-sm mb-4">{error}</p>
+            <p className="text-xs text-red-500 bg-red-100 rounded p-3 mb-4 font-mono text-left">
+              Endpoint: GET {API_BASE}/analytics/all
+            </p>
+            <button
+              onClick={fetchData}
+              className="bg-red-600 text-white font-bold px-4 py-2 rounded-lg text-sm hover:bg-red-700"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        {!loading && !error && data && renderTab(activeTab, data)}
+      </main>
     </div>
   );
-};
+}
 
-export default Dashboard;
