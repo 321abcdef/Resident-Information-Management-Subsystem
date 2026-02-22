@@ -13,12 +13,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const menuItems = [
-    { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard', to: '/dashboard' },
+    { id: 'Dashboard', icon: LayoutDashboard, label: 'Dashboard and Analytics', to: '/dashboard' },
     { id: 'Verification', icon: IdCard, label: 'ID Verification', to: '/verification' },
     { id: 'Residents', icon: Users, label: 'Residents', to: '/residents' },
     { id: 'Households', icon: House, label: 'Households', to: '/households' },
     // { id: 'Certificates', icon: FileText, label: 'Certificates', to: '/certificates'},
-    { id: 'Analytics', icon: BarChart3, label: 'Analytics', to: '/analytics' },
+    // { id: 'Analytics', icon: BarChart3, label: 'Analytics', to: '/analytics' },
     // { id: 'Scanner', icon: ScanQrCode, label: 'Scanner', to: '/scanner' },
   ];
 
