@@ -14,10 +14,10 @@ const VerificationNotificationListener = () => {
   const bannerTimerRef = useRef(null);
   const isFetchingRef = useRef(false);
 
-
   useEffect(() => {
     const loadPendingCount = async () => {
       if (isFetchingRef.current) return;
+      
       isFetchingRef.current = true;
       try {
         const submissions = await verificationService.getSubmissions();
