@@ -12,7 +12,7 @@ import { getResidencyLabel } from '@/utils/residency';
 
 const Residents = () => {
   const { 
-    residents, loading, searchTerm, setSearchTerm, 
+    residents, loading, error, searchTerm, setSearchTerm, 
     categoryFilter, setCategoryFilter, handleUpdate, handleDelete,
   } = useResidents();
   
@@ -111,6 +111,11 @@ const Residents = () => {
       <SectorLegend activeFilter={categoryFilter} onFilterChange={setCategoryFilter} counts={sectorCounts} />
 
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-sm">
+        {error && (
+          <div className="mx-6 mt-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {error}
+          </div>
+        )}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between p-6 gap-4 border-b border-slate-100 dark:border-slate-800">
           <div className="flex-1 w-full lg:max-w-md">
             <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1.5 ml-1 block">
@@ -132,17 +137,23 @@ const Residents = () => {
           )}
         </div>
         
-        <ResidentTable residents={currentItems} onUpdate={handleUpdate} handleDelete={handleDelete} />
-        
-        <div className="p-6 border-t border-slate-100 dark:border-slate-800">
-          <Pagination 
-            currentPage={currentPage} 
-            totalPages={totalPages} 
-            onPageChange={setCurrentPage} 
-            totalItems={filteredResidents.length} 
-            itemsPerPage={itemsPerPage} 
-          />
-        </div>
+        {loading ? (
+          <div className="p-10 text-center italic text-slate-400">Loading...</div>
+        ) : (
+          <>
+            <ResidentTable residents={currentItems} onUpdate={handleUpdate} handleDelete={handleDelete} />
+            
+            <div className="p-6 border-t border-slate-100 dark:border-slate-800">
+              <Pagination 
+                currentPage={currentPage} 
+                totalPages={totalPages} 
+                onPageChange={setCurrentPage} 
+                totalItems={filteredResidents.length} 
+                itemsPerPage={itemsPerPage} 
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

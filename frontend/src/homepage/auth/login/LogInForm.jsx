@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, User, Lock } from "lucide-react";
 
 const LoginForm = ({ formData, handleChange, isDarkMode }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,22 +10,37 @@ const LoginForm = ({ formData, handleChange, isDarkMode }) => {
         <label className={`text-[10px] font-black uppercase tracking-widest ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}>
           Username
         </label>
-        <input
-          type="text"
-          name="username"
-          value={formData.username || ""}
-          onChange={handleChange}
-          required
-          autoComplete="username"
-          className="signin-input"
-          placeholder="Enter your username"
-        />
+        <div className="relative">
+          <User
+            size={16}
+            className={`absolute left-3.5 top-1/2 -translate-y-1/2 ${
+              isDarkMode ? "text-slate-400" : "text-slate-500"
+            }`}
+          />
+          <input
+            type="text"
+            name="username"
+            value={formData.username || ""}
+            onChange={handleChange}
+            required
+            autoComplete="username"
+            className="signin-input"
+            style={{ paddingLeft: "2.75rem" }}
+            placeholder="Enter your username"
+          />
+        </div>
       </div>
       <div className="space-y-2">
         <label className={`text-[10px] font-black uppercase tracking-widest ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}>
           Password
         </label>
         <div className="relative">
+          <Lock
+            size={16}
+            className={`absolute left-3.5 top-1/2 -translate-y-1/2 ${
+              isDarkMode ? "text-slate-400" : "text-slate-500"
+            }`}
+          />
           <input
             type={showPassword ? "text" : "password"}
             name="password"
@@ -33,7 +48,8 @@ const LoginForm = ({ formData, handleChange, isDarkMode }) => {
             onChange={handleChange}
             required
             autoComplete="current-password"
-            className="signin-input pr-12"
+            className="signin-input"
+            style={{ paddingLeft: "2.75rem", paddingRight: "3rem" }}
             placeholder="Enter your password"
           />
           <button

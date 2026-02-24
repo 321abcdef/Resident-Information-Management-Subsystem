@@ -1,20 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { verificationService } from '../services/verification';
+
+const POLL_INTERVAL_MS = 10000;
 
 export const useVerification = () => {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const isFetchingRef = useRef(false);
 
  
   const loadData = async (isInitial = false) => {
+    if (isFetchingRef.current) return;
+    isFetchingRef.current = true;
+
     try {
       if (isInitial) setLoading(true); 
+      setError(null);
       const data = await verificationService.getSubmissions();
       setSubmissions(data || []);
     } catch (error) {
       console.error("Hook Load Error:", error);
+      setError(error.message || 'Failed to fetch submissions.');
     } finally {
       if (isInitial) setLoading(false);
+      isFetchingRef.current = false;
     }
   };
 
@@ -36,11 +46,11 @@ export const useVerification = () => {
 
     const interval = setInterval(() => {
       loadData(false); 
-    }, 1000); // 10000ms = 10 seconds
+    }, POLL_INTERVAL_MS);
 
    
     return () => clearInterval(interval);
   }, []);
 
-  return { submissions, loading, updateStatus, refresh: () => loadData(true) };
+  return { submissions, loading, error, updateStatus, refresh: () => loadData(true) };
 };

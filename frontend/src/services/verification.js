@@ -80,7 +80,8 @@ export const verificationService = {
       });
     } catch (error) {
       console.error("Fetch submissions error:", error);
-      return [];
+      const message = error.response?.data?.error || error.response?.data?.message || error.message || 'Failed to fetch submissions';
+      throw new Error(message);
     }
   },
 

@@ -19,7 +19,8 @@ export const residentService = {
                 .map(transformResident);
         } catch (error) {
             console.error("Fetch Error:", error);
-            return [];
+            const message = error.response?.data?.error || error.response?.data?.message || error.message || 'Failed to fetch residents';
+            throw new Error(message);
         }
     },
 

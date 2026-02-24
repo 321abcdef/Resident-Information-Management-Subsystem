@@ -1,4 +1,6 @@
+import { useEffect, useLayoutEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import { UserProvider } from "./context/UserContext";
 
@@ -22,11 +24,38 @@ import Support from "./pages/support";
 import Settings from "./pages/settings";
 import Logout from "./pages/logout";
 
+function ScrollToTop() {
+  const { pathname, key } = useLocation();
+
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    const scrollRoot = document.scrollingElement || document.documentElement;
+    scrollRoot.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+
+    const rafId = window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      scrollRoot.scrollTop = 0;
+    });
+
+    return () => window.cancelAnimationFrame(rafId);
+  }, [pathname, key]);
+
+  return null;
+}
+
 function App() {
   return (
     <ThemeProvider>
       <UserProvider>
         <Router>
+          <ScrollToTop />
           <Routes>
             {/* PUBLIC ROUTES */}
             <Route path="/" element={<HomePage />} />

@@ -31,7 +31,7 @@ export default function HeroSection({
           </span>
         </div>
         <h1 className="text-5xl md:text-7xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.9] mb-8 md:mb-10 italic">
-          Barangay <br /> <span className="text-emerald-600 not-italic">Gulod.</span>
+          Barangay <br /> <span className="text-emerald-600 not-italic">Gulod</span>
         </h1>
         <p
           className={`text-base md:text-lg lg:text-xl mb-10 md:mb-12 max-w-2xl mx-auto font-medium ${

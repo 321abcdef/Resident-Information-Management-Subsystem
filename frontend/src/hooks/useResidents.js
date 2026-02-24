@@ -6,14 +6,17 @@ export const useResidents = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [categoryFilter, setCategoryFilter] = useState("All");
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const loadData = async () => {
         setLoading(true);
         try {
+            setError(null);
             const data = await residentService.getResidents();
             setAllResidents(data || []);
         } catch (error) {
             console.error("Error loading residents:", error);
+            setError(error.message || "Failed to load residents.");
         } finally {
             setLoading(false);
         }
@@ -101,6 +104,7 @@ export const useResidents = () => {
     return {
         residents: filteredResidents,
         loading,
+        error,
         searchTerm,
         setSearchTerm,
         categoryFilter,

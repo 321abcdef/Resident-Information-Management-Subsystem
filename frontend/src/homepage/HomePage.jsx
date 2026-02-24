@@ -7,7 +7,8 @@ import logoPic from "../assets/bgylogo.png";
 import officialFallback from "../assets/atl.png";
 import AnnouncementsSection from "./components/AnnouncementsSection";
 import ContactSection from "./components/ContactSection";
-import EmergencyModal from "./components/EmergencyModal";
+import EventsCalendarSection from "./components/EventsCalendarSection";
+import FAQSection from "./components/FAQSection";
 import FloatingWidgets from "./components/FloatingWidgets";
 import HeroSection from "./components/HeroSection";
 import HomeFooter from "./components/HomeFooter";
@@ -18,12 +19,49 @@ import {
   announcements,
   createMessageId,
   defaultChatMessage,
-  emergencyHotlines,
+  faqItems,
   officials,
+  upcomingEvents,
   services,
   socialLinks,
-  weatherConditions,
 } from "./data/homepageData";
+
+const WEATHER_API_URL =
+  "https://api.open-meteo.com/v1/forecast?latitude=14.676&longitude=121.0437&current=temperature_2m,weather_code&timezone=Asia%2FManila";
+const WEATHER_REFRESH_MS = 10 * 60 * 1000;
+
+const WEATHER_CODE_LABELS = {
+  0: "Clear",
+  1: "Mostly Clear",
+  2: "Partly Cloudy",
+  3: "Cloudy",
+  45: "Foggy",
+  48: "Foggy",
+  51: "Light Drizzle",
+  53: "Drizzle",
+  55: "Heavy Drizzle",
+  56: "Freezing Drizzle",
+  57: "Freezing Drizzle",
+  61: "Light Rain",
+  63: "Rain",
+  65: "Heavy Rain",
+  66: "Freezing Rain",
+  67: "Freezing Rain",
+  71: "Light Snow",
+  73: "Snow",
+  75: "Heavy Snow",
+  77: "Snow Grains",
+  80: "Rain Showers",
+  81: "Rain Showers",
+  82: "Heavy Showers",
+  85: "Snow Showers",
+  86: "Snow Showers",
+  95: "Thunderstorm",
+  96: "Thunderstorm",
+  99: "Thunderstorm",
+};
+
+const getWeatherLabel = (code) => WEATHER_CODE_LABELS[code] ?? "Fair";
 
 export default function HomePage() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -33,17 +71,12 @@ export default function HomePage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
   const [selectedNews, setSelectedNews] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [chatMessage, setChatMessage] = useState("");
-  const [weather] = useState(() => {
-    const randomCondition =
-      weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
-    return {
-      temp: `${Math.floor(Math.random() * (32 - 26) + 26)}°C`,
-      condition: randomCondition,
-    };
+  const [weather, setWeather] = useState({
+    temp: "-- C",
+    condition: "Loading...",
   });
   const [chatHistory, setChatHistory] = useState([defaultChatMessage]);
   const [contactData, setContactData] = useState({ name: "", email: "", message: "" });
@@ -58,6 +91,45 @@ export default function HomePage() {
   useEffect(() => {
     window.localStorage.setItem("homepage-theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchWeather = async () => {
+      try {
+        const response = await fetch(WEATHER_API_URL, { signal: controller.signal });
+        if (!response.ok) {
+          throw new Error(`Weather request failed with ${response.status}`);
+        }
+
+        const data = await response.json();
+        const current = data?.current;
+        if (!current || typeof current.temperature_2m !== "number") {
+          throw new Error("Weather payload is missing current values");
+        }
+
+        setWeather({
+          temp: `${Math.round(current.temperature_2m)} C`,
+          condition: getWeatherLabel(current.weather_code),
+        });
+      } catch (error) {
+        if (error?.name === "AbortError") return;
+        setWeather((prev) =>
+          prev.condition === "Loading..."
+            ? { temp: "-- C", condition: "Unavailable" }
+            : prev
+        );
+      }
+    };
+
+    fetchWeather();
+    const weatherTimer = window.setInterval(fetchWeather, WEATHER_REFRESH_MS);
+
+    return () => {
+      controller.abort();
+      window.clearInterval(weatherTimer);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -166,6 +238,15 @@ export default function HomePage() {
     }, 1000);
   };
 
+  const homepageNavItems = [
+    { id: "news", label: "News" },
+    { id: "events", label: "Events" },
+    { id: "services", label: "Services" },
+    { id: "faq", label: "FAQ" },
+    { id: "officials", label: "Officials" },
+    { id: "contact", label: "Contact" },
+  ];
+
   return (
     <div
       className={`min-h-screen transition-colors duration-500 ${
@@ -200,10 +281,10 @@ export default function HomePage() {
             />
             <div className="flex flex-col">
               <span className="font-black tracking-tighter text-lg md:text-xl uppercase italic leading-none">
-                Gulod<span className="text-emerald-600">Digital</span>
+                Barangay <span className="text-emerald-600">Gulod</span>
               </span>
               <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.2em] opacity-60 flex items-center gap-1">
-                <ShieldCheck size={8} className="text-emerald-500" /> Official Portal
+                <ShieldCheck size={8} className="text-emerald-500" /> Official Website
               </span>
             </div>
           </button>
@@ -223,16 +304,16 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-8 text-[10px] font-black uppercase tracking-widest">
-              <button onClick={() => scrollToSection("news")} className="hover:text-emerald-600 transition-colors">
-                News
-              </button>
-              <button onClick={() => scrollToSection("services")} className="hover:text-emerald-600 transition-colors">
-                Services
-              </button>
-              <button onClick={() => scrollToSection("officials")} className="hover:text-emerald-600 transition-colors">
-                Officials
-              </button>
+            <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-widest">
+              {homepageNavItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="hover:text-emerald-600 transition-colors"
+                >
+                  {item.label}
+                </button>
+              ))}
               <button
                 type="button"
                 aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
@@ -285,9 +366,11 @@ export default function HomePage() {
             }`}
           >
             <div className="flex flex-col gap-6 text-center font-black uppercase tracking-widest text-xs">
-              <button onClick={() => scrollToSection("news")}>News</button>
-              <button onClick={() => scrollToSection("services")}>Services</button>
-              <button onClick={() => scrollToSection("officials")}>Officials</button>
+              {homepageNavItems.map((item) => (
+                <button key={item.id} onClick={() => scrollToSection(item.id)}>
+                  {item.label}
+                </button>
+              ))}
               <button
                 onClick={() => navigate("/auth")}
                 className="bg-emerald-700 text-white py-4 rounded-2xl shadow-lg"
@@ -305,13 +388,14 @@ export default function HomePage() {
         onGetDigitalId={() => navigate("/auth")}
         onLatestNews={() => scrollToSection("news")}
       />
-
       <AnnouncementsSection
         isDarkMode={isDarkMode}
         announcements={announcements}
         fallbackImage={bsbPic}
         onReadMore={setSelectedNews}
       />
+
+      <EventsCalendarSection isDarkMode={isDarkMode} events={upcomingEvents} />
 
       <NewsModal
         selectedNews={selectedNews}
@@ -334,6 +418,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <FAQSection isDarkMode={isDarkMode} faqItems={faqItems} />
 
       <OfficialsSection
         officials={officials}
@@ -358,17 +444,9 @@ export default function HomePage() {
         onOfficialsClick={() => scrollToSection("officials")}
       />
 
-      <EmergencyModal
-        isOpen={isEmergencyModalOpen}
-        isDarkMode={isDarkMode}
-        hotlines={emergencyHotlines}
-        onClose={() => setIsEmergencyModalOpen(false)}
-      />
-
       <FloatingWidgets
         isDarkMode={isDarkMode}
         isChatOpen={isChatOpen}
-        onOpenEmergency={() => setIsEmergencyModalOpen(true)}
         onToggleChat={() => setIsChatOpen((prev) => !prev)}
         onCloseChat={() => setIsChatOpen(false)}
         chatHistory={chatHistory}

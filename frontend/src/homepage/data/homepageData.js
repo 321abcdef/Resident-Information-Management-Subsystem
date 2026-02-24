@@ -54,6 +54,103 @@ export const announcements = [
   },
 ];
 
+export const officeHours = {
+  timezone: "Asia/Manila",
+  weekday: { open: "08:00", close: "17:00" },
+  saturday: { open: "08:00", close: "12:00" },
+  closedDays: ["Sunday"],
+};
+
+export const upcomingEvents = [
+  {
+    id: "barangay-assembly-2026-02-28",
+    date: "2026-02-28",
+    startTime: "09:00 AM",
+    endTime: "11:30 AM",
+    title: "1st Quarter Barangay Assembly",
+    category: "Governance",
+    location: "Barangay Covered Court",
+    details: "Community updates, budget highlights, and open forum.",
+  },
+  {
+    id: "medical-mission-2026-03-05",
+    date: "2026-03-05",
+    startTime: "08:00 AM",
+    endTime: "02:00 PM",
+    title: "Medical and Dental Mission",
+    category: "Health",
+    location: "Barangay Hall Clinic",
+    details: "Free blood pressure, glucose check, and dental consultation.",
+  },
+  {
+    id: "livelihood-seminar-2026-03-12",
+    date: "2026-03-12",
+    startTime: "01:00 PM",
+    endTime: "04:00 PM",
+    title: "Livelihood Skills Seminar",
+    category: "Livelihood",
+    location: "Session Hall, 2nd Floor",
+    details: "Training for food business basics and small business setup.",
+  },
+  {
+    id: "cleanup-drive-2026-03-21",
+    date: "2026-03-21",
+    startTime: "06:00 AM",
+    endTime: "10:00 AM",
+    title: "Community Clean-Up Drive",
+    category: "Community",
+    location: "All Purok Assembly Points",
+    details: "Bring reusable gloves and tumblers. Cleanup kits are provided.",
+  },
+];
+
+export const faqItems = [
+  {
+    id: "faq-resident-id",
+    question: "How do I apply for a Digital Resident ID?",
+    answer:
+      "Create an account, complete your profile, upload valid requirements, then wait for verification. You will be notified once approved.",
+    tags: ["id", "registration", "digital id"],
+  },
+  {
+    id: "faq-clearance-time",
+    question: "How long is the processing time for Barangay Clearance?",
+    answer:
+      "Most requests are processed within 1 to 2 business days after verification and payment confirmation.",
+    tags: ["clearance", "processing", "certificate"],
+  },
+  {
+    id: "faq-requirements",
+    question: "What requirements are needed for certificate requests?",
+    answer:
+      "Prepare a valid ID, proof of residency, and any additional supporting document depending on the certificate type.",
+    tags: ["requirements", "residency", "documents"],
+  },
+  {
+    id: "faq-track",
+    question: "Where can I follow up my submitted request?",
+    answer:
+      "Log in to your portal account and check the request status panel. You can also ask support with your reference number.",
+    tags: ["tracking", "status", "reference number"],
+  },
+  {
+    id: "faq-office-hours",
+    question: "What are the office hours of Barangay Gulod?",
+    answer:
+      "The office is open Monday to Friday from 8:00 AM to 5:00 PM and Saturday from 8:00 AM to 12:00 PM.",
+    tags: ["office hours", "schedule", "open"],
+  },
+];
+
+export const concernCategories = [
+  "Road and Sidewalk",
+  "Streetlight",
+  "Drainage and Flooding",
+  "Waste and Sanitation",
+  "Peace and Order",
+  "Other",
+];
+
 export const services = [
   {
     id: "e-certifications",

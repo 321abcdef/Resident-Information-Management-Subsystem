@@ -11,7 +11,7 @@ import Pagination from '@/components/common/pagination';
 import { useSound } from '@/hooks/useSound';
 
 const Verification = () => {
-  const { submissions, loading, updateStatus } = useVerification();
+  const { submissions, loading, error, updateStatus } = useVerification();
   const [view, setView] = useState('list');
   const [activeTab, setActiveTab] = useState('Pending');
   const [selectedRes, setSelectedRes] = useState(null);
@@ -190,6 +190,11 @@ const Verification = () => {
 
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm flex flex-col">
             <VerificationFilters searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            {error && (
+              <div className="mx-4 mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {error}
+              </div>
+            )}
             
             {loading ? (
               <div className="p-10 text-center italic text-slate-400">Loading...</div>

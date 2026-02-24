@@ -6,6 +6,20 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
 
   const startIdx = (currentPage - 1) * itemsPerPage + 1;
   const endIdx = Math.min(currentPage * itemsPerPage, totalItems);
+  const maxVisiblePages = 10;
+  const halfWindow = Math.floor(maxVisiblePages / 2);
+  let startPage = Math.max(1, currentPage - halfWindow);
+  let endPage = startPage + maxVisiblePages - 1;
+
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+
+  const visiblePages = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, index) => startPage + index
+  );
 
   return (
     <div className="p-4 bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 transition-colors duration-300">
@@ -23,17 +37,17 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
         </button>
 
         <div className="flex items-center">
-          {[...Array(totalPages)].map((_, i) => (
+          {visiblePages.map((page) => (
             <button
-              key={i + 1}
-              onClick={() => onPageChange(i + 1)}
+              key={page}
+              onClick={() => onPageChange(page)}
               className={`w-9 h-9 text-[11px] font-black border-y border-r border-gray-200 dark:border-slate-700 transition-all ${
-                currentPage === i + 1 
+                currentPage === page 
                 ? 'bg-emerald-600 text-white border-emerald-600 z-10' 
                 : 'bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-800'
               }`}
             >
-              {i + 1}
+              {page}
             </button>
           ))}
         </div>

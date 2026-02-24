@@ -36,6 +36,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     navigate('/logout');
   };
 
+  const handleNavClick = () => {
+    window.scrollTo(0, 0);
+    if (window.innerWidth < 1024) toggleSidebar();
+  };
+
   const linkClass = ({ isActive }) => `
     flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group
     ${isActive 
@@ -72,7 +77,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <NavLink
               key={item.id}
               to={item.to}
-              onClick={() => window.innerWidth < 1024 && toggleSidebar()}
+              onClick={handleNavClick}
               className={linkClass}
             >
               {({ isActive }) => (
@@ -93,7 +98,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {/* Footer Nav */}
         <div className="p-4 border-t border-slate-100 dark:border-slate-800 space-y-1 bg-slate-50/50 dark:bg-slate-900/50">
           {bottomItems.map(item => (
-            <NavLink key={item.id} to={item.to} onClick={() => window.innerWidth < 1024 && toggleSidebar()} className={linkClass}>
+            <NavLink key={item.id} to={item.to} onClick={handleNavClick} className={linkClass}>
               <item.icon size={20} />
               <span className="text-sm font-bold tracking-tight">{item.label}</span>
             </NavLink>
@@ -104,7 +109,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all duration-200 mt-2 group"
           >
             <LogOut size={20} className="group-hover:translate-x-1 transition-transform" />
-            <span className="text-sm font-black uppercase tracking-widest">Logout Account</span>
+            <span className="text-sm font-bold tracking-tight">Logout Account</span>
           </button>
         </div>
       </aside>

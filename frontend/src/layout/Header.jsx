@@ -30,7 +30,7 @@ const Header = ({ toggleSidebar }) => {
   const dateTime = `${datePart} | ${timePart}`;
 
   return (
-    <header className="h-[89px] bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center px-6 sticky top-0 z-10 transition-colors duration-300">
+    <header className="h-[89px] bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center px-6 sticky top-0 z-40 transition-colors duration-300">
       <button 
         onClick={toggleSidebar} 
         className="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"

@@ -98,9 +98,9 @@ export default function OverviewTab({ raw }) {
         </Card>
 
         <Card title="Residency Type">
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Pie data={residencyData} cx="50%" cy="50%" outerRadius={80} dataKey="value"
+          <ResponsiveContainer width="100%" height={220}>
+            <PieChart margin={{ top: 8, right: 28, left: 28, bottom: 8 }}>
+              <Pie data={residencyData} cx="50%" cy="56%" outerRadius={72} dataKey="value"
                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>
                 {residencyData.map((e, i) => <Cell key={i} fill={e.color} />)}
               </Pie>

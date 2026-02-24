@@ -1,9 +1,8 @@
-import { ArrowUp, MessageSquare, Phone, Send, X } from "lucide-react";
+import { ArrowUp, MessageSquare, Send, X } from "lucide-react";
 
 export default function FloatingWidgets({
   isDarkMode,
   isChatOpen,
-  onOpenEmergency,
   onToggleChat,
   onCloseChat,
   chatHistory,
@@ -16,18 +15,6 @@ export default function FloatingWidgets({
   return (
     <>
       <div className="fixed bottom-6 left-4 md:bottom-10 md:left-10 z-[150] flex flex-col gap-4">
-        <div className="relative group">
-          <div className="absolute inset-0 bg-red-600 rounded-full animate-ping opacity-20 group-hover:opacity-40" />
-          <button
-            type="button"
-            aria-label="Open emergency hotlines"
-            onClick={onOpenEmergency}
-            className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)] hover:scale-110 transition-transform active:scale-95"
-          >
-            <Phone size={22} className="animate-pulse" />
-          </button>
-        </div>
-
         <div className="relative">
           {isChatOpen && (
             <>
@@ -52,11 +39,9 @@ export default function FloatingWidgets({
                     <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                     <div>
                       <span className="font-black uppercase text-[10px] md:text-[11px] tracking-widest">
-                        Digital Assistant
+                        Barangay Gulod Assistant
                       </span>
-                      <p className="text-[8px] md:text-[9px] opacity-80 mt-0.5">
-                        Online - Usually replies in seconds
-                      </p>
+                      <p className="text-[8px] md:text-[9px] text-emerald-300"></p>
                     </div>
                   </div>
                   <button

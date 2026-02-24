@@ -36,9 +36,9 @@ export function StatCard({ icon, label, value, sub, color = 'primary', trend }) 
 // ─── CARD ─────────────────────────────────────────────────────
 export function Card({ title, children, className = '' }) {
   return (
-    <div className={`bg-white rounded-xl p-5 shadow border border-gray-100 ${className}`}>
+    <div className={`bg-white dark:bg-slate-900 rounded-xl p-5 shadow border border-gray-100 dark:border-slate-800 ${className}`}>
       {title && (
-        <h3 className="font-black text-[#1a5276] mb-4 text-xs uppercase tracking-widest">
+        <h3 className="font-black text-[#1a5276] dark:text-slate-200 mb-4 text-xs uppercase tracking-widest">
           {title}
         </h3>
       )}
@@ -51,8 +51,8 @@ export function Card({ title, children, className = '' }) {
 export function SectionHeader({ title, subtitle }) {
   return (
     <div className="mb-5">
-      <h2 className="text-xl font-black text-[#1a5276] tracking-tight">{title}</h2>
-      {subtitle && <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>}
+      <h2 className="text-xl font-black text-[#1a5276] dark:text-slate-100 tracking-tight">{title}</h2>
+      {subtitle && <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">{subtitle}</p>}
     </div>
   );
 }
@@ -96,10 +96,10 @@ export function InsightCard({ type, icon, title, description, action, priority, 
         <span className="text-xl mt-0.5 flex-shrink-0">{icon}</span>
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between mb-1 gap-2 flex-wrap">
-            <span className="font-bold text-gray-800 text-sm leading-tight">{title}</span>
+            <span className="font-bold text-gray-800 dark:text-slate-100 text-sm leading-tight">{title}</span>
             <div className="flex items-center gap-2 flex-shrink-0">
               {metric !== undefined && (
-                <span className="text-lg font-black text-gray-700">
+                <span className="text-lg font-black text-gray-700 dark:text-slate-100">
                   {metric}
                   {metric_label && <span className="text-xs font-normal text-gray-500 ml-1">{metric_label}</span>}
                 </span>
@@ -111,7 +111,7 @@ export function InsightCard({ type, icon, title, description, action, priority, 
               )}
             </div>
           </div>
-          <p className="text-gray-600 text-sm leading-snug">{description}</p>
+          <p className="text-gray-600 dark:text-slate-300 text-sm leading-snug">{description}</p>
           {action && (
             <div className="mt-2 text-sm font-semibold text-[#1a5276] flex gap-1">
               <span>→</span><span>{action}</span>
@@ -122,3 +122,4 @@ export function InsightCard({ type, icon, title, description, action, priority, 
     </div>
   );
 }
+
