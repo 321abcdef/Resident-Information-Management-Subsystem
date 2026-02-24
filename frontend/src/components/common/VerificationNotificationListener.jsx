@@ -4,11 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSound } from '@/hooks/useSound';
 import { verificationService } from '@/services/verification';
 
-<<<<<<< Updated upstream
 const POLL_INTERVAL_MS = 3000;
-=======
-const POLL_INTERVAL_MS = 15000;
->>>>>>> Stashed changes
 
 const VerificationNotificationListener = () => {
   const { playFeedback } = useSound();
@@ -42,13 +38,9 @@ const VerificationNotificationListener = () => {
 
         lastPendingCountRef.current = pendingCount;
       } catch (error) {
-<<<<<<< Updated upstream
-        console.error('Notification Error:', error);
-=======
         console.error('Failed to check pending verification notifications:', error);
       } finally {
         isFetchingRef.current = false;
->>>>>>> Stashed changes
       }
     };
 
