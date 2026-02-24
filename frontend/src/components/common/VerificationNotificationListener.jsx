@@ -17,6 +17,7 @@ const VerificationNotificationListener = () => {
   useEffect(() => {
     const loadPendingCount = async () => {
       if (isFetchingRef.current) return;
+      
       isFetchingRef.current = true;
       try {
         const submissions = await verificationService.getSubmissions();
