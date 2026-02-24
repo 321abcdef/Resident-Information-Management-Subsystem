@@ -6,6 +6,8 @@ import { verificationService } from '@/services/verification';
 
 const POLL_INTERVAL_MS = 15000;
 
+//UPDATE
+
 const VerificationNotificationListener = () => {
   const { playFeedback } = useSound();
   const navigate = useNavigate(); 
