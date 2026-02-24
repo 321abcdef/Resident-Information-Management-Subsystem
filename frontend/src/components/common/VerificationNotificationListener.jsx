@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSound } from '@/hooks/useSound';
 import { verificationService } from '@/services/verification';
 
-const POLL_INTERVAL_MS = 3000;
+const POLL_INTERVAL_MS = 1000;
 
 //UPDATE
 
