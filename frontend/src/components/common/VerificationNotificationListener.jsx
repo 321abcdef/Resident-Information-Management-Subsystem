@@ -4,19 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSound } from '@/hooks/useSound';
 import { verificationService } from '@/services/verification';
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-const POLL_INTERVAL_MS = 3000;
-=======
 const POLL_INTERVAL_MS = 15000;
->>>>>>> Stashed changes
-=======
-const POLL_INTERVAL_MS = 1555000;
->>>>>>> Stashed changes
-=======
-const POLL_INTERVAL_MS = 15000;
->>>>>>> Stashed changes
 
 const VerificationNotificationListener = () => {
   const { playFeedback } = useSound();
@@ -25,27 +13,11 @@ const VerificationNotificationListener = () => {
   const lastPendingCountRef = useRef(null);
   const bannerTimerRef = useRef(null);
   const isFetchingRef = useRef(false);
-<<<<<<< Updated upstream
-  const isFetchingRef = useRef(false);
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-  const isFetchingRef = useRef(false);
-=======
->>>>>>> Stashed changes
 
   useEffect(() => {
     const loadPendingCount = async () => {
       if (isFetchingRef.current) return;
       isFetchingRef.current = true;
-<<<<<<< Updated upstream
-      if (isFetchingRef.current) return;
-      isFetchingRef.current = true;
-      if (isFetchingRef.current) return;
-      isFetchingRef.current = true;
-=======
->>>>>>> Stashed changes
       try {
         const submissions = await verificationService.getSubmissions();
         const pendingCount = submissions.filter((s) => s.status === 'Pending').length;
@@ -71,17 +43,6 @@ const VerificationNotificationListener = () => {
         console.error('Failed to check pending verification notifications:', error);
       } finally {
         isFetchingRef.current = false;
-<<<<<<< Updated upstream
-      } finally {
-        isFetchingRef.current = false;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-      } finally {
-        isFetchingRef.current = false;
-=======
->>>>>>> Stashed changes
       }
     };
 
