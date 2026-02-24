@@ -5,7 +5,11 @@ import { useSound } from '@/hooks/useSound';
 import { verificationService } from '@/services/verification';
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 const POLL_INTERVAL_MS = 3000;
+=======
+const POLL_INTERVAL_MS = 15000;
+>>>>>>> Stashed changes
 =======
 const POLL_INTERVAL_MS = 15000;
 >>>>>>> Stashed changes
@@ -17,7 +21,10 @@ const VerificationNotificationListener = () => {
   const lastPendingCountRef = useRef(null);
   const bannerTimerRef = useRef(null);
   const isFetchingRef = useRef(false);
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
   useEffect(() => {
     const loadPendingCount = async () => {
@@ -48,6 +55,9 @@ const VerificationNotificationListener = () => {
         console.error('Failed to check pending verification notifications:', error);
       } finally {
         isFetchingRef.current = false;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
       }
     };
