@@ -7,15 +7,16 @@
 import { useState, useEffect } from 'react';
 import { Spinner }        from '../components/analytics/AnalyticsInterface';
 import { TABS }           from '../components/analytics/analyticsConfig';
-import OverviewTab        from '../components/analytics/OverviewTab';
-import HeatmapTab         from '../components/analytics/HeatmapTab';
-import DemographicsTab    from '../components/analytics/DemographicsTab';
-import SectorsTab         from '../components/analytics/SectorsTab';
-import RegistrationTab    from '../components/analytics/RegistrationTab';
-import LivelihoodTab      from '../components/analytics/LivelihoodTab';
-import DecisionGuideTab   from '../components/analytics/DecisionguideTab';
+import OverviewTab        from '../components/analytics/tabs/OverviewTab';
+import HeatmapTab         from '../components/analytics/tabs/HeatmapTab';
+import DemographicsTab    from '../components/analytics/tabs/DemographicsTab';
+import SectorsTab         from '../components/analytics/tabs/SectorsTab';
+import RegistrationTab    from '../components/analytics/tabs/RegistrationTab';
+import LivelihoodTab      from '../components/analytics/tabs/LivelihoodTab';
+import DecisionGuideTab   from '../components/analytics/tabs/DecisionguideTab';
+import { API_BASE_URL } from '@/config/api';
 
-const API_BASE = import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000/api';
+const API_BASE = import.meta.env.VITE_API_URL || API_BASE_URL;
 
 function renderTab(id, data) {
   switch (id) {

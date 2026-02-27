@@ -9,8 +9,8 @@ import {
   BarChart, Bar,
 } from 'recharts';
 import { Users, ShieldCheck, Clock, UserCheck, Home, Landmark, XCircle, IdCard } from 'lucide-react';
-import { StatCard, Card, SectionHeader } from './AnalyticsInterface';
-import { COLORS, pct } from './analyticsConfig';
+import { StatCard, Card, SectionHeader } from '../AnalyticsInterface';
+import { COLORS, pct } from '../analyticsConfig';
 
 export default function OverviewTab({ raw }) {
   const ov = raw?.overview ?? {};

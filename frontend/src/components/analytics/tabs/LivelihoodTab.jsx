@@ -7,8 +7,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
   PieChart, Pie, Legend,
 } from 'recharts';
-import { Card, SectionHeader } from './AnalyticsInterface';
-import { COLORS, INCOME_ORDER, pct } from './analyticsConfig';
+import { Card, SectionHeader } from '../AnalyticsInterface';
+import { COLORS, INCOME_ORDER, pct } from '../analyticsConfig';
 
 const LOW_INCOME = ['No Income', 'Below 5,000', '0'];
 const MID_INCOME = ['5,001-10,000', '10,001-20,000', '20,001-30,000', '20,001-40,000'];
