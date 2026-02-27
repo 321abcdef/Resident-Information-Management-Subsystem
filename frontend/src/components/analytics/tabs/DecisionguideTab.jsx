@@ -1,5 +1,5 @@
 import { AlertTriangle, Eye, Siren } from 'lucide-react';
-import { StatCard, Card, SectionHeader, EmptyState } from './AnalyticsInterface';
+import { StatCard, Card, SectionHeader, EmptyState } from '../AnalyticsInterface';
 
 function detectPurok(text = '') {
   const m = String(text).match(/purok\s*\d+/i);

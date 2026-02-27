@@ -20,7 +20,6 @@ export const verificationService = {
       return response.data.map(res => {
         const ageVal = calculateAge(res.birthdate);
         
-        // Date Formatter Helper
         const formatDate = (dateStr) => {
           if (!dateStr) return 'N/A';
           const d = new Date(dateStr);
@@ -37,6 +36,8 @@ export const verificationService = {
           date: formatDate(res.created_at),
           status: res.status,
           sector: res.sector?.name || '',
+          
+          registration_payload: res.registration_payload, 
           
           details: {
             birthdate: formatDate(res.birthdate),

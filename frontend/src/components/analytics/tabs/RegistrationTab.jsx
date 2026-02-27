@@ -8,8 +8,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell,
 } from 'recharts';
-import { StatCard, Card, SectionHeader } from './AnalyticsInterface';
-import { COLORS, pct, calcVerifRate } from './analyticsConfig';
+import { StatCard, Card, SectionHeader } from '../AnalyticsInterface';
+import { COLORS, pct, calcVerifRate } from '../analyticsConfig';
 
 export default function RegistrationTab({ raw }) {
   const ov  = raw?.overview   ?? {};

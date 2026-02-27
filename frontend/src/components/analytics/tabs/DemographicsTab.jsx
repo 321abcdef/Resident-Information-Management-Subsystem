@@ -7,8 +7,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
   PieChart, Pie, Legend,
 } from 'recharts';
-import { Card, SectionHeader } from './AnalyticsInterface';
-import { COLORS, AGE_ORDER } from './analyticsConfig';
+import {Card, SectionHeader} from '../AnalyticsInterface';
+import { COLORS, AGE_ORDER } from '../analyticsConfig';
 
 export default function DemographicsTab({ raw }) {
   const demo = raw?.demographics ?? {};

@@ -7,8 +7,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend,
 } from 'recharts';
-import { StatCard, Card, SectionHeader } from './AnalyticsInterface';
-import { COLORS, SECTOR_COLORS } from './analyticsConfig';
+import { StatCard, Card, SectionHeader } from '../AnalyticsInterface';
+import { COLORS, SECTOR_COLORS } from '../analyticsConfig';
 
 export default function SectorsTab({ raw }) {
   const sec = raw?.sectors ?? {};

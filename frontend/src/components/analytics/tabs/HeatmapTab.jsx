@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { SectionHeader, EmptyState } from './AnalyticsInterface';
+import { SectionHeader, EmptyState } from '../AnalyticsInterface';
 import {
   BARANGAY_BOUNDARY,
   BARANGAY_CENTER,
@@ -7,7 +7,7 @@ import {
   HEATMAP_METRICS,
   getHeatColor,
   calcVerifRate,
-} from './analyticsConfig';
+} from '../analyticsConfig';
 
 function HeatmapMap({ purokData, metric }) {
   const mapRef = useRef(null);
