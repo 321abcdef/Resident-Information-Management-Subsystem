@@ -7,7 +7,8 @@ import { VERIFY_URL } from '@/config/api';
 const VerificationSuccessModal = ({ isOpen, onClose, data }) => {
     if (!data) return null;
 
-const qrUrl = `${VERIFY_URL}/v/${data.id}?token=${data.token}`;
+    // Construct the external verification URL
+    const qrUrl = `${VERIFY_URL}/v/${data.id}?token=${data.token}`;
 
     const downloadQR = () => {
         const svg = document.getElementById("resident-qr");
@@ -56,25 +57,33 @@ const qrUrl = `${VERIFY_URL}/v/${data.id}?token=${data.token}`;
             <div className="flex flex-col md:flex-row gap-8 items-stretch p-2">
                 
                 {/* LEFT: QR CODE SECTION */}
-              <div className="w-full md:w-2/5 flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-[2.5rem] border-2 border-slate-200 dark:border-slate-700 shadow-inner">
-    <div className="bg-white p-4 rounded-3xl shadow-2xl mb-4 border border-slate-100">
-        {/* BINALOT NG ANCHOR TAG PARA CLICKABLE */}
-        <a href={qrUrl} target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:opacity-80 transition-opacity">
-            <QRCodeSVG 
-                id="resident-qr"
-                value={qrUrl}
-                size={200} 
-                level="H" 
-                includeMargin={true}
-            />
-        </a>
-    </div>
+                <div className="w-full md:w-2/5 flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-[2.5rem] border-2 border-slate-200 dark:border-slate-700 shadow-inner">
+                    <div className="bg-white p-4 rounded-3xl shadow-2xl mb-4 border border-slate-100">
+                        {/* QR Code is now clickable to open the verification link */}
+                        <a 
+                            href={qrUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="block cursor-pointer hover:opacity-80 transition-opacity"
+                            title="Click to preview verification page"
+                        >
+                            <QRCodeSVG 
+                                id="resident-qr"
+                                value={qrUrl}
+                                size={200} 
+                                level="H" 
+                                includeMargin={true}
+                            />
+                        </a>
+                    </div>
+                    
                     <button 
                         onClick={downloadQR}
                         className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white dark:bg-white dark:text-black rounded-2xl text-[10px] font-black uppercase hover:scale-105 transition-all shadow-lg mb-4 w-full justify-center"
                     >
                         <Download size={14} /> Download QR File
                     </button>
+                    
                     <div className="text-center">
                         <p className="text-[11px] font-black text-emerald-600 uppercase tracking-widest">Official Resident ID</p>
                         <p className="text-[9px] text-slate-400 font-mono mt-1 font-bold">SCAN TO VERIFY IDENTITY</p>
@@ -112,11 +121,11 @@ const qrUrl = `${VERIFY_URL}/v/${data.id}?token=${data.token}`;
 const CredentialBox = ({ label, value, icon: Icon, highlight, isSecret }) => (
     <div className={`p-3 rounded-xl border ${highlight ? 'border-emerald-500 bg-emerald-50/30' : 'border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900'} shadow-sm`}>
         <div className="flex items-center gap-2 mb-1">
-            <Icon size={12} className={highlight ? "text-emerald-500" : "text-slate-400"} />
+            {Icon && <Icon size={12} className={highlight ? "text-emerald-500" : "text-slate-400"} />}
             <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{label}</span>
         </div>
         <p className={`text-sm font-mono font-bold ${highlight ? 'text-emerald-600' : 'dark:text-white'} ${isSecret ? 'bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 rounded text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800' : ''}`}>
-            {value}
+            {value || '---'}
         </p>
     </div>
 );
